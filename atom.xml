@@ -4,7 +4,7 @@
   <title><![CDATA[Chris Arriola]]></title>
   <link href="http://arriolac.github.io/atom.xml" rel="self"/>
   <link href="http://arriolac.github.io/"/>
-  <updated>2014-01-09T20:42:40-08:00</updated>
+  <updated>2014-01-09T21:12:59-08:00</updated>
   <id>http://arriolac.github.io/</id>
   <author>
     <name><![CDATA[Chris Arriola]]></name>
@@ -33,7 +33,7 @@ Added more context to my understanding of why the present is what&#8217;s most i
     <link href="http://arriolac.github.io/blog/2013/07/23/preparing-for-a-hackathon-a-mobile-perspective/"/>
     <updated>2013-07-23T00:00:00-07:00</updated>
     <id>http://arriolac.github.io/blog/2013/07/23/preparing-for-a-hackathon-a-mobile-perspective</id>
-    <content type="html"><![CDATA[[caption id=&#8221;&#8221; align=&#8221;alignleft&#8221; width=&#8221;170&#8221;]<a href="http://chrisarriola.files.wordpress.com/2013/07/536444_10150917662022200_1083819652_a.jpg"><img class="size-full wp-image  " id="i-461" alt="Image" src="http://chrisarriola.files.wordpress.com/2013/07/536444_10150917662022200_1083819652_a.jpg?w=170" width="170" height="261" /></a> Stay Focus &amp; Keep hacking[/caption]
+    <content type="html"><![CDATA[<a href="http://chrisarriola.files.wordpress.com/2013/07/536444_10150917662022200_1083819652_a.jpg"><img class="size-full wp-image  " id="i-461" alt="Image" align="middle" src="http://chrisarriola.files.wordpress.com/2013/07/536444_10150917662022200_1083819652_a.jpg?w=170" width="170" height="261" /></a>
 <p dir="ltr">The time-pressure imposed at hackathons make it essential for teams to prepare ahead of time so that they can focus on the most critical tasks (building the actual product) the day of the event. Typically though, hackers come in without a team or idea. Whether you fall under this category or not, <em>preparation is still important</em>. Given that a full-blown business and a polished working product is unlikely to be built overnight, the point of a hackathon should be to learn as much as you can as well as form long-lasting relationships with people in your team—<strong>the burning desire for building and creating new things does not stop after a weekend</strong>!</p>
 <p dir="ltr">Let’s say you do have a team and an idea to work on over the course of a sleep-deprived weekend. So where should you start? I thought I’d share some mobile-specific (Android and iOS) tools and projects you can leverage to bootstrap the development process.</p>
 
@@ -54,11 +54,13 @@ Added more context to my understanding of why the present is what&#8217;s most i
     <link href="http://arriolac.github.io/blog/2012/08/31/android-security-part-1-reverse-engineering-android-apps/"/>
     <updated>2012-08-31T00:00:00-07:00</updated>
     <id>http://arriolac.github.io/blog/2012/08/31/android-security-part-1-reverse-engineering-android-apps</id>
-    <content type="html"><![CDATA[Google introduced automatic support for <strong>ProGuard</strong>, a code obfuscation tool, in ADT as early as December 2010 in version 8.0.0. It is integrated into the build system to make code obfuscation a pretty &#8220;straightforward&#8221; process. Since then, Google has encouraged—albeit not proactively—developers to enable ProGuard to prevent hackers from reverse engineering and hacking applications. Despite enabling ProGuard, however, a very persistent hacker may still be able to reverse engineer a ProGuard-ed application but the task becomes exponentially harder. There are other good practices developers should abide by to ensure a secure app, but code obfuscation should always be the first line of defense (more information on code obfuscation on Android <a title="ProGuard" href="http://android-developers.blogspot.com/2010/09/proguard-android-and-licensing-server.html">here</a> and <a title="ProGuard 2" href="http://android-developers.blogspot.com/2010/09/securing-android-lvl-applications.html">here</a>).
+    <content type="html"><![CDATA[<p>
+Google introduced automatic support for <strong>ProGuard</strong>, a code obfuscation tool, in ADT as early as December 2010 in version 8.0.0. It is integrated into the build system to make code obfuscation a pretty &#8220;straightforward&#8221; process. Since then, Google has encouraged—albeit not proactively—developers to enable ProGuard to prevent hackers from reverse engineering and hacking applications. Despite enabling ProGuard, however, a very persistent hacker may still be able to reverse engineer a ProGuard-ed application but the task becomes exponentially harder. There are other good practices developers should abide by to ensure a secure app, but code obfuscation should always be the first line of defense (more information on code obfuscation on Android <a title="ProGuard" href="http://android-developers.blogspot.com/2010/09/proguard-android-and-licensing-server.html">here</a> and <a title="ProGuard 2" href="http://android-developers.blogspot.com/2010/09/securing-android-lvl-applications.html">here</a>).
 
 Out of curiosity, I went ahead and did some reverse engineering on some popular apps (all have more than 1 million downloads on Google Play) that may contain user sensitive information and un/surprisingly, 10 out of 12 weren&#8217;t doing some sort of code obfuscation. I&#8217;m sharing in this post what and how I did that to point out 2 things: (1) how easy it is to reverse engineer an app, and (2) to increase awareness of the importance of security specifically code obfuscation.
+</p>
 
-<strong>Methodology</strong>
+<h3>Methodology</h3>
 
 My methodology was simple, in fact, a quick Google Search on &#8221;<em>Android Hacking</em>&#8221; should give anyone the tools to do this. Below are the steps:
 <ol>
@@ -69,35 +71,34 @@ My methodology was simple, in fact, a quick Google Search on &#8221;<em>Android 
 </ol>
 For step 4, if an application does not have code obfuscation, then all static constant declarations can be read in plain text (<span style="color:#ff0000;">red flag</span>!). You can still take things a step further, for instance, by writing smali code and retracing your steps to create your own custom hacked-out app.
 
-<strong>Results</strong>
+<h3>Results</h3>
 
 Understanding <em>smali</em> code is pretty straightforward event without prior knowledge of the language especially when it comes to finding static member fields. Declared String values are human-readable.
 
 Here are a few screen-shots of what I&#8217;ve found:
 
-[caption id=&#8221;attachment_435&#8221; align=&#8221;aligncenter&#8221; width=&#8221;510&#8221;]<a href="http://chrisarriola.files.wordpress.com/2012/08/secret.png"><img class="size-full wp-image-435" title="Key 1" src="http://chrisarriola.files.wordpress.com/2012/08/secret.png" alt="" width="510" height="22" /></a> Fig. 1[/caption]
+<br />
+<a href="http://chrisarriola.files.wordpress.com/2012/08/secret.png"><img class="size-full wp-image-435" title="Key 1" src="http://chrisarriola.files.wordpress.com/2012/08/secret.png" alt="" width="510" height="22" /></a> Fig. 1
+<a href="http://chrisarriola.files.wordpress.com/2012/08/secret2.png"><img class="size-full wp-image-434" title="Key 2" src="http://chrisarriola.files.wordpress.com/2012/08/secret2.png" alt="" width="510" height="37" /></a> Fig. 2
+<a href="http://chrisarriola.files.wordpress.com/2012/08/secret3.png"><img class="size-full wp-image-433" title="Key 3" src="http://chrisarriola.files.wordpress.com/2012/08/secret3.png" alt="" width="510" height="26" /></a> Fig. 3
+<a href="http://chrisarriola.files.wordpress.com/2012/08/secret4.png"><img class="size-full wp-image-432" title="secret4" src="http://chrisarriola.files.wordpress.com/2012/08/secret4.png" alt="" width="510" height="16" /></a> Fig. 4
+<br />
 
-[caption id=&#8221;attachment_434&#8221; align=&#8221;aligncenter&#8221; width=&#8221;510&#8221;]<a href="http://chrisarriola.files.wordpress.com/2012/08/secret2.png"><img class="size-full wp-image-434" title="Key 2" src="http://chrisarriola.files.wordpress.com/2012/08/secret2.png" alt="" width="510" height="37" /></a> Fig. 2[/caption]
-
-[caption id=&#8221;attachment_433&#8221; align=&#8221;aligncenter&#8221; width=&#8221;510&#8221;]<a href="http://chrisarriola.files.wordpress.com/2012/08/secret3.png"><img class="size-full wp-image-433" title="Key 3" src="http://chrisarriola.files.wordpress.com/2012/08/secret3.png" alt="" width="510" height="26" /></a> Fig. 3[/caption]
-
-[caption id=&#8221;attachment_432&#8221; align=&#8221;aligncenter&#8221; width=&#8221;510&#8221;]<a href="http://chrisarriola.files.wordpress.com/2012/08/secret4.png"><img class="size-full wp-image-432" title="secret4" src="http://chrisarriola.files.wordpress.com/2012/08/secret4.png" alt="" width="510" height="16" /></a> Fig. 4[/caption]
-
-<strong>Conclusion</strong>
+<h3>Conclusion</h3>
 
 ProGuard creates drastic improvements in security. Here&#8217;s an example of how smali code would look like with ProGuard on vs. with ProGuard off.
 
-Say your <em>Activity </em>has a static member field <em>HACK_THIS</em>:
+Say your <em>Activity </em>has a static member field <em>HACK_THIS</em>:<br />
 
-[caption id=&#8221;attachment_444&#8221; align=&#8221;aligncenter&#8221; width=&#8221;510&#8221;]<a href="http://chrisarriola.files.wordpress.com/2012/08/java-code1.png"><img class="size-full wp-image-444" title="java-code" src="http://chrisarriola.files.wordpress.com/2012/08/java-code1.png" alt="" width="510" height="320" /></a> Fig. 5[/caption]
+<a href="http://chrisarriola.files.wordpress.com/2012/08/java-code1.png"><img class="size-full wp-image-444" title="java-code" src="http://chrisarriola.files.wordpress.com/2012/08/java-code1.png" alt="" width="510" height="320" /></a> Fig. 5<br />
 
 When we disassemble the resulting .dex file without ProGuard enabled, we get this:
 
-[caption id=&#8221;attachment_442&#8221; align=&#8221;aligncenter&#8221; width=&#8221;510&#8221;]<a href="http://chrisarriola.files.wordpress.com/2012/08/proguarded.png"><img class="size-full wp-image-442" title="ProGuarded" src="http://chrisarriola.files.wordpress.com/2012/08/proguarded.png" alt="" width="510" height="484" /></a> Fig. 6[/caption]
+<a href="http://chrisarriola.files.wordpress.com/2012/08/proguarded.png"><img class="size-full wp-image-442" title="ProGuarded" src="http://chrisarriola.files.wordpress.com/2012/08/proguarded.png" alt="" width="510" height="484" /></a> Fig. 6<br />
 
 Whereas code obfuscation using ProGuard results in:
 
-<a href="http://chrisarriola.files.wordpress.com/2012/08/proguarded1.png"><img class="aligncenter size-full wp-image-449" title="proguarded" src="http://chrisarriola.files.wordpress.com/2012/08/proguarded1.png" alt="" width="510" height="485" /></a>
+<a href="http://chrisarriola.files.wordpress.com/2012/08/proguarded1.png"><img class="aligncenter size-full wp-image-449" title="proguarded" src="http://chrisarriola.files.wordpress.com/2012/08/proguarded1.png" alt="" width="510" height="485" /></a><br />
 
 From this comparison, you can observe the following: enabling ProGuard in this situation removes the human-readable static member field whereas disabling it leaves it in plain-text in smali assembly code. Although the content of the String gets copied wherever it is used in code as seen on line 39 in Figure 7, the context of what that String represents is virtually unknown. Again, a persistent hacker may deduce what that means through brute-force, but ProGuard increases the complexity of the task.
 
@@ -115,15 +116,6 @@ Any tips on how to create a secure Android app? Leave a comment below!
     <content type="html"><![CDATA[One line: Intent cropIntent = <span style="color:#3366ff;"><strong>new</strong></span> Intent(<span style="color:#0000ff;">&#8220;com.android.camera.action.CROP&#8221;</span>);
 
 Great tutorial from mobile tuts+: <a href="http://mobile.tutsplus.com/tutorials/android/capture-and-crop-an-image-with-the-device-camera/">http://mobile.tutsplus.com/tutorials/android/capture-and-crop-an-image-with-the-device-camera/</a>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[In mobile design, failure is inevitable, says Path's Dave Morin]]></title>
-    <link href="http://arriolac.github.io/blog/2012/07/10/408/"/>
-    <updated>2012-07-10T00:00:00-07:00</updated>
-    <id>http://arriolac.github.io/blog/2012/07/10/408</id>
-    <content type="html"><![CDATA[Moving onto a single screen mobile app design.
 ]]></content>
   </entry>
   
@@ -430,19 +422,19 @@ For the majority of the smartphone population, Android has always been perceived
 
 Here&#8217;s why I think Android is pure awesomeness.
 
-<strong>Options</strong>
+<h3>Options</h3>
 
 I enjoy having many options. This goes for food, clothes, places, as well as phones. One of the features I particularly enjoy that some Android phones have is a physical keyboard—which is something iPhone lacks. Not going to lie though, iPhone&#8217;s hardware is beautiful but the idea of having only a single option doesn&#8217;t really float my boat.
 
-<strong>Inexpensive</strong>
+<h3>Inexpensive</h3>
 
 When I first used a smartphone I was frikin&#8217; hooked. I could simply Google questions like: &#8220;what&#8217;s the weather tomorrow?&#8221;, &#8220;how does the internet work?&#8221;, &#8220;when and where will be the next meteor shower?&#8221;, etc. Better yet, I can find location and context-specific answers to questions such as &#8220;where&#8217;s the closest restaurant/bar?&#8221;, &#8220;where can I get orange juice?&#8221;, etc. With smartphones, answers to such questions are virtually at your fingertips, anywhere you go. In the past, this was only available to the privileged, however, nowadays (thanks to Android) <a href="http://singularityhub.com/2011/08/16/80-android-phone-sells-like-hotcakes-in-kenya-the-world-next/">anyone can get a smartphone for as cheap as $80</a>! Why should only the rich have access to things like this when the less-fortunate would benefit from it the most?
 
-<strong>Open-Source</strong>
+<h3>Open-Source</h3>
 
 Anyone can go in and look at Android&#8217;s source code and create a custom OS. Because Android is Open Source, we can expect many different flavors that suit different needs—android running on <a href="http://www.shopping.hp.com/product/printer/Photosmart/1/storefronts/CQ140A%2523B1H">printers</a>, android running on <a href="http://www.barnesandnoble.com/u/nook/379003208/">e-readers</a>, etc. These are only a few examples and expect Android to dominate the OS of choice for other embedded systems.
 
-<strong>Cross-Application Integration</strong>
+<h3>Cross-Application Integration</h3>
 
 One word: Intents.
 
@@ -527,6 +519,18 @@ My rating: <a href="http://www.goodreads.com/review/show/243192342">5 of 5 stars
 It was such a great read! Eric&#8217;s methodology fits perfectly with human behavior.
 
 <a href="http://www.goodreads.com/review/list/7114307-chris-arriola">View all my reviews</a>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Stepping Up!]]></title>
+    <link href="http://arriolac.github.io/blog/2011/11/22/stepping-up/"/>
+    <updated>2011-11-22T00:00:00-08:00</updated>
+    <id>http://arriolac.github.io/blog/2011/11/22/stepping-up</id>
+    <content type="html"><![CDATA[<blockquote>
+<p style="text-align:center;"><a href="http://chrisarriola.files.wordpress.com/2011/11/img_20111106_180953.jpg"><img class="aligncenter size-medium wp-image-215" title="UPW-2011" src="http://chrisarriola.files.wordpress.com/2011/11/img_20111106_180953.jpg?w=300" alt="" width="300" height="224" /></a></p>
+<p style="text-align:center;">&#8220;<strong>Step Up and Set a New Standard!</strong>&#8221;</p>
+</blockquote>
 ]]></content>
   </entry>
   

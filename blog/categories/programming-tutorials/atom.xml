@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Programming Tutorials | Chris Arriola]]></title>
   <link href="http://arriolac.github.io/blog/categories/programming-tutorials/atom.xml" rel="self"/>
   <link href="http://arriolac.github.io/"/>
-  <updated>2014-01-09T20:42:40-08:00</updated>
+  <updated>2014-01-09T21:12:59-08:00</updated>
   <id>http://arriolac.github.io/</id>
   <author>
     <name><![CDATA[Chris Arriola]]></name>
@@ -18,11 +18,17 @@
     <link href="http://arriolac.github.io/blog/2012/08/31/android-security-part-1-reverse-engineering-android-apps/"/>
     <updated>2012-08-31T00:00:00-07:00</updated>
     <id>http://arriolac.github.io/blog/2012/08/31/android-security-part-1-reverse-engineering-android-apps</id>
-    <content type="html"><![CDATA[<p>Google introduced automatic support for <strong>ProGuard</strong>, a code obfuscation tool, in ADT as early as December 2010 in version 8.0.0. It is integrated into the build system to make code obfuscation a pretty &ldquo;straightforward&rdquo; process. Since then, Google has encouraged—albeit not proactively—developers to enable ProGuard to prevent hackers from reverse engineering and hacking applications. Despite enabling ProGuard, however, a very persistent hacker may still be able to reverse engineer a ProGuard-ed application but the task becomes exponentially harder. There are other good practices developers should abide by to ensure a secure app, but code obfuscation should always be the first line of defense (more information on code obfuscation on Android <a title="ProGuard" href="http://android-developers.blogspot.com/2010/09/proguard-android-and-licensing-server.html">here</a> and <a title="ProGuard 2" href="http://android-developers.blogspot.com/2010/09/securing-android-lvl-applications.html">here</a>).</p>
+    <content type="html"><![CDATA[<p>
+Google introduced automatic support for <strong>ProGuard</strong>, a code obfuscation tool, in ADT as early as December 2010 in version 8.0.0. It is integrated into the build system to make code obfuscation a pretty "straightforward" process. Since then, Google has encouraged—albeit not proactively—developers to enable ProGuard to prevent hackers from reverse engineering and hacking applications. Despite enabling ProGuard, however, a very persistent hacker may still be able to reverse engineer a ProGuard-ed application but the task becomes exponentially harder. There are other good practices developers should abide by to ensure a secure app, but code obfuscation should always be the first line of defense (more information on code obfuscation on Android <a title="ProGuard" href="http://android-developers.blogspot.com/2010/09/proguard-android-and-licensing-server.html">here</a> and <a title="ProGuard 2" href="http://android-developers.blogspot.com/2010/09/securing-android-lvl-applications.html">here</a>).
 
-<p>Out of curiosity, I went ahead and did some reverse engineering on some popular apps (all have more than 1 million downloads on Google Play) that may contain user sensitive information and un/surprisingly, 10 out of 12 weren&rsquo;t doing some sort of code obfuscation. I&rsquo;m sharing in this post what and how I did that to point out 2 things: (1) how easy it is to reverse engineer an app, and (2) to increase awareness of the importance of security specifically code obfuscation.</p>
+Out of curiosity, I went ahead and did some reverse engineering on some popular apps (all have more than 1 million downloads on Google Play) that may contain user sensitive information and un/surprisingly, 10 out of 12 weren't doing some sort of code obfuscation. I'm sharing in this post what and how I did that to point out 2 things: (1) how easy it is to reverse engineer an app, and (2) to increase awareness of the importance of security specifically code obfuscation.
+</p>
 
-<p><strong>Methodology</strong></p>
+
+
+
+<h3>Methodology</h3>
+
 
 <p>My methodology was simple, in fact, a quick Google Search on &ldquo;<em>Android Hacking</em>&rdquo; should give anyone the tools to do this. Below are the steps:</p>
 
@@ -36,35 +42,42 @@
 
 <p>For step 4, if an application does not have code obfuscation, then all static constant declarations can be read in plain text (<span style="color:#ff0000;">red flag</span>!). You can still take things a step further, for instance, by writing smali code and retracing your steps to create your own custom hacked-out app.</p>
 
-<p><strong>Results</strong></p>
+<h3>Results</h3>
+
 
 <p>Understanding <em>smali</em> code is pretty straightforward event without prior knowledge of the language especially when it comes to finding static member fields. Declared String values are human-readable.</p>
 
 <p>Here are a few screen-shots of what I&rsquo;ve found:</p>
 
-<p>[caption id=&ldquo;attachment_435&rdquo; align=&ldquo;aligncenter&rdquo; width=&ldquo;510&rdquo;]<a href="http://chrisarriola.files.wordpress.com/2012/08/secret.png"><img class="size-full wp-image-435" title="Key 1" src="http://chrisarriola.files.wordpress.com/2012/08/secret.png" alt="" width="510" height="22" /></a> Fig. 1[/caption]</p>
+<br />
 
-<p>[caption id=&ldquo;attachment_434&rdquo; align=&ldquo;aligncenter&rdquo; width=&ldquo;510&rdquo;]<a href="http://chrisarriola.files.wordpress.com/2012/08/secret2.png"><img class="size-full wp-image-434" title="Key 2" src="http://chrisarriola.files.wordpress.com/2012/08/secret2.png" alt="" width="510" height="37" /></a> Fig. 2[/caption]</p>
 
-<p>[caption id=&ldquo;attachment_433&rdquo; align=&ldquo;aligncenter&rdquo; width=&ldquo;510&rdquo;]<a href="http://chrisarriola.files.wordpress.com/2012/08/secret3.png"><img class="size-full wp-image-433" title="Key 3" src="http://chrisarriola.files.wordpress.com/2012/08/secret3.png" alt="" width="510" height="26" /></a> Fig. 3[/caption]</p>
+<p><a href="http://chrisarriola.files.wordpress.com/2012/08/secret.png"><img class="size-full wp-image-435" title="Key 1" src="http://chrisarriola.files.wordpress.com/2012/08/secret.png" alt="" width="510" height="22" /></a> Fig. 1
+<a href="http://chrisarriola.files.wordpress.com/2012/08/secret2.png"><img class="size-full wp-image-434" title="Key 2" src="http://chrisarriola.files.wordpress.com/2012/08/secret2.png" alt="" width="510" height="37" /></a> Fig. 2
+<a href="http://chrisarriola.files.wordpress.com/2012/08/secret3.png"><img class="size-full wp-image-433" title="Key 3" src="http://chrisarriola.files.wordpress.com/2012/08/secret3.png" alt="" width="510" height="26" /></a> Fig. 3
+<a href="http://chrisarriola.files.wordpress.com/2012/08/secret4.png"><img class="size-full wp-image-432" title="secret4" src="http://chrisarriola.files.wordpress.com/2012/08/secret4.png" alt="" width="510" height="16" /></a> Fig. 4</p>
 
-<p>[caption id=&ldquo;attachment_432&rdquo; align=&ldquo;aligncenter&rdquo; width=&ldquo;510&rdquo;]<a href="http://chrisarriola.files.wordpress.com/2012/08/secret4.png"><img class="size-full wp-image-432" title="secret4" src="http://chrisarriola.files.wordpress.com/2012/08/secret4.png" alt="" width="510" height="16" /></a> Fig. 4[/caption]</p>
+<br />
 
-<p><strong>Conclusion</strong></p>
+
+
+
+<h3>Conclusion</h3>
+
 
 <p>ProGuard creates drastic improvements in security. Here&rsquo;s an example of how smali code would look like with ProGuard on vs. with ProGuard off.</p>
 
-<p>Say your <em>Activity </em>has a static member field <em>HACK_THIS</em>:</p>
+<p>Say your <em>Activity </em>has a static member field <em>HACK_THIS</em>:<br /></p>
 
-<p>[caption id=&ldquo;attachment_444&rdquo; align=&ldquo;aligncenter&rdquo; width=&ldquo;510&rdquo;]<a href="http://chrisarriola.files.wordpress.com/2012/08/java-code1.png"><img class="size-full wp-image-444" title="java-code" src="http://chrisarriola.files.wordpress.com/2012/08/java-code1.png" alt="" width="510" height="320" /></a> Fig. 5[/caption]</p>
+<p><a href="http://chrisarriola.files.wordpress.com/2012/08/java-code1.png"><img class="size-full wp-image-444" title="java-code" src="http://chrisarriola.files.wordpress.com/2012/08/java-code1.png" alt="" width="510" height="320" /></a> Fig. 5<br /></p>
 
 <p>When we disassemble the resulting .dex file without ProGuard enabled, we get this:</p>
 
-<p>[caption id=&ldquo;attachment_442&rdquo; align=&ldquo;aligncenter&rdquo; width=&ldquo;510&rdquo;]<a href="http://chrisarriola.files.wordpress.com/2012/08/proguarded.png"><img class="size-full wp-image-442" title="ProGuarded" src="http://chrisarriola.files.wordpress.com/2012/08/proguarded.png" alt="" width="510" height="484" /></a> Fig. 6[/caption]</p>
+<p><a href="http://chrisarriola.files.wordpress.com/2012/08/proguarded.png"><img class="size-full wp-image-442" title="ProGuarded" src="http://chrisarriola.files.wordpress.com/2012/08/proguarded.png" alt="" width="510" height="484" /></a> Fig. 6<br /></p>
 
 <p>Whereas code obfuscation using ProGuard results in:</p>
 
-<p><a href="http://chrisarriola.files.wordpress.com/2012/08/proguarded1.png"><img class="aligncenter size-full wp-image-449" title="proguarded" src="http://chrisarriola.files.wordpress.com/2012/08/proguarded1.png" alt="" width="510" height="485" /></a></p>
+<p><a href="http://chrisarriola.files.wordpress.com/2012/08/proguarded1.png"><img class="aligncenter size-full wp-image-449" title="proguarded" src="http://chrisarriola.files.wordpress.com/2012/08/proguarded1.png" alt="" width="510" height="485" /></a><br /></p>
 
 <p>From this comparison, you can observe the following: enabling ProGuard in this situation removes the human-readable static member field whereas disabling it leaves it in plain-text in smali assembly code. Although the content of the String gets copied wherever it is used in code as seen on line 39 in Figure 7, the context of what that String represents is virtually unknown. Again, a persistent hacker may deduce what that means through brute-force, but ProGuard increases the complexity of the task.</p>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Technology | Chris Arriola]]></title>
   <link href="http://arriolac.github.io/blog/categories/technology/atom.xml" rel="self"/>
   <link href="http://arriolac.github.io/"/>
-  <updated>2014-01-09T20:42:40-08:00</updated>
+  <updated>2014-01-09T21:12:59-08:00</updated>
   <id>http://arriolac.github.io/</id>
   <author>
     <name><![CDATA[Chris Arriola]]></name>
@@ -18,7 +18,7 @@
     <link href="http://arriolac.github.io/blog/2013/07/23/preparing-for-a-hackathon-a-mobile-perspective/"/>
     <updated>2013-07-23T00:00:00-07:00</updated>
     <id>http://arriolac.github.io/blog/2013/07/23/preparing-for-a-hackathon-a-mobile-perspective</id>
-    <content type="html"><![CDATA[<p>[caption id=&ldquo;&rdquo; align=&ldquo;alignleft&rdquo; width=&ldquo;170&rdquo;]<a href="http://chrisarriola.files.wordpress.com/2013/07/536444_10150917662022200_1083819652_a.jpg"><img class="size-full wp-image  " id="i-461" alt="Image" src="http://chrisarriola.files.wordpress.com/2013/07/536444_10150917662022200_1083819652_a.jpg?w=170" width="170" height="261" /></a> Stay Focus &amp; Keep hacking[/caption]</p>
+    <content type="html"><![CDATA[<p><a href="http://chrisarriola.files.wordpress.com/2013/07/536444_10150917662022200_1083819652_a.jpg"><img class="size-full wp-image  " id="i-461" alt="Image" align="middle" src="http://chrisarriola.files.wordpress.com/2013/07/536444_10150917662022200_1083819652_a.jpg?w=170" width="170" height="261" /></a></p>
 
 <p dir="ltr">The time-pressure imposed at hackathons make it essential for teams to prepare ahead of time so that they can focus on the most critical tasks (building the actual product) the day of the event. Typically though, hackers come in without a team or idea. Whether you fall under this category or not, <em>preparation is still important</em>. Given that a full-blown business and a polished working product is unlikely to be built overnight, the point of a hackathon should be to learn as much as you can as well as form long-lasting relationships with people in your team—<strong>the burning desire for building and creating new things does not stop after a weekend</strong>!</p>
 
@@ -52,15 +52,6 @@
 
 <p dir="ltr">Hopefully these tools help you with your next Hackathon. If you have any suggestions/tips please feel free to leave a comment. Keep hacking!</p>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[In mobile design, failure is inevitable, says Path's Dave Morin]]></title>
-    <link href="http://arriolac.github.io/blog/2012/07/10/408/"/>
-    <updated>2012-07-10T00:00:00-07:00</updated>
-    <id>http://arriolac.github.io/blog/2012/07/10/408</id>
-    <content type="html"><![CDATA[<p>Moving onto a single screen mobile app design.</p>
 ]]></content>
   </entry>
   
@@ -151,6 +142,52 @@ by <em>Justin Rosentein</em></blockquote>
     <content type="html"><![CDATA[<p>[caption id=&ldquo;attachment_331&rdquo; align=&ldquo;aligncenter&rdquo; width=&ldquo;510&rdquo;]<a href="http://chrisarriola.files.wordpress.com/2012/05/xlarge_8ca4aa827c1151851324895f5ffb778b.jpg"><img class="size-full wp-image-331" title="SQL Injection" src="http://chrisarriola.files.wordpress.com/2012/05/xlarge_8ca4aa827c1151851324895f5ffb778b.jpg" alt="" width="510" height="286" /></a> <a href="http://gizmodo.com/5498412/sql-injection-license-plate-hopes-to-foil-euro-traffic-cameras">http://gizmodo.com/5498412/sql-injection-license-plate-hopes-to-foil-euro-traffic-cameras</a>[/caption]</p>
 
 <p>&nbsp;</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Android FTW]]></title>
+    <link href="http://arriolac.github.io/blog/2012/04/12/android-ftw/"/>
+    <updated>2012-04-12T00:00:00-07:00</updated>
+    <id>http://arriolac.github.io/blog/2012/04/12/android-ftw</id>
+    <content type="html"><![CDATA[<p>At last, the most anticipated app for Android came out a few days ago: Instagram for Android. For the first 12 hours, they hit an amazing 1 million Android app downloads! Now they&rsquo;re at the ~6 million mark and they just got bought out by Facebook for $1 billion. I thought to myself: &ldquo;great, now everyone is happy.&rdquo;</p>
+
+<p>I couldn&rsquo;t have been more wrong.</p>
+
+<p>An alarming number of iPhone users and apple fans were ranting about how lame Instagram is now that it&rsquo;s open to Android users. Here&rsquo;s a few example of what people were saying:</p>
+
+<p style="text-align:center;"><a href="http://chrisarriola.files.wordpress.com/2012/04/hatetweets.png"><img class="size-full wp-image-305 aligncenter" title="hatetweets" src="http://chrisarriola.files.wordpress.com/2012/04/hatetweets.png" alt="" width="510" height="492" /></a></p>
+
+
+<p>For the majority of the smartphone population, Android has always been perceived as being &ldquo;low quality&rdquo; compared to the iPhone. Social status has a big influence to Android being perceived this way. All the wealthy folks can brag about how awesome their iPhone is whereas people on the low-end have to compromise with shitty Android phones since they&rsquo;re too poor to buy iPhones, right? If you look at a lot of high-end Android phones though, this is obviously not the case. iPhone users, however, still feel that they&rsquo;re getting the best bang for their buck because of the exceptional brand-value Apple established for itself thanks to Steve Jobs. Looking beyond the surface though, there are many pros about Android which makes me believe otherwise.</p>
+
+<p>Here&rsquo;s why I think Android is pure awesomeness.</p>
+
+<h3>Options</h3>
+
+
+<p>I enjoy having many options. This goes for food, clothes, places, as well as phones. One of the features I particularly enjoy that some Android phones have is a physical keyboard—which is something iPhone lacks. Not going to lie though, iPhone&rsquo;s hardware is beautiful but the idea of having only a single option doesn&rsquo;t really float my boat.</p>
+
+<h3>Inexpensive</h3>
+
+
+<p>When I first used a smartphone I was frikin' hooked. I could simply Google questions like: &ldquo;what&rsquo;s the weather tomorrow?&rdquo;, &ldquo;how does the internet work?&rdquo;, &ldquo;when and where will be the next meteor shower?&rdquo;, etc. Better yet, I can find location and context-specific answers to questions such as &ldquo;where&rsquo;s the closest restaurant/bar?&rdquo;, &ldquo;where can I get orange juice?&rdquo;, etc. With smartphones, answers to such questions are virtually at your fingertips, anywhere you go. In the past, this was only available to the privileged, however, nowadays (thanks to Android) <a href="http://singularityhub.com/2011/08/16/80-android-phone-sells-like-hotcakes-in-kenya-the-world-next/">anyone can get a smartphone for as cheap as $80</a>! Why should only the rich have access to things like this when the less-fortunate would benefit from it the most?</p>
+
+<h3>Open-Source</h3>
+
+
+<p>Anyone can go in and look at Android&rsquo;s source code and create a custom OS. Because Android is Open Source, we can expect many different flavors that suit different needs—android running on <a href="http://www.shopping.hp.com/product/printer/Photosmart/1/storefronts/CQ140A%2523B1H">printers</a>, android running on <a href="http://www.barnesandnoble.com/u/nook/379003208/">e-readers</a>, etc. These are only a few examples and expect Android to dominate the OS of choice for other embedded systems.</p>
+
+<h3>Cross-Application Integration</h3>
+
+
+<p>One word: Intents.</p>
+
+<p>Android Intents essentially enable applications to &ldquo;talk&rdquo; to each other. What that means to the end-user is that you have many different options (depending on the apps installed on your device) when let&rsquo;s say for instance you want to share a location, article, photo, etc. Whereas on other platforms such as the iPhone, you&rsquo;re limited to only what the OS provides which is typically the native apps such as messaging/e-mail. This of course is not only limited to sharing content. Another example would be if you have a camera/photo application and want to launch that app for another app that takes pictures. Assuming that app exposes it&rsquo;s functionality (side note: why doesn&rsquo;t Instagram do this?), on Android you would be able to do that without going through intermediate steps, i.e. capturing a photo with app 1, saving image, opening app 2&hellip; I think you get the point.</p>
+
+<p style="text-align:center;"><a href="http://chrisarriola.files.wordpress.com/2012/04/androideatingapple.png"><img class="aligncenter" title="androideatingapple" src="http://chrisarriola.files.wordpress.com/2012/04/androideatingapple.png?w=258" alt="" width="258" height="300" /></a><a href="http://chrisarriola.files.wordpress.com/2012/04/androideatingapple.png">
+</a></p>
+
 ]]></content>
   </entry>
   
