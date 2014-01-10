@@ -1,0 +1,59 @@
+---
+layout: post
+title: Countdown Timer on Android
+categories:
+- Android
+- Programming Tutorials
+tags:
+- Android
+- asynctask
+- countdown
+- countdown timer
+- handler
+- Java
+- multithreading
+- napp
+- runnable
+- thread
+- timer
+status: publish
+type: post
+published: true
+meta:
+  publicize_results: a:1:{s:7:"twitter";a:1:{i:222522906;a:2:{s:7:"user_id";s:12:"arriolachris";s:7:"post_id";s:18:"197201660777467904";}}}
+  _wpas_mess: Countdown Timer on Android http://wp.me/p1cpYQ-55
+  _wpas_done_twitter: '1'
+  tagazine-media: a:7:{s:7:"primary";s:0:"";s:6:"images";a:0:{}s:6:"videos";a:0:{}s:11:"image_count";s:1:"0";s:6:"author";s:8:"18163990";s:7:"blog_id";s:8:"17736144";s:9:"mod_stamp";s:19:"2012-05-01
+    05:52:57";}
+  _elasticsearch_indexed_on: '2012-05-01 05:51:37'
+---
+An <a href="http://chrisarriola.wordpress.com/2012/03/12/first-android-application-napp/">exercise</a> I did to practice threading on Android is to implement a simple countdown timer. To do this, I used a <em>Handler</em> and added a <em>Runnable</em> Object—which performs the countdown—to it's message queue.
+
+Here's a snippet of the Runnable Object:
+<pre>Runnable mTimerTask = new Runnable() {
+@Override
+public void run() {
+  long currTime = System.currentTimeMillis();
+  long currTimeSysClock = SystemClock.uptimeMillis();
+  long timeLeftMillis = mWakeUpTime - currTime;
+  int seconds = (int) timeLeftMillis / 1000;
+  int minutes = seconds / 60;
+  int hours = minutes / 60;
+  seconds %= 60;
+  minutes %= 60;
+  updateTime(mSecondView, seconds);
+  updateTime(mMinuteView, minutes);
+  updateTime(mHourView, hours);
+
+  if (hours == 0 &amp;&amp; minutes == 0 &amp;&amp; seconds == 0) {
+    mTimerHandler.removeCallbacks(this);
+  } else {
+    mTimerHandler.postAtTime(this, currTimeSysClock + 1000);
+  }
+  }
+};</pre>
+Finally, passing the Runnable object to the Handler's <em>post()</em> method will initiate the countdown sequence.
+
+Essentially, the run method gets called every 1 second following the first call to run ( <em>postAtTime()</em> ). The process is then repeated until the countdown reaches 0. To prevent reseting the wake up time, the wake up time (<em>mWakeUpTime</em>) is saved in the app's shared preferences.
+
+Another approach that could've also been used is through the use of an <em>AsyncTask</em>. However, for a simple task such as a countdown timer and since we want to control the specific time a thread runs, a Handler would be the best way to go.

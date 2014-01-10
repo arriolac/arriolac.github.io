@@ -1,0 +1,55 @@
+---
+layout: post
+title: Optimizing Android Layouts
+categories:
+- Android
+- Technology
+tags:
+- AnDevCon
+- Android
+- android developer
+- hierarchyviewer
+- layout
+- lint
+- optimization
+- view
+- viewstub
+- widget
+status: publish
+type: post
+published: true
+meta:
+  _wpas_mess: Optimizing Android Layouts http://wp.me/p1cpYQ-5o
+  publicize_results: a:1:{s:7:"twitter";a:1:{i:222522906;a:2:{s:7:"user_id";s:12:"arriolachris";s:7:"post_id";s:18:"205466152019824640";}}}
+  _wpas_done_twitter: '1'
+  tagazine-media: a:7:{s:7:"primary";s:62:"http://chrisarriola.files.wordpress.com/2012/05/viewstub41.png";s:6:"images";a:2:{s:62:"http://chrisarriola.files.wordpress.com/2012/05/viewstub41.png";a:6:{s:8:"file_url";s:62:"http://chrisarriola.files.wordpress.com/2012/05/viewstub41.png";s:5:"width";s:3:"736";s:6:"height";s:3:"622";s:4:"type";s:5:"image";s:4:"area";s:6:"457792";s:9:"file_path";s:0:"";}s:61:"http://chrisarriola.files.wordpress.com/2012/05/viewstub3.png";a:6:{s:8:"file_url";s:61:"http://chrisarriola.files.wordpress.com/2012/05/viewstub3.png";s:5:"width";s:3:"468";s:6:"height";s:3:"476";s:4:"type";s:5:"image";s:4:"area";s:6:"222768";s:9:"file_path";s:0:"";}}s:6:"videos";a:0:{}s:11:"image_count";s:1:"2";s:6:"author";s:8:"18163990";s:7:"blog_id";s:8:"17736144";s:9:"mod_stamp";s:19:"2012-05-24
+    01:14:26";}
+  _elasticsearch_indexed_on: '2012-05-24 01:11:59'
+---
+I recently used the <strong>hierarchyviewer</strong> &amp; <strong>lint </strong>tool in the Android SDK and was pretty surprised with the results I saw. Many of the views I had were heavily nested and some views did not necessarily have to be inflated off the bat (progress indicators and refresh icons to name a few). As a result, my activity took a performance hit because of a badly designed layout.
+
+Here's a technique I used that I picked up at AnDevCon III to flatten my layouts and in general make them more performant.
+<h3><strong>ViewStub</strong></h3>
+Essentially, ViewStub is a lightweight and cheap to inflate widget that you can include in a layout. Its purpose is basically to serve as a stub or placeholder for views that don't necessarily need to be inflated on creation. For example, let's say your app displays notifications on a SlidingDrawer; however, when there are no notifications, that SlidingDrawer should be hidden. What you can do then is create a ViewStub that points to your SlidingDrawer layout implementation and when notifications are present, you can simply inflate the ViewStub. Here's an example taken from <a href="http://developer.android.com/resources/articles/layout-tricks-stubs.html">Android Developers</a> that displays the flattening of the view hierarchy using ViewStubs.
+
+Layout without ViewStub:
+
+[caption id="attachment_341" align="aligncenter" width="510"]<a href="http://chrisarriola.files.wordpress.com/2012/05/viewstub41.png"><img class="size-full wp-image-341 " title="Layout Without ViewStub" src="http://chrisarriola.files.wordpress.com/2012/05/viewstub41.png" alt="" width="510" height="431" /></a> Layout Without ViewStub[/caption]
+
+Layout using ViewStub:
+
+[caption id="attachment_342" align="aligncenter" width="468"]<a href="http://chrisarriola.files.wordpress.com/2012/05/viewstub3.png"><img class="size-full wp-image-342 " title="Layout With ViewStub" src="http://chrisarriola.files.wordpress.com/2012/05/viewstub3.png" alt="" width="468" height="476" /></a> Layout With ViewStub[/caption]
+
+The code for your layout:
+<blockquote>
+<pre><span style="color:#0000ff;">&lt;ViewStub</span>
+<span style="color:#ff00ff;">android:id</span>=<span style="color:#339966;">"@+id/stub_slidingdrawer"</span>
+<span style="color:#ff00ff;">android:layout</span>=<span style="color:#339966;">"@layout/slidingdrawer"</span>
+<span style="color:#ff00ff;">android:layout_width</span>=<span style="color:#339966;">"fill_parent"</span>
+<span style="color:#ff00ff;">android:layout_height</span>=<span style="color:#339966;">"wrap_content"</span>
+<span style="color:#0000ff;">/&gt;</span></pre>
+</blockquote>
+<span style="color:#0000ff;"><span style="color:#000000;">The code to inflate the ViewStub:</span></span>
+<blockquote><span style="color:#0000ff;"><span style="color:#000000;">ViewStub stub = (ViewStub) findViewById(R.id.<span style="color:#0000ff;"><em>stub_slidingdrawer</em></span>);</span>
+<span style="color:#000000;">View v = stub.inflate();</span> </span></blockquote>
+For my specific case, it took about half the time to inflate the entire layout tree by using a ViewStub for infrequently used child layouts. Pretty sweet.
