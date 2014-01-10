@@ -108,3 +108,5 @@ navigation:
   url: /index.html
 - text: CV
   url: /cv
+- text: About Me
+  url: /about-me
