@@ -8,10 +8,10 @@
   <title>First Android Application: Napp - Chris Arriola</title>
   <meta name="author" content="Chris Arriola">
 
+   
+  <meta name="description" content="">
   
-  <meta name="description" content=" Just published my first Android application: Napp. Check it out on Google Play!
-">
-  
+  <meta name="keywords" content="">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -21,12 +21,15 @@
   
   <link rel="canonical" href="http://arriolac.github.io/blog/2012/03/12/first-android-application-napp">
   <link href="/favicon.png" rel="icon">
+  <link href='http://fonts.googleapis.com/css?family=Quicksand:300,400' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Chris Arriola" type="application/atom+xml">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <script src="/js/jquery.js"></script>
+  <script src="/js/bootstrap-collapse.js"></script>
+  <script src="/js/modernizr-2.0.js"></script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+  <script src="/js/application.js"></script>
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
@@ -36,44 +39,44 @@
 </head>
 
 <body   >
-  <header role="banner"><hgroup>
-  <h1><a href="/">Chris Arriola</a></h1>
-  
-    <h2>Musings of an active observer.</h2>
-  
-</hgroup>
-
-</header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:arriolac.github.io" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/">Blog</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
+  <div class="navbar navbar-inverse navbar-static-top">
+  	<div class="navbar-inner">
+  	  <div class="container">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+          <span class="fui-menu-24"></span>
+        </a>
+  	  	<div class="nav-collapse collapse navbar-responsive-collapse" style="height:0;">
+  	      <ul class="nav">
+    
 </ul>
 
-</nav>
-  <div id="main">
-    <div id="content">
-      <div>
+<ul class="nav pull-right">
+    
+    
+    
+    
+    
+    
+    
+
+    
+</ul>
+
+  	    </div>
+  	  </div>
+  	</div>
+  </div>
+  <div class="container" id="main">
+      <div class="row-fluid">
+        <div id="content">
+          <div>
 <article class="hentry" role="article">
   
+
   <header>
-    
-      <h1 class="entry-title">First Android Application: Napp</h1>
-    
-    
-      <p class="meta">
-        
+  <div class="jumbotron">
+    First Android Application: Napp
+	<h5>
 
 
 
@@ -85,117 +88,90 @@
   
 
 
-<time datetime="2012-03-12T00:00:00-07:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-<div class="entry-content"><a href="http://chrisarriola.files.wordpress.com/2012/03/launcher.png"><img class="aligncenter" src="http://chrisarriola.files.wordpress.com/2012/03/launcher.png?w=86" alt="Image" /></a>
+<i class="icon-calendar-empty"></i> <time datetime="2012-03-12T00:00:00-07:00" pubdate data-updated="true"></time></h5>
+  </div>
+</header>
+  <div class="row-fluid">
+    <div class="span12">
+      <a href="http://chrisarriola.files.wordpress.com/2012/03/launcher.png"><img class="aligncenter" src="http://chrisarriola.files.wordpress.com/2012/03/launcher.png?w=86" alt="Image" /></a>
 
 Just published my first Android application: Napp. Check it out on Google Play!
-</div>
+
+    </div>
+  </div>
+
 
 
   <footer>
-    <p class="meta">
-      
-  
-
-<span class="byline author vcard">Posted by <span class="fn">Chris Arriola</span></span>
-
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-12T00:00:00-07:00" pubdate data-updated="true"></time>
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/android/'>Android</a>
-  
-</span>
-
-
-    </p>
+    <hr>
     
-      <div class="sharing">
+    <div class="row-fluid">
+      
+      <div class="span6">
+        <p class="meta">
+        
+        
+
+
+
+  <a href="/blog/categories/android/"><span class="badge">Android</span></a>
+
+
+
+
+        </p>
+      </div>
+      
+      <div class="span6 social-sharing">
+        <div class="sharing">
+  <div class="addthis_toolbox addthis_default_style ">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://arriolac.github.io/blog/2012/03/12/first-android-application-napp/" data-via="" data-counturl="http://arriolac.github.io/blog/2012/03/12/first-android-application-napp/" >Tweet</a>
+  
+  <a class="addthis_button_tweet"></a>
   
   
-  
+  <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
 </div>
 
+      </div>
+      
+      
+    </div>
     
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/2012/02/25/writing-it-down/" title="Previous Post: Writing It Down">&laquo; Writing It Down</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/2012/04/12/android-ftw/" title="Next Post: Android FTW">Android FTW &raquo;</a>
-      
-    </p>
+    <div class="row-fluid">
+      <div class="span12">
+        <p class="meta">
+          
+            <a class="basic-alignment left" href="/blog/2012/02/25/writing-it-down/" title="Previous Post: Writing It Down">&laquo; Writing It Down</a>
+          
+          
+            <a class="basic-alignment right" href="/blog/2012/04/12/android-ftw/" title="Next Post: Android FTW">Android FTW &raquo;</a>
+          
+        </p>
+      </div>
+    </div>
   </footer>
 </article>
 
 </div>
 
-<aside class="sidebar">
-  
-    <section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2013/11/21/480/">The Power of Now by Eckhard Tolle</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/23/preparing-for-a-hackathon-a-mobile-perspective/">Preparing for a Hackathon (a Mobile Perspective)</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/08/31/android-security-part-1-reverse-engineering-android-apps/">Android Security Part 1 - Reverse Engineering Android Apps</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/07/18/android-capture-and-crop-an-image/">Android: Capture and Crop an Image</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/07/10/408/">In Mobile Design, Failure Is Inevitable, Says Path's Dave Morin</a>
-      </li>
-    
-  </ul>
-</section>
 
 
-
-
-
-  
-</aside>
-
-
-    </div>
-  </div>
-  <footer role="contentinfo"><p>
+        </div>
+      </div>
+      <div class="row-fluid">
+        <footer class="footer-page" role="contentinfo">
+          <p>
   Copyright &copy; 2014 - Chris Arriola -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span> - Theme by <a href="http://alexgaribay.com">Alex Garibay</a>
 </p>
 
-</footer>
+
+        </footer>
+      </div>
+  </div>
   
 
 
@@ -209,7 +185,7 @@ Just published my first Android application: Napp. Check it out on Google Play!
       var twitterWidgets = document.createElement('script');
       twitterWidgets.type = 'text/javascript';
       twitterWidgets.async = true;
-      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>

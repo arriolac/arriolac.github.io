@@ -4,7 +4,7 @@
   <title><![CDATA[Chris Arriola]]></title>
   <link href="http://arriolac.github.io/atom.xml" rel="self"/>
   <link href="http://arriolac.github.io/"/>
-  <updated>2014-01-09T19:21:25-08:00</updated>
+  <updated>2014-01-09T19:53:12-08:00</updated>
   <id>http://arriolac.github.io/</id>
   <author>
     <name><![CDATA[Chris Arriola]]></name>
@@ -29,7 +29,7 @@ Added more context to my understanding of why the present is what&#8217;s most i
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Preparing for a Hackathon (a Mobile Perspective)]]></title>
+    <title type="html"><![CDATA[Preparing for a Hackathon (A Mobile Perspective)]]></title>
     <link href="http://arriolac.github.io/blog/2013/07/23/preparing-for-a-hackathon-a-mobile-perspective/"/>
     <updated>2013-07-23T00:00:00-07:00</updated>
     <id>http://arriolac.github.io/blog/2013/07/23/preparing-for-a-hackathon-a-mobile-perspective</id>
@@ -119,7 +119,7 @@ Great tutorial from mobile tuts+: <a href="http://mobile.tutsplus.com/tutorials
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[In Mobile Design, Failure Is Inevitable, Says Path's Dave Morin]]></title>
+    <title type="html"><![CDATA[In mobile design, failure is inevitable, says Path's Dave Morin]]></title>
     <link href="http://arriolac.github.io/blog/2012/07/10/408/"/>
     <updated>2012-07-10T00:00:00-07:00</updated>
     <id>http://arriolac.github.io/blog/2012/07/10/408</id>
@@ -128,7 +128,7 @@ Great tutorial from mobile tuts+: <a href="http://mobile.tutsplus.com/tutorials
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Dynamic Data With ListView + Loading Footer]]></title>
+    <title type="html"><![CDATA[Dynamic Data with ListView + Loading Footer]]></title>
     <link href="http://arriolac.github.io/blog/2012/06/15/dynamic-data-with-listview-loading-footer/"/>
     <updated>2012-06-15T00:00:00-07:00</updated>
     <id>http://arriolac.github.io/blog/2012/06/15/dynamic-data-with-listview-loading-footer</id>
@@ -329,7 +329,7 @@ For my specific case, it took about half the time to inflate the entire layout t
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[How to Avoid Getting a Ticket When Running a Red Light]]></title>
+    <title type="html"><![CDATA[How To Avoid Getting a Ticket When Running a Red Light]]></title>
     <link href="http://arriolac.github.io/blog/2012/05/14/how-to-avoid-getting-a-ticket-when-running-a-red-light/"/>
     <updated>2012-05-14T00:00:00-07:00</updated>
     <id>http://arriolac.github.io/blog/2012/05/14/how-to-avoid-getting-a-ticket-when-running-a-red-light</id>
@@ -340,7 +340,7 @@ For my specific case, it took about half the time to inflate the entire layout t
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[How to Create Popups in Android]]></title>
+    <title type="html"><![CDATA[How to create popups in Android]]></title>
     <link href="http://arriolac.github.io/blog/2012/05/10/how-to-create-popups-in-android/"/>
     <updated>2012-05-10T00:00:00-07:00</updated>
     <id>http://arriolac.github.io/blog/2012/05/10/how-to-create-popups-in-android</id>
@@ -491,7 +491,7 @@ Farewell, San Diego. You will be severely missed!
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Book Review: I Was Blind but Now I See]]></title>
+    <title type="html"><![CDATA[Book Review: I Was Blind But Now I See]]></title>
     <link href="http://arriolac.github.io/blog/2012/02/13/book-review-i-was-blind-but-now-i-see/"/>
     <updated>2012-02-13T00:00:00-08:00</updated>
     <id>http://arriolac.github.io/blog/2012/02/13/book-review-i-was-blind-but-now-i-see</id>
