@@ -1,4 +1,16 @@
-<hgroup>
-  <img src="{{ root_url }}/images/ah_frame_transparent.svg" />
-  <h1><a href="{{ root_url }}/">{{ site.title }}</a></h1>
-</hgroup>
+<div class="jumbotron">
+  <div class="container">
+    {% if site.title %}
+      {{ site.title }}
+    {% else %}
+      Hi. I'm {{ site.author }}.
+    {% endif %}
+    <h3 class="tagline">
+      {% if site.subtitle %}
+        {{ site.subtitle }}
+      {% else %}
+         Here are some thoughts of mine.
+      {% endif %}
+    </h3>
+  </div>
+</div>
