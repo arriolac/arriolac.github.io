@@ -99,7 +99,12 @@ google_analytics_tracking_id:
 # Facebook Like
 facebook_like: false
 
+# LinkedIn
+linkedin_user: chrisarriola
+
 # Navigation
 navigation:
 - text: Home
   url: /index.html
+- text: CV
+  url: /cv
