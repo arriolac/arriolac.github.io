@@ -1,0 +1,344 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Dynamic Data With ListView + Loading Footer - Chris Arriola</title>
+  <meta name="author" content="Chris Arriola">
+
+  
+  <meta name="description" content="A pretty common UI design pattern for  ListViews on Android is displaying a loading footer for the dynamic loading of a list. It&#8217;s a pattern &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://arriolac.github.io/blog/2012/06/15/dynamic-data-with-listview-loading-footer">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Chris Arriola" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Chris Arriola</a></h1>
+  
+    <h2>Musings of an active observer.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:arriolac.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Dynamic Data With ListView + Loading Footer</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-15T00:00:00-07:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content">A pretty common UI design pattern for  ListViews on Android is displaying a loading footer for the dynamic loading of a list. It&#8217;s a pattern used by several well known apps - Twitter, Gmail and Instagram to mention a few - to display data without having to click a button to paginate through information. Essentially, as a user scrolls down to the end of a list, which indicates the end of the current page, a loading indicator is displayed at the footer of the list to notify the user that the list is in the process of populating more data.
+
+[caption id=&#8221;attachment_389&#8221; align=&#8221;aligncenter&#8221; width=&#8221;510&#8221;]<a href="http://chrisarriola.files.wordpress.com/2012/06/dynamiclist.png"><img class="size-full wp-image-389" title="Dynamic List" src="http://chrisarriola.files.wordpress.com/2012/06/dynamiclist.png" alt="" width="510" height="340" /></a> Dynamic Loading of a List (<a href="http://www.androidpatterns.com/uap_pattern/dynamic-loading-of-a-list">http://www.androidpatterns.com/uap_pattern/dynamic-loading-of-a-list</a>)[/caption]
+
+While playing around with this pattern, I was quite surprise how not-so-straightforward it was to implement this (then again, that&#8217;s programming for you). With that said, I&#8217;d like to share my implementation with you in case you&#8217;re trying to use this pattern in your application.
+<h3>Trial 1</h3>
+The intuitive way to go about this is to (1) simply attach an Adapter with the first page of items to a ListView, (2) attach an OnScrollListener to detect if the bottom of the list has been reached, if so, (3) add a loading footer view to the list while retrieving more data, and when the retrieval process is done, remove the loading footer and (4) update the adapter with the recently pulled data.
+
+Sounds pretty straightforward right? Turns out, it&#8217;s not.
+
+Here&#8217;s some code snippets of the above approach.
+
+(1) &amp; (2)
+<pre>ListView list = (ListView) findViewById(R.id.listview);
+MyAdapter adapter = new MyAdapter(context, items);
+list.setAdapter(adapter);
+
+list.setOnScrollListener(new OnScrollListener() {
+    @Override
+    public void onScrollStateChanged(AbsListView view, 
+            int scrollState) {
+         <span style="color:#339966;">// Do nothing</span>
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, 
+            int visibleItemCount, int totalItemCount) {
+
+        <span style="color:#339966;">// threshold being indicator if bottom of list is hit</span>
+        if (firstVisibleItem = threshold) {
+            pullMoreData();
+        }
+    }
+});</pre>
+(3) &amp; (4)
+<pre>private void pullMoreData() {
+    doNetworkRequest(page); <span style="color:#339966;">// Perform request for next page</span>
+    list.addFooterView(loadingFooter);
+}
+
+@Override
+public void onNetworkRequestComplete(Request request) {
+    list.removeFooterView(loadingFooter);
+    adapter.addAll(request.getData());
+    adapter.notifyDataSetChanged();
+}</pre>
+This implementation, however, does not result in the intended action - the footer never gets displayed. A work-around I did for this leads me to&#8230;
+<h3>Trial 2</h3>
+With my second trial, I did this: (1) attached the footer first before the adapter, and when the bottom of the list has been reached and new data has been retrieved, (2) reattach the footer and create a new adapter with the old+new data which is then reattached to the list. Finally, to bring the user back to the scroll position, I (3) keep track of the first visible item on the scroll view and set the list selection to be this item.
+
+Immediately, a few things must be popping up in your head such as: that must be slow! it&#8217;s a hack! there has to be a cleaner way! etc. I can&#8217;t agree with you more.
+
+(1), (2) &amp; (3)
+<pre>ListView list = (ListView) findViewById(R.id.listview);
+list.addFooterView(loadingFooter);
+
+MyAdapter adapter = new MyAdapter(context, items);
+list.setAdapter(adapter);
+
+list.setOnScrollListener(new OnScrollListener() {
+    @Override
+    public void onScrollStateChanged(AbsListView view, 
+            int scrollState) {
+         <span style="color:#339966;">// Do nothing</span>
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, 
+            int visibleItemCount, int totalItemCount) {
+
+<span style="color:#339966;"> // member variable for restoring selection</span>
+        mSelection = firstVisibleItem;
+
+<span style="color:#339966;"> // threshold being indicator if bottom of list is hit</span>
+        if (firstVisibleItem = threshold) {
+            pullMoreData();
+        }
+    }
+});
+
+@Override
+public void onNetworkRequestComplete(Request request) {
+    list.removeFooterView(loadingFooter);
+    list.addFooterView(loadingFooter);
+
+    MyAdapter newAdapter = new MyAdapter(this);
+    newAdapter.addOldData(adapter);
+    newAdapter.addAll(request.getData());
+
+    list.setAdapter(newAdapter);
+    adapter = newAdapter;
+
+<span style="color:#339966;"> // Set table to last selection</span>
+    list.setSelection(mSelection)
+}</pre>
+Albeit some performance issues and jerkiness because of (3), this implementation actually works.
+
+Can we do better than this?
+<h3>Trial 3</h3>
+The trick, it turns out, is to <strong>attach the footer view before setting the adapter</strong>, this way, any combination of adding and removing of the footer view/s just works. <strong>Why does it have to be in order</strong>!? If you have the answer, please leave a comment. I&#8217;d love to know
+<pre>ListView list = (ListView) findViewById(R.id.listview);
+list.addFooterView(loadingFooter);
+
+MyAdapter adapter = new MyAdapter(context, items);
+list.setAdapter(adapter);
+
+<span style="color:#339966;">// this step is important to not display the footer view // right of the bat.</span>
+list.removeFooterView(loadingFooter);
+
+list.setOnScrollListener(new OnScrollListener() {
+    @Override
+    public void onScrollStateChanged(AbsListView view, 
+            int scrollState) {
+<span style="color:#339966;"> // Do nothing</span>
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, 
+            int visibleItemCount, int totalItemCount) {
+<span style="color:#339966;"> // threshold being indicator if bottom of list is hit</span>
+        if (firstVisibleItem = threshold) {
+            pullMoreData();
+        }
+    }
+});</pre>
+I&#8217;ll share more Android quirks as they come up, I hope this helped.
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Chris Arriola</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-15T00:00:00-07:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/android/'>Android</a>, <a class='category' href='/blog/categories/programming-tutorials/'>Programming Tutorials</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://arriolac.github.io/blog/2012/06/15/dynamic-data-with-listview-loading-footer/" data-via="" data-counturl="http://arriolac.github.io/blog/2012/06/15/dynamic-data-with-listview-loading-footer/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/06/06/too-many-to-one/" title="Previous Post: Too Many to One - Implementing mHealth">&laquo; Too Many to One - Implementing mHealth</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/07/10/408/" title="Next Post: In mobile design, failure is inevitable, says Path's Dave Morin">In mobile design, failure is inevitable, says Path's Dave Morin &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/11/21/480/">The Power of Now by Eckhard Tolle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/23/preparing-for-a-hackathon-a-mobile-perspective/">Preparing for a Hackathon (a Mobile Perspective)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/31/android-security-part-1-reverse-engineering-android-apps/">Android Security Part 1 - Reverse Engineering Android Apps</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/07/18/android-capture-and-crop-an-image/">Android: Capture and Crop an Image</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/07/10/408/">In Mobile Design, Failure Is Inevitable, Says Path's Dave Morin</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Chris Arriola -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
