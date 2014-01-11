@@ -45,6 +45,11 @@ single: true
     </div>
   </footer>
 </article>
+{% if site.moot_name and page.comments == true %}
+  <section>
+    {% moot_comments %}
+  </section>
+{% endif %}
 {% if site.disqus_short_name and page.comments == true %}
   <section>
     <h1>Comments</h1>

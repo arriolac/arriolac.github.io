@@ -102,6 +102,9 @@ facebook_like: false
 # LinkedIn
 linkedin_user: chrisarriola
 
+# Moot
+moot_name: chrisarriola
+
 # Navigation
 navigation:
 - text: Home
