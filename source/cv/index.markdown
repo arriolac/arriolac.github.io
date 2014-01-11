@@ -42,7 +42,7 @@ __Developer__, *Startup Weekend NYC - Artmented (Nov. 2010)*
 
 Over a weekend, formed a group with other software developers, designers, and business developers, to create a prototype and business model for an Android application called Artmented. Artmented is an augmented reality (AR) application which allows a user to place and share digital art in a location which can then be viewed through the phone's camera.
 
-_Open Source Contributor_, **Sana Mobile (Nov. 2010 - Present)**
+__Open Source Contributor__, *Sana Mobile (Nov. 2010 - Present)*
 
 Pushing code to develop the Sana Mobile Android client.
 <br />
