@@ -10,7 +10,9 @@ footer: true
 <br />
 __Android Software Engineer__, *Edmodo (March 2012 - Present)*
 
-I'm currently Working on Edmodo's Android application.
+Working on Edmodo's Android Application.
+
+Edmodo helps connect all learners with the people and resources needed to reach their full potential.
 
 __Software Engineer__, *Hewlett-Packard (Jan. 2011 - Feb. 2012)*
 
