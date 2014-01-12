@@ -3,6 +3,7 @@ layout: post
 title: "Blog Migration"
 date: 2014-01-11 11:06:18 -0800
 comments: true
+published: true
 categories:
 - Uncategorized
 ---
