@@ -4,7 +4,7 @@
   <title><![CDATA[Chris Arriola]]></title>
   <link href="http://arriolac.github.io/atom.xml" rel="self"/>
   <link href="http://arriolac.github.io/"/>
-  <updated>2014-01-11T15:58:21-08:00</updated>
+  <updated>2014-01-11T16:02:54-08:00</updated>
   <id>http://arriolac.github.io/</id>
   <author>
     <name><![CDATA[Chris Arriola]]></name>
@@ -12,6 +12,17 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Blog Migration]]></title>
+    <link href="http://arriolac.github.io/blog/2014/01/11/blog-migration/"/>
+    <updated>2014-01-11T11:06:18-08:00</updated>
+    <id>http://arriolac.github.io/blog/2014/01/11/blog-migration</id>
+    <content type="html"><![CDATA[<p>Just moved my blog from a <a href="www.chrisarriola.wordpress.com">wordpress.com site</a> to Octopress hosted on GitHub. Surprisingly, the set-up was really quick including migrating all of my posts and tweaking some colors from the theme I chose. Not everything went smoothly though; I lost all of my comments and images on posts had some formatting issues. Aside from that, it only took a few hours.</p>
+
+<p>Feel free to leave a comment for any suggestions!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[The Power of Now by Eckhart Tolle]]></title>
@@ -519,18 +530,6 @@ My rating: <a href="http://www.goodreads.com/review/show/243192342">5 of 5 stars
 It was such a great read! Eric&#8217;s methodology fits perfectly with human behavior.
 
 <a href="http://www.goodreads.com/review/list/7114307-chris-arriola">View all my reviews</a>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Stepping Up!]]></title>
-    <link href="http://arriolac.github.io/blog/2011/11/22/stepping-up/"/>
-    <updated>2011-11-22T00:00:00-08:00</updated>
-    <id>http://arriolac.github.io/blog/2011/11/22/stepping-up</id>
-    <content type="html"><![CDATA[<blockquote>
-<p style="text-align:center;"><a href="http://chrisarriola.files.wordpress.com/2011/11/img_20111106_180953.jpg"><img class="aligncenter size-medium wp-image-215" title="UPW-2011" src="http://chrisarriola.files.wordpress.com/2011/11/img_20111106_180953.jpg?w=300" alt="" width="300" height="224" /></a></p>
-<p style="text-align:center;">&#8220;<strong>Step Up and Set a New Standard!</strong>&#8221;</p>
-</blockquote>
 ]]></content>
   </entry>
   
