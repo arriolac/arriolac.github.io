@@ -12,6 +12,8 @@ __Android Software Engineer__, *Edmodo (March 2012 - Present)*
 
 Working on Edmodo's Android application. Previously worked on the iPad application as well.
 
+Edmodo helps connect all learners with the people and resources needed to reach their full potential.
+
 __Software Engineer__, *Hewlett-Packard (Jan. 2011 - Feb. 2012)*
 
 Worked on computer vision applications.
