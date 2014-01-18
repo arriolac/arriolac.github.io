@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Productivity | Chris Arriola]]></title>
+  <title><![CDATA[Category: productivity | Chris Arriola]]></title>
   <link href="http://arriolac.github.io/blog/categories/productivity/atom.xml" rel="self"/>
   <link href="http://arriolac.github.io/"/>
-  <updated>2014-01-11T18:37:52-08:00</updated>
+  <updated>2014-01-18T14:24:06-08:00</updated>
   <id>http://arriolac.github.io/</id>
   <author>
     <name><![CDATA[Chris Arriola]]></name>
@@ -14,44 +14,40 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Preparing for a Hackathon (A Mobile Perspective)]]></title>
-    <link href="http://arriolac.github.io/blog/2013/07/23/preparing-for-a-hackathon-a-mobile-perspective/"/>
-    <updated>2013-07-23T00:00:00-07:00</updated>
-    <id>http://arriolac.github.io/blog/2013/07/23/preparing-for-a-hackathon-a-mobile-perspective</id>
-    <content type="html"><![CDATA[<p><a href="http://chrisarriola.files.wordpress.com/2013/07/536444_10150917662022200_1083819652_a.jpg"><img class="size-full wp-image  " id="i-461" alt="Image" align="middle" src="http://chrisarriola.files.wordpress.com/2013/07/536444_10150917662022200_1083819652_a.jpg?w=170" width="170" height="261" /></a></p>
+    <title type="html"><![CDATA[Deep Work]]></title>
+    <link href="http://arriolac.github.io/blog/2014/01/17/deep-work/"/>
+    <updated>2014-01-17T20:19:00-08:00</updated>
+    <id>http://arriolac.github.io/blog/2014/01/17/deep-work</id>
+    <content type="html"><![CDATA[<h5>&ldquo;What should I do next to get better at X?&rdquo;</h5>
 
-<p dir="ltr">The time-pressure imposed at hackathons make it essential for teams to prepare ahead of time so that they can focus on the most critical tasks (building the actual product) the day of the event. Typically though, hackers come in without a team or idea. Whether you fall under this category or not, <em>preparation is still important</em>. Given that a full-blown business and a polished working product is unlikely to be built overnight, the point of a hackathon should be to learn as much as you can as well as form long-lasting relationships with people in your team—<strong>the burning desire for building and creating new things does not stop after a weekend</strong>!</p>
+<p><em>Practice&hellip; right?</em></p>
 
+<p>When I was in college, I followed a blog by Cal Newport called &ldquo;Study Hacks&rdquo;. If you haven&rsquo;t heard of it yet, I <strong>highly</strong> encourage you to check it out. It changed a lot of my perspectives and some of the lessons I learned I still practice today. Check it out <a href="http://calnewport.com/blog/">here</a>.</p>
 
-<p dir="ltr">Let’s say you do have a team and an idea to work on over the course of a sleep-deprived weekend. So where should you start? I thought I’d share some mobile-specific (Android and iOS) tools and projects you can leverage to bootstrap the development process.</p>
+<p>As I was thinking about the question above, I thought of a topic discussed on <em>Study Hacks</em> called <a href="http://calnewport.com/blog/2012/11/21/knowledge-workers-are-bad-at-working-and-heres-what-to-do-about-it/">Deep Work</a>.</p>
 
+<p><em>Deep work</em>, according to Cal, is the type of work that causes our abilities to continually improve. It is a source of deeper satisfaction; that is, a feeling of passion towards whatever it is we&rsquo;re pursuing. In contrast, so called <em>shallow work</em> are the types of tasks that require minimal amount of effort. These are the tasks that through repetition and training we&rsquo;re able to do with our eyes closed.</p>
 
+<p>Figuratively, of course.</p>
 
+<p>The answer to the question I posed to myself requires some amount of deep work. With that said, here&rsquo;s how I go about preparing myself for some deep work:</p>
 
-<h3>Back-end</h3>
+<ol>
+<li><p>Quiet time</p>
 
+<p> The simple act of turning off all my devices and &ldquo;unplugging&rdquo; myself unleashes tons of creative juices. Distractions from tweets, likes, +1s, e-mails, etc. make it hard to get into any sort of rhythm. Once unplugged, I find that I don&rsquo;t really need to think of anything at all &ndash; ideas just start flowing.</p>
 
-<p dir="ltr">If you want to do data-persistence you can always build your own server logic, create RESTful APIs and create database schemas, but if you want a simple back-end service solution, the best option right now is to use <a title="Parse" href="www.parse.com" target="_blank">Parse</a>. <em>Parse</em> allows you to create models in a nice visual dashboard and then automatically creates a RESTful API for you to do CRUD operations on that model. Best of all, <em>Parse</em> is free until you hit a million requests on the API which is something you don’t have to worry about in a hackathon setting. In short, if you’re building a mobile app and you don’t have a dedicated server guy, go with <em>Parse</em>.</p>
+<p> Ironically, some of my most creative moments are in the plane when I&rsquo;m bored out of my mind. Who said boredom was a bad thing??</p></li>
+<li><p>Plan for tomorrow.</p>
 
+<p> I have trouble maintaining a very rigid routine/schedule. However, it&rsquo;s incredibly easy to plan for the next day. I find that if I just jot down a few reasonable and achievable tasks for myself to do the next day, my mind has time to prepare for what&rsquo;s ahead. Surprisingly, this motivates me to wake up early the following day too.</p></li>
+<li><p>Be in the now.</p>
 
-
-
-<h3>Networking</h3>
-
-
-<p dir="ltr">If you’re going to be integrating with some sort of web service (Facebook, Twitter, etc.), chances are, you’ll be using their APIs. Perhaps you might build your own API. Regardless, client-side you’ll need a pretty solid networking library to use. iOS and Android have their native implementations but you’ll be better of using a 3rd party library with a much simpler API that abstracts all the nitty-gritty details of HTTP. For iOS, <a title="AFNetworking" href="https://github.com/AFNetworking/AFNetworking" target="_blank">AFNetworking</a> and <a title="RestKit" href="https://github.com/RestKit/RestKit" target="_blank">RestKit</a> (uses <em>AFNetworking</em>) are the common solutions, whereas for Android, you have a couple of options but to name a few <a title="OkHTTP" href="https://github.com/square/okhttp" target="_blank">OkHTTP</a>, <a title="Retrofit" href="http://square.github.io/retrofit/" target="_blank">Retrofit</a> and <a title="android-async-http" href="https://github.com/loopj/android-async-http" target="_blank">android-async-http</a> are pretty solid.</p>
-
-
-
-
-<h3>Convenience Libraries</h3>
-
-
-<p dir="ltr">Do you make common mistakes on Android such as forgetting to check for <em>null</em>? Do you have the issue of stale objects such as Fragments and/or Activities when doing callbacks? A couple of ways to get around that is to use <a title="Guava" href="https://code.google.com/p/guava-libraries/" target="_blank">Guava</a> which has a lot of convenience classes that for Java, and to use some sort of event bus such as Square’s <a title="Otto" href="https://github.com/square/otto" target="_blank">Otto</a> to avoid callback nightmare.</p>
+<p> The most important part about execution of deep work is to be in the moment. You just need to pay attention to what you&rsquo;re doing. To &ldquo;pay attention&rdquo; is such a great sentiment in this context as it reminds us that attention costs something&hellip; energy.</p></li>
+</ol>
 
 
-<p dir="ltr">Hopefully these tools help you with your next Hackathon. If you have any suggestions/tips please feel free to leave a comment. Keep hacking!</p>
-
+<p>How do you prepare yourself for <em>deep work</em>?</p>
 ]]></content>
   </entry>
   
