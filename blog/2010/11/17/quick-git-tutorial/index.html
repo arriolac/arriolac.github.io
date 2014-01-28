@@ -1,0 +1,232 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Quick Git Tutorial - Chris Arriola</title>
+  <meta name="author" content="Chris Arriola">
+
+  
+  <meta name="description" content="I just recently picked up Git and I realized that there is no simple way of explaining how to get started using Git so I decided to put together a &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://arriolac.github.io/blog/2010/11/17/quick-git-tutorial">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Chris Arriola" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Chris Arriola</a></h1>
+  
+    <h2>Musings of an active observer.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:arriolac.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Quick Git Tutorial</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-11-17T00:00:00-08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content">I just recently picked up Git and I realized that there is <del>no simple way of explaining how to get started using Git</del> so I decided to put together a VERY SIMPLE tutorial. (Check this <a href="http://www.youtube.com/watch?v=OFkgSjRnay4">video</a> out,  the best video tutorial I&#8217;ve found on how to get started with Git) And when I mean simple, I mean you can only do basic commands but it should help get you started. =] Sometimes in life, you just need that &#8221;<em>initial push&#8221;. </em>Haha!&#8230;. To learn about <em>pushing </em>to a remote repository, check out <em>github.</em> It&#8217;s amazing.
+
+You can download Git at: <a href="http://git-scm.com/">http://git-scm.com/</a> For those of you who don&#8217;t know what Git is, it&#8217;s basically an excellent open-source version control system. It&#8217;s especially helpful in collaborative projects but you can use it for yourself to keep track of different changes you make during a program&#8217;s life-cycle. Git lets you manage different &#8220;branches&#8221; of a project &#8211; let&#8217;s say for instance at any given point you have 2 different implementations in mind but you&#8217;re not sure which one is the best. At that point, you can create a branch to work on the 1st implementation and if that doesn&#8217;t work, you can simply back-track to the branching point and work on the 2nd implementation. Git essentially manages a tree-structure of your program wherein the &#8220;master branch&#8221; or &#8220;trunk&#8221; is your primary path and each node represents a &#8220;commit-point&#8221; of your project (You can think of commits as an image or snapshot of your project). After experimenting with multiple branches, you can simply merge different branches to put together your different implementations.
+
+Ok, now for the tutorial to get you started&#8230;
+<ul>
+	<li><span style="color:#000000;">To create a git repository, navigate to the project directory (ex. cd ~/workspace/project_name) and use the command &#8217;<em>git init</em>&#8217;</span></li>
+	<li><span style="color:#000000;">When adding files to be monitored or &#8220;staged&#8221; by git, use &#8217;<em>git add filename1 filename2 ..&#8217; </em>or simply use &#8217;<em>git add .&#8217; </em>to add all files (notice the space followed by the period) if you want to index all of the new files</span></li>
+	<li><span style="color:#000000;">To create a snapshot or a commit point, use &#8217;<em>git commit -m msg&#8217; </em>wherein <em>&#8216;msg&#8217;</em> is the commit message. You can also use <em>&#8216;git commit&#8217; </em>and you will be directed to a text editor where you can enter your commit message. Only files tracked via &#8217;<em>git add&#8217; </em>will be in that snapshot.</span></li>
+	<li><span style="color:#000000;">To create a branch, use &#8217;<em>git branch branchname&#8217;. </em>To switch between different branches use &#8217;<em>git checkout branchname&#8217;. </em>To delete a branch use &#8217;<em>git branch -D branchname&#8217; </em> </span></li>
+	<li><span style="color:#000000;">If at the current branch you decide you want to merge it with the master branch, use &#8217;<em>git merge branchname&#8217; </em></span></li>
+	<li><span style="color:#000000;">To obtain a graphical representation of your working tree, type in &#8217;<em>gitk&#8217;</em></span></li>
+</ul>
+&#8230; and that should be it! I know it&#8217;s very simple but I hope this gets you started with Git. It significantly boasts your productivity and I feel every programmer should use it (at least the ones that like saving time). For more info, check out: <a href="http://www.kernel.org/pub/software/scm/git/docs/gittutorial.html">http://www.kernel.org/pub/software/scm/git/docs/gittutorial.html</a> and <a href="http://gitref.org/">http://gitref.org/</a>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Chris Arriola</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-11-17T00:00:00-08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/programming-tutorials/'>Programming Tutorials</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://arriolac.github.io/blog/2010/11/17/quick-git-tutorial/" data-via="" data-counturl="http://arriolac.github.io/blog/2010/11/17/quick-git-tutorial/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2010/11/16/hello-world/" title="Previous Post: Startup Weekend Recap">&laquo; Startup Weekend Recap</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2010/12/08/plan-and-take-action-finals-week/" title="Next Post: Plan and Take Action - Finals Week!!">Plan and Take Action - Finals Week!! &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/11/21/480/">The Power of Now by Eckhard Tolle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/23/preparing-for-a-hackathon-a-mobile-perspective/">Preparing for a Hackathon (a Mobile Perspective)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/31/android-security-part-1-reverse-engineering-android-apps/">Android Security Part 1 - Reverse Engineering Android Apps</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/07/18/android-capture-and-crop-an-image/">Android: Capture and Crop an Image</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/07/10/408/">In Mobile Design, Failure Is Inevitable, Says Path's Dave Morin</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Chris Arriola -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,233 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Too Many to One - Implementing mHealth - Chris Arriola</title>
+  <meta name="author" content="Chris Arriola">
+
+  
+  <meta name="description" content="For about a year and a half now, I&#8217;ve been volunteering with Global HEED—a non-profit organization focused on supporting health, education, and &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://arriolac.github.io/blog/2012/06/06/too-many-to-one">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Chris Arriola" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Chris Arriola</a></h1>
+  
+    <h2>Musings of an active observer.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:arriolac.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Too Many to One - Implementing mHealth</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-06T00:00:00-07:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content">For about a year and a half now, I&#8217;ve been volunteering with <a title="Global HEED" href="http://globalheed.org/">Global HEED</a>—a non-profit organization focused on supporting health, education, and economic development globally. Global HEED was started in 2008 by founders Sonny Bandyopadhyay and Zain Ahmed while both pursuing their degrees at the University of Emory. Over the course of 5 years, Global HEED has made a tremendous impact in communities around the world, most notably, in a small village in Guatemala called Calhuitz. Medical students enroll to become a summer fellow wherein they will be responsible for any of the following: developing &amp; teaching public health topics, assessing the communities needs, shadowing/assisting a doctor or nurse, etc. Some of the projects in the past involved building a pharmacy, a community health worker training center, and even first community health clinic in Calhuitz.
+
+The newest project within Global HEED is the mHealth initiative—a telemedicine project whose goal is to improve the quality of healthcare in under-served communities. Specifically, we&#8217;re collaborating with <a title="Partners for Care" href="http://www.partnersforcare.org/">Partners for Care</a>, an NGO based in Kenya, to implement mHealth in the slums of Nairobi by utilizing <a title="Sana Mobile" href="http://sana.mit.edu/">Sana Mobile</a>.
+<h4>Problem</h4>
+The underlying problem is this: there are too many people in need of healthcare but there aren&#8217;t enough physicians that can support that need. As a result, not everyone gets treated; in addition, taking into account waiting and travel time, visiting a clinic or hospital can be very time consuming. In some instances, patients have to travel ~10 km by foot to pay a visit to the nearest clinic. It&#8217;s a very brutal experience as you might imagine.
+<h4>Proposed Solution</h4>
+To alleviate this, we implemented Sana as essentially a triaging tool to improve  the delivery and efficiency of healthcare. It works as follows: a community health worker visits a patient and enters the necessary information through the mobile device (patient information, symptoms, photos, etc.), the information is then sent to an electronic medical record system, <a title="OpenMRS" href="http://openmrs.org/">OpenMRS</a>, wherein a remote doctor can send a diagnosis back to the community health worker who would then perform the necessary action (more on this <a title="Case Study - Kenya" href="http://sana.mit.edu/2012/06/02/case-study-kenyan-mhealth-project/">here</a>). Although the entire process seems simple, there&#8217;s still a couple of BIG obstacles to go through before we can comfortably expand into other regions. To name a few, we need to verify uploading information to the EMR works 99% of the time, that patient data is consistent with what&#8217;s recorded, that the community generally accepts the technology, that the project can be evaluated in a metric and quantifiable way&#8230; thinking about all this is giving me a headache.
+<h4>Conclusion</h4>
+Despite all these obstacles, seeing the passion within the organization itself, that is Global HEED, gives me the confidence that these &#8220;minor&#8221; obstacles can be eventually surpassed. For instance, even though members of Global HEED are from all over the nation—Atlanta, San Francisco, and New York City to name a few—we somehow still manage to consistently collaborate and work towards the same goal thanks to the very passionate leaders within the organization. Not to mention, our use of technology for communication, which enables us to connect, should be a testament to the potential of technology for improving the lives of those around us; not just for those a few houses away, but also for those on the opposite side of the globe.
+<blockquote>We who work in technology have nurtured an especially rare gift: the opportunity to effect change at an unprecedented scale and rate. Technology, community, and capitalism combine to make Silicon Valley the potential epicenter of vast positive change. We can tackle the world’s biggest problems and take on bold missions like fixing education, re-imagining energy distribution, connecting people, or even democratizing democracy. And with increasingly severe threats to our survival — rapid climate change, an unstable international economy, and unsustainable energy consumption — it is more important than ever that we use these gifts to change the world, foster happiness and alleviate suffering, for us and our fellow beings.
+
+by <em>Justin Rosentein</em></blockquote>
+#####
+
+If you&#8217;re a developer and would like to contribute to the project, please feel free to reach out! You can also just jump and start pushing code into the Sana <a title="Sana Source Code" href="http://sana.mit.edu/wiki/index.php?title=Main_Page">source code</a> repository, it&#8217;s open source.
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Chris Arriola</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-06T00:00:00-07:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/social-entrepreneurship/'>Social Entrepreneurship</a>, <a class='category' href='/blog/categories/technology/'>Technology</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://arriolac.github.io/blog/2012/06/06/too-many-to-one/" data-via="" data-counturl="http://arriolac.github.io/blog/2012/06/06/too-many-to-one/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/05/30/incremental-goals/" title="Previous Post: Incremental Goals">&laquo; Incremental Goals</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/06/15/dynamic-data-with-listview-loading-footer/" title="Next Post: Dynamic Data with ListView + Loading Footer">Dynamic Data with ListView + Loading Footer &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/11/21/480/">The Power of Now by Eckhard Tolle</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/23/preparing-for-a-hackathon-a-mobile-perspective/">Preparing for a Hackathon (a Mobile Perspective)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/31/android-security-part-1-reverse-engineering-android-apps/">Android Security Part 1 - Reverse Engineering Android Apps</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/07/18/android-capture-and-crop-an-image/">Android: Capture and Crop an Image</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/07/10/408/">In Mobile Design, Failure Is Inevitable, Says Path's Dave Morin</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Chris Arriola -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

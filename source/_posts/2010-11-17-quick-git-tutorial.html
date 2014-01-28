@@ -1,0 +1,31 @@
+---
+layout: post
+title: Quick Git Tutorial
+categories:
+- Programming Tutorials
+tags:
+- programming
+- tutorial
+status: publish
+type: post
+published: true
+meta:
+  _oembed_8e58fa9e589e9ef4903818b91ad4fd91: '{{unknown}}'
+  _oembed_68073c87b5c0230aabaef23ed89eb4af: '{{unknown}}'
+  _oembed_4935cf2bfe8d3df45f1e8c09dc8e960f: '{{unknown}}'
+  _elasticsearch_indexed_on: '2010-11-18 03:50:48'
+---
+I just recently picked up Git and I realized that there is <del>no simple way of explaining how to get started using Git</del> so I decided to put together a VERY SIMPLE tutorial. (Check this <a href="http://www.youtube.com/watch?v=OFkgSjRnay4">video</a> out,  the best video tutorial I've found on how to get started with Git) And when I mean simple, I mean you can only do basic commands but it should help get you started. =] Sometimes in life, you just need that "<em>initial push". </em>Haha!.... To learn about <em>pushing </em>to a remote repository, check out <em>github.</em> It's amazing.
+
+You can download Git at: <a href="http://git-scm.com/">http://git-scm.com/</a> For those of you who don't know what Git is, it's basically an excellent open-source version control system. It's especially helpful in collaborative projects but you can use it for yourself to keep track of different changes you make during a program's life-cycle. Git lets you manage different "branches" of a project -- let's say for instance at any given point you have 2 different implementations in mind but you're not sure which one is the best. At that point, you can create a branch to work on the 1st implementation and if that doesn't work, you can simply back-track to the branching point and work on the 2nd implementation. Git essentially manages a tree-structure of your program wherein the "master branch" or "trunk" is your primary path and each node represents a "commit-point" of your project (You can think of commits as an image or snapshot of your project). After experimenting with multiple branches, you can simply merge different branches to put together your different implementations.
+
+Ok, now for the tutorial to get you started...
+<ul>
+	<li><span style="color:#000000;">To create a git repository, navigate to the project directory (ex. cd ~/workspace/project_name) and use the command '<em>git init</em>'</span></li>
+	<li><span style="color:#000000;">When adding files to be monitored or "staged" by git, use '<em>git add filename1 filename2 ..' </em>or simply use '<em>git add .' </em>to add all files (notice the space followed by the period) if you want to index all of the new files</span></li>
+	<li><span style="color:#000000;">To create a snapshot or a commit point, use '<em>git commit -m msg' </em>wherein <em>'msg'</em> is the commit message. You can also use <em>'git commit' </em>and you will be directed to a text editor where you can enter your commit message. Only files tracked via '<em>git add' </em>will be in that snapshot.</span></li>
+	<li><span style="color:#000000;">To create a branch, use '<em>git branch branchname'. </em>To switch between different branches use '<em>git checkout branchname'. </em>To delete a branch use '<em>git branch -D branchname' </em> </span></li>
+	<li><span style="color:#000000;">If at the current branch you decide you want to merge it with the master branch, use '<em>git merge branchname' </em></span></li>
+	<li><span style="color:#000000;">To obtain a graphical representation of your working tree, type in '<em>gitk'</em></span></li>
+</ul>
+... and that should be it! I know it's very simple but I hope this gets you started with Git. It significantly boasts your productivity and I feel every programmer should use it (at least the ones that like saving time). For more info, check out: <a href="http://www.kernel.org/pub/software/scm/git/docs/gittutorial.html">http://www.kernel.org/pub/software/scm/git/docs/gittutorial.html</a> and <a href="http://gitref.org/">http://gitref.org/</a>
