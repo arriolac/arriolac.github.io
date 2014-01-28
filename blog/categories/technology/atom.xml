@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Technology | Chris Arriola]]></title>
+  <link href="http://arriolac.github.io/blog/categories/technology/atom.xml" rel="self"/>
+  <link href="http://arriolac.github.io/"/>
+  <updated>2014-01-18T14:29:36-08:00</updated>
+  <id>http://arriolac.github.io/</id>
+  <author>
+    <name><![CDATA[Chris Arriola]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Preparing for a Hackathon (A Mobile Perspective)]]></title>
+    <link href="http://arriolac.github.io/blog/2013/07/23/preparing-for-a-hackathon-a-mobile-perspective/"/>
+    <updated>2013-07-23T00:00:00-07:00</updated>
+    <id>http://arriolac.github.io/blog/2013/07/23/preparing-for-a-hackathon-a-mobile-perspective</id>
+    <content type="html"><![CDATA[<p><a href="http://chrisarriola.files.wordpress.com/2013/07/536444_10150917662022200_1083819652_a.jpg"><img class="size-full wp-image  " id="i-461" alt="Image" align="middle" src="http://chrisarriola.files.wordpress.com/2013/07/536444_10150917662022200_1083819652_a.jpg?w=170" width="170" height="261" /></a></p>
+
+<p dir="ltr">The time-pressure imposed at hackathons make it essential for teams to prepare ahead of time so that they can focus on the most critical tasks (building the actual product) the day of the event. Typically though, hackers come in without a team or idea. Whether you fall under this category or not, <em>preparation is still important</em>. Given that a full-blown business and a polished working product is unlikely to be built overnight, the point of a hackathon should be to learn as much as you can as well as form long-lasting relationships with people in your team—<strong>the burning desire for building and creating new things does not stop after a weekend</strong>!</p>
+
+
+<p dir="ltr">Let’s say you do have a team and an idea to work on over the course of a sleep-deprived weekend. So where should you start? I thought I’d share some mobile-specific (Android and iOS) tools and projects you can leverage to bootstrap the development process.</p>
+
+
+
+
+<h3>Back-end</h3>
+
+
+<p dir="ltr">If you want to do data-persistence you can always build your own server logic, create RESTful APIs and create database schemas, but if you want a simple back-end service solution, the best option right now is to use <a title="Parse" href="www.parse.com" target="_blank">Parse</a>. <em>Parse</em> allows you to create models in a nice visual dashboard and then automatically creates a RESTful API for you to do CRUD operations on that model. Best of all, <em>Parse</em> is free until you hit a million requests on the API which is something you don’t have to worry about in a hackathon setting. In short, if you’re building a mobile app and you don’t have a dedicated server guy, go with <em>Parse</em>.</p>
+
+
+
+
+<h3>Networking</h3>
+
+
+<p dir="ltr">If you’re going to be integrating with some sort of web service (Facebook, Twitter, etc.), chances are, you’ll be using their APIs. Perhaps you might build your own API. Regardless, client-side you’ll need a pretty solid networking library to use. iOS and Android have their native implementations but you’ll be better of using a 3rd party library with a much simpler API that abstracts all the nitty-gritty details of HTTP. For iOS, <a title="AFNetworking" href="https://github.com/AFNetworking/AFNetworking" target="_blank">AFNetworking</a> and <a title="RestKit" href="https://github.com/RestKit/RestKit" target="_blank">RestKit</a> (uses <em>AFNetworking</em>) are the common solutions, whereas for Android, you have a couple of options but to name a few <a title="OkHTTP" href="https://github.com/square/okhttp" target="_blank">OkHTTP</a>, <a title="Retrofit" href="http://square.github.io/retrofit/" target="_blank">Retrofit</a> and <a title="android-async-http" href="https://github.com/loopj/android-async-http" target="_blank">android-async-http</a> are pretty solid.</p>
+
+
+
+
+<h3>Convenience Libraries</h3>
+
+
+<p dir="ltr">Do you make common mistakes on Android such as forgetting to check for <em>null</em>? Do you have the issue of stale objects such as Fragments and/or Activities when doing callbacks? A couple of ways to get around that is to use <a title="Guava" href="https://code.google.com/p/guava-libraries/" target="_blank">Guava</a> which has a lot of convenience classes that for Java, and to use some sort of event bus such as Square’s <a title="Otto" href="https://github.com/square/otto" target="_blank">Otto</a> to avoid callback nightmare.</p>
+
+
+<p dir="ltr">Hopefully these tools help you with your next Hackathon. If you have any suggestions/tips please feel free to leave a comment. Keep hacking!</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Too Many to One - Implementing mHealth]]></title>
+    <link href="http://arriolac.github.io/blog/2012/06/06/too-many-to-one/"/>
+    <updated>2012-06-06T00:00:00-07:00</updated>
+    <id>http://arriolac.github.io/blog/2012/06/06/too-many-to-one</id>
+    <content type="html"><![CDATA[<p>For about a year and a half now, I&rsquo;ve been volunteering with <a title="Global HEED" href="http://globalheed.org/">Global HEED</a>—a non-profit organization focused on supporting health, education, and economic development globally. Global HEED was started in 2008 by founders Sonny Bandyopadhyay and Zain Ahmed while both pursuing their degrees at the University of Emory. Over the course of 5 years, Global HEED has made a tremendous impact in communities around the world, most notably, in a small village in Guatemala called Calhuitz. Medical students enroll to become a summer fellow wherein they will be responsible for any of the following: developing &amp; teaching public health topics, assessing the communities needs, shadowing/assisting a doctor or nurse, etc. Some of the projects in the past involved building a pharmacy, a community health worker training center, and even first community health clinic in Calhuitz.</p>
+
+<p>The newest project within Global HEED is the mHealth initiative—a telemedicine project whose goal is to improve the quality of healthcare in under-served communities. Specifically, we&rsquo;re collaborating with <a title="Partners for Care" href="http://www.partnersforcare.org/">Partners for Care</a>, an NGO based in Kenya, to implement mHealth in the slums of Nairobi by utilizing <a title="Sana Mobile" href="http://sana.mit.edu/">Sana Mobile</a>.</p>
+
+<h4>Problem</h4>
+
+
+<p>The underlying problem is this: there are too many people in need of healthcare but there aren&rsquo;t enough physicians that can support that need. As a result, not everyone gets treated; in addition, taking into account waiting and travel time, visiting a clinic or hospital can be very time consuming. In some instances, patients have to travel ~10 km by foot to pay a visit to the nearest clinic. It&rsquo;s a very brutal experience as you might imagine.</p>
+
+<h4>Proposed Solution</h4>
+
+
+<p>To alleviate this, we implemented Sana as essentially a triaging tool to improve  the delivery and efficiency of healthcare. It works as follows: a community health worker visits a patient and enters the necessary information through the mobile device (patient information, symptoms, photos, etc.), the information is then sent to an electronic medical record system, <a title="OpenMRS" href="http://openmrs.org/">OpenMRS</a>, wherein a remote doctor can send a diagnosis back to the community health worker who would then perform the necessary action (more on this <a title="Case Study - Kenya" href="http://sana.mit.edu/2012/06/02/case-study-kenyan-mhealth-project/">here</a>). Although the entire process seems simple, there&rsquo;s still a couple of BIG obstacles to go through before we can comfortably expand into other regions. To name a few, we need to verify uploading information to the EMR works 99% of the time, that patient data is consistent with what&rsquo;s recorded, that the community generally accepts the technology, that the project can be evaluated in a metric and quantifiable way&hellip; thinking about all this is giving me a headache.</p>
+
+<h4>Conclusion</h4>
+
+
+<p>Despite all these obstacles, seeing the passion within the organization itself, that is Global HEED, gives me the confidence that these &ldquo;minor&rdquo; obstacles can be eventually surpassed. For instance, even though members of Global HEED are from all over the nation—Atlanta, San Francisco, and New York City to name a few—we somehow still manage to consistently collaborate and work towards the same goal thanks to the very passionate leaders within the organization. Not to mention, our use of technology for communication, which enables us to connect, should be a testament to the potential of technology for improving the lives of those around us; not just for those a few houses away, but also for those on the opposite side of the globe.</p>
+
+<blockquote>We who work in technology have nurtured an especially rare gift: the opportunity to effect change at an unprecedented scale and rate. Technology, community, and capitalism combine to make Silicon Valley the potential epicenter of vast positive change. We can tackle the world’s biggest problems and take on bold missions like fixing education, re-imagining energy distribution, connecting people, or even democratizing democracy. And with increasingly severe threats to our survival — rapid climate change, an unstable international economy, and unsustainable energy consumption — it is more important than ever that we use these gifts to change the world, foster happiness and alleviate suffering, for us and our fellow beings.
+
+by <em>Justin Rosentein</em></blockquote>
+
+
+<h4>#</h4>
+
+<p>If you&rsquo;re a developer and would like to contribute to the project, please feel free to reach out! You can also just jump and start pushing code into the Sana <a title="Sana Source Code" href="http://sana.mit.edu/wiki/index.php?title=Main_Page">source code</a> repository, it&rsquo;s open source.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Optimizing Android Layouts]]></title>
+    <link href="http://arriolac.github.io/blog/2012/05/23/optimizing-android-layouts/"/>
+    <updated>2012-05-23T00:00:00-07:00</updated>
+    <id>http://arriolac.github.io/blog/2012/05/23/optimizing-android-layouts</id>
+    <content type="html"><![CDATA[<p>I recently used the <strong>hierarchyviewer</strong> &amp; <strong>lint </strong>tool in the Android SDK and was pretty surprised with the results I saw. Many of the views I had were heavily nested and some views did not necessarily have to be inflated off the bat (progress indicators and refresh icons to name a few). As a result, my activity took a performance hit because of a badly designed layout.</p>
+
+<p>Here&rsquo;s a technique I used that I picked up at AnDevCon III to flatten my layouts and in general make them more performant.</p>
+
+<h3><strong>ViewStub</strong></h3>
+
+
+<p>Essentially, ViewStub is a lightweight and cheap to inflate widget that you can include in a layout. Its purpose is basically to serve as a stub or placeholder for views that don&rsquo;t necessarily need to be inflated on creation. For example, let&rsquo;s say your app displays notifications on a SlidingDrawer; however, when there are no notifications, that SlidingDrawer should be hidden. What you can do then is create a ViewStub that points to your SlidingDrawer layout implementation and when notifications are present, you can simply inflate the ViewStub. Here&rsquo;s an example taken from <a href="http://developer.android.com/resources/articles/layout-tricks-stubs.html">Android Developers</a> that displays the flattening of the view hierarchy using ViewStubs.</p>
+
+<p>Layout without ViewStub:</p>
+
+<p>[caption id=&ldquo;attachment_341&rdquo; align=&ldquo;aligncenter&rdquo; width=&ldquo;510&rdquo;]<a href="http://chrisarriola.files.wordpress.com/2012/05/viewstub41.png"><img class="size-full wp-image-341 " title="Layout Without ViewStub" src="http://chrisarriola.files.wordpress.com/2012/05/viewstub41.png" alt="" width="510" height="431" /></a> Layout Without ViewStub[/caption]</p>
+
+<p>Layout using ViewStub:</p>
+
+<p>[caption id=&ldquo;attachment_342&rdquo; align=&ldquo;aligncenter&rdquo; width=&ldquo;468&rdquo;]<a href="http://chrisarriola.files.wordpress.com/2012/05/viewstub3.png"><img class="size-full wp-image-342 " title="Layout With ViewStub" src="http://chrisarriola.files.wordpress.com/2012/05/viewstub3.png" alt="" width="468" height="476" /></a> Layout With ViewStub[/caption]</p>
+
+<p>The code for your layout:</p>
+
+<blockquote>
+<pre><span style="color:#0000ff;">&lt;ViewStub</span>
+<span style="color:#ff00ff;">android:id</span>=<span style="color:#339966;">"@+id/stub_slidingdrawer"</span>
+<span style="color:#ff00ff;">android:layout</span>=<span style="color:#339966;">"@layout/slidingdrawer"</span>
+<span style="color:#ff00ff;">android:layout_width</span>=<span style="color:#339966;">"fill_parent"</span>
+<span style="color:#ff00ff;">android:layout_height</span>=<span style="color:#339966;">"wrap_content"</span>
+<span style="color:#0000ff;">/&gt;</span></pre>
+</blockquote>
+
+
+<p><span style="color:#0000ff;"><span style="color:#000000;">The code to inflate the ViewStub:</span></span></p>
+
+<blockquote><span style="color:#0000ff;"><span style="color:#000000;">ViewStub stub = (ViewStub) findViewById(R.id.<span style="color:#0000ff;"><em>stub_slidingdrawer</em></span>);</span>
+<span style="color:#000000;">View v = stub.inflate();</span> </span></blockquote>
+
+
+<p>For my specific case, it took about half the time to inflate the entire layout tree by using a ViewStub for infrequently used child layouts. Pretty sweet.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How To Avoid Getting a Ticket When Running a Red Light]]></title>
+    <link href="http://arriolac.github.io/blog/2012/05/14/how-to-avoid-getting-a-ticket-when-running-a-red-light/"/>
+    <updated>2012-05-14T00:00:00-07:00</updated>
+    <id>http://arriolac.github.io/blog/2012/05/14/how-to-avoid-getting-a-ticket-when-running-a-red-light</id>
+    <content type="html"><![CDATA[<p>[caption id=&ldquo;attachment_331&rdquo; align=&ldquo;aligncenter&rdquo; width=&ldquo;510&rdquo;]<a href="http://chrisarriola.files.wordpress.com/2012/05/xlarge_8ca4aa827c1151851324895f5ffb778b.jpg"><img class="size-full wp-image-331" title="SQL Injection" src="http://chrisarriola.files.wordpress.com/2012/05/xlarge_8ca4aa827c1151851324895f5ffb778b.jpg" alt="" width="510" height="286" /></a> <a href="http://gizmodo.com/5498412/sql-injection-license-plate-hopes-to-foil-euro-traffic-cameras">http://gizmodo.com/5498412/sql-injection-license-plate-hopes-to-foil-euro-traffic-cameras</a>[/caption]</p>
+
+<p>&nbsp;</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Android FTW]]></title>
+    <link href="http://arriolac.github.io/blog/2012/04/12/android-ftw/"/>
+    <updated>2012-04-12T00:00:00-07:00</updated>
+    <id>http://arriolac.github.io/blog/2012/04/12/android-ftw</id>
+    <content type="html"><![CDATA[<p>At last, the most anticipated app for Android came out a few days ago: Instagram for Android. For the first 12 hours, they hit an amazing 1 million Android app downloads! Now they&rsquo;re at the ~6 million mark and they just got bought out by Facebook for $1 billion. I thought to myself: &ldquo;great, now everyone is happy.&rdquo;</p>
+
+<p>I couldn&rsquo;t have been more wrong.</p>
+
+<p>An alarming number of iPhone users and apple fans were ranting about how lame Instagram is now that it&rsquo;s open to Android users. Here&rsquo;s a few example of what people were saying:</p>
+
+<p style="text-align:center;"><a href="http://chrisarriola.files.wordpress.com/2012/04/hatetweets.png"><img class="size-full wp-image-305 aligncenter" title="hatetweets" src="http://chrisarriola.files.wordpress.com/2012/04/hatetweets.png" alt="" width="510" height="492" /></a></p>
+
+
+<p>For the majority of the smartphone population, Android has always been perceived as being &ldquo;low quality&rdquo; compared to the iPhone. Social status has a big influence to Android being perceived this way. All the wealthy folks can brag about how awesome their iPhone is whereas people on the low-end have to compromise with shitty Android phones since they&rsquo;re too poor to buy iPhones, right? If you look at a lot of high-end Android phones though, this is obviously not the case. iPhone users, however, still feel that they&rsquo;re getting the best bang for their buck because of the exceptional brand-value Apple established for itself thanks to Steve Jobs. Looking beyond the surface though, there are many pros about Android which makes me believe otherwise.</p>
+
+<p>Here&rsquo;s why I think Android is pure awesomeness.</p>
+
+<h3>Options</h3>
+
+
+<p>I enjoy having many options. This goes for food, clothes, places, as well as phones. One of the features I particularly enjoy that some Android phones have is a physical keyboard—which is something iPhone lacks. Not going to lie though, iPhone&rsquo;s hardware is beautiful but the idea of having only a single option doesn&rsquo;t really float my boat.</p>
+
+<h3>Inexpensive</h3>
+
+
+<p>When I first used a smartphone I was frikin' hooked. I could simply Google questions like: &ldquo;what&rsquo;s the weather tomorrow?&rdquo;, &ldquo;how does the internet work?&rdquo;, &ldquo;when and where will be the next meteor shower?&rdquo;, etc. Better yet, I can find location and context-specific answers to questions such as &ldquo;where&rsquo;s the closest restaurant/bar?&rdquo;, &ldquo;where can I get orange juice?&rdquo;, etc. With smartphones, answers to such questions are virtually at your fingertips, anywhere you go. In the past, this was only available to the privileged, however, nowadays (thanks to Android) <a href="http://singularityhub.com/2011/08/16/80-android-phone-sells-like-hotcakes-in-kenya-the-world-next/">anyone can get a smartphone for as cheap as $80</a>! Why should only the rich have access to things like this when the less-fortunate would benefit from it the most?</p>
+
+<h3>Open-Source</h3>
+
+
+<p>Anyone can go in and look at Android&rsquo;s source code and create a custom OS. Because Android is Open Source, we can expect many different flavors that suit different needs—android running on <a href="http://www.shopping.hp.com/product/printer/Photosmart/1/storefronts/CQ140A%2523B1H">printers</a>, android running on <a href="http://www.barnesandnoble.com/u/nook/379003208/">e-readers</a>, etc. These are only a few examples and expect Android to dominate the OS of choice for other embedded systems.</p>
+
+<h3>Cross-Application Integration</h3>
+
+
+<p>One word: Intents.</p>
+
+<p>Android Intents essentially enable applications to &ldquo;talk&rdquo; to each other. What that means to the end-user is that you have many different options (depending on the apps installed on your device) when let&rsquo;s say for instance you want to share a location, article, photo, etc. Whereas on other platforms such as the iPhone, you&rsquo;re limited to only what the OS provides which is typically the native apps such as messaging/e-mail. This of course is not only limited to sharing content. Another example would be if you have a camera/photo application and want to launch that app for another app that takes pictures. Assuming that app exposes it&rsquo;s functionality (side note: why doesn&rsquo;t Instagram do this?), on Android you would be able to do that without going through intermediate steps, i.e. capturing a photo with app 1, saving image, opening app 2&hellip; I think you get the point.</p>
+
+<p style="text-align:center;"><a href="http://chrisarriola.files.wordpress.com/2012/04/androideatingapple.png"><img class="aligncenter" title="androideatingapple" src="http://chrisarriola.files.wordpress.com/2012/04/androideatingapple.png?w=258" alt="" width="258" height="300" /></a><a href="http://chrisarriola.files.wordpress.com/2012/04/androideatingapple.png">
+</a></p>
+
+]]></content>
+  </entry>
+  
+</feed>
