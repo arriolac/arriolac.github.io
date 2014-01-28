@@ -6,9 +6,11 @@ sharing: true
 footer: true
 ---
 
-Currently an Android Developer at Edmodo.
+{% img left ../images/profile-picture.jpg 225 300 %}
 
-Formerly a Firmware Engineer at HP.
+Currently an Android Dev Freelancer.
+
+Previously an Android Developer at Edmodo and Software Engineer at HP.
 
 Avid rock climber and loves all things fitness.
 
