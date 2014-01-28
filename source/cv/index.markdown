@@ -8,7 +8,11 @@ footer: true
 
 ##Work Experience
 <br />
-__Android Software Engineer__, *Edmodo (March 2012 - Present)*
+__Android Dev Freelancer__, *Self-Employed (Jan. 2014 - Present)*
+
+Making beautiful apps on Android.
+
+__Android Software Engineer__, *Edmodo (March 2012 - Jan. 2014)*
 
 Working on Edmodo's Android application. Previously worked on the iPad application as well.
 
