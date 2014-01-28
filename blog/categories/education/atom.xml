@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Education | Chris Arriola]]></title>
-  <link href="http://arriolac.github.io/blog/categories/education/atom.xml" rel="self"/>
-  <link href="http://arriolac.github.io/"/>
-  <updated>2014-01-18T14:29:36-08:00</updated>
-  <id>http://arriolac.github.io/</id>
+  <link href="http://chrisarriola.me/blog/categories/education/atom.xml" rel="self"/>
+  <link href="http://chrisarriola.me/"/>
+  <updated>2014-01-27T22:59:14-08:00</updated>
+  <id>http://chrisarriola.me/</id>
   <author>
     <name><![CDATA[Chris Arriola]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Preparing for a Hackathon (A Mobile Perspective)]]></title>
-    <link href="http://arriolac.github.io/blog/2013/07/23/preparing-for-a-hackathon-a-mobile-perspective/"/>
+    <link href="http://chrisarriola.me/blog/2013/07/23/preparing-for-a-hackathon-a-mobile-perspective/"/>
     <updated>2013-07-23T00:00:00-07:00</updated>
-    <id>http://arriolac.github.io/blog/2013/07/23/preparing-for-a-hackathon-a-mobile-perspective</id>
+    <id>http://chrisarriola.me/blog/2013/07/23/preparing-for-a-hackathon-a-mobile-perspective</id>
     <content type="html"><![CDATA[<p><a href="http://chrisarriola.files.wordpress.com/2013/07/536444_10150917662022200_1083819652_a.jpg"><img class="size-full wp-image  " id="i-461" alt="Image" align="middle" src="http://chrisarriola.files.wordpress.com/2013/07/536444_10150917662022200_1083819652_a.jpg?w=170" width="170" height="261" /></a></p>
 
 <p dir="ltr">The time-pressure imposed at hackathons make it essential for teams to prepare ahead of time so that they can focus on the most critical tasks (building the actual product) the day of the event. Typically though, hackers come in without a team or idea. Whether you fall under this category or not, <em>preparation is still important</em>. Given that a full-blown business and a polished working product is unlikely to be built overnight, the point of a hackathon should be to learn as much as you can as well as form long-lasting relationships with people in your team—<strong>the burning desire for building and creating new things does not stop after a weekend</strong>!</p>
@@ -57,9 +57,9 @@
   
   <entry>
     <title type="html"><![CDATA[Self-Learning Resources]]></title>
-    <link href="http://arriolac.github.io/blog/2012/05/01/self-learning-resources/"/>
+    <link href="http://chrisarriola.me/blog/2012/05/01/self-learning-resources/"/>
     <updated>2012-05-01T00:00:00-07:00</updated>
-    <id>http://arriolac.github.io/blog/2012/05/01/self-learning-resources</id>
+    <id>http://chrisarriola.me/blog/2012/05/01/self-learning-resources</id>
     <content type="html"><![CDATA[<p>One of the many pleasures in life involves learning something new. Whether it be learning a new culture, learning how to paint, learning how to write creatively, or learning how to fly a kite; the act of &ldquo;knowing&rdquo; something is nothing less than exciting. With that said, I&rsquo;m a firm believer in the active pursuit of self-learning and self-education—who said learning should stop in school? Perhaps graduating school is the end of formal learning, but if it were the end of learning in itself, life would be very, very, boring.</p>
 
 <p>Below are some resources I&rsquo;ve used in the past for taking free online classes. As my Calc 2 professor would say, these resources are &ldquo;jewels in a priceless treasure chest&rdquo;.</p>
