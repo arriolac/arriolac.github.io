@@ -8,9 +8,9 @@ footer: true
 
 ##Work Experience
 <br />
-__Android Dev Freelancer__, *Self-Employed (Jan. 2014 - Present)*
+__Co-Founder and Android Dev__, *Green Halo Labs (Jan. 2014 - Present)*
 
-Making beautiful apps on Android.
+Green Halo Labs is an Android development company. We focus on bringing to the best possible experience on Android.
 
 __Android Software Engineer__, *Edmodo (March 2012 - Jan. 2014)*
 
