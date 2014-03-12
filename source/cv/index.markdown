@@ -10,7 +10,7 @@ footer: true
 <br />
 __Co-Founder and Android Dev__, *Green Halo Labs (Jan. 2014 - Present)*
 
-Green Halo Labs is an Android development company. We focus on bringing to the best possible experience on Android.
+We build Android apps.
 
 __Android Software Engineer__, *Edmodo (March 2012 - Jan. 2014)*
 
@@ -52,8 +52,10 @@ __Open Source Contributor__, *Sana Mobile (Nov. 2010 - Present)*
 
 Pushing code to develop the Sana Mobile Android client.
 <br />
-##Speaking Events
+##Speaking/Teaching Events
 <br />
+__Android Workshop Instructor__, *Learning Android Development Meetup Group, San Francisco (March 2014)*
+
 __What to Expect as an Android Developer__, *Codepath, San Francisco (October 2013)*
 
 __Introduction to Mobile Development__, *AngelHack, San Francisco (October 2013)*
