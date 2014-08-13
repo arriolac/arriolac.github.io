@@ -179,7 +179,7 @@
 body {
   color: $text-color;
   background: $bg-color;
-  font: 18px/1.831 "Open Sans", sans-serif; }
+  font: 18px/1.831 "Roboto", sans-serif; }
 
 p {
   font-weight: 300; }
@@ -200,7 +200,7 @@ h1 {
   color: $primary-color;
   font-size: 32px;
   font-weight: 900; 
-  font-family: "Quicksand"; }
+  font-family: "Roboto Condensed"; }
   .date-time{
     font-size: 15px;
     color: $accent-color2;
@@ -215,14 +215,14 @@ h2 {
   color: $primary-color;
   font-size: 26px;
   font-weight: 500;
-  font-family: "Quicksand";
+  font-family: "Roboto Condensed";
   margin-bottom: 2px; }
 
 h3 {
   color: $accent-color2;
   font-size: 24px;
   font-weight: 500;
-  font-family: "Quicksand";
+  font-family: "Roboto Condensed";
   margin-bottom: 4px;
   margin-top: 2px; }
   .tagline
@@ -234,7 +234,7 @@ h4 {
   color: $accent-color2;
   font-size: 18px;
   font-weight: 500;
-  font-family: "Quicksand";
+  font-family: "Roboto Condensed";
   line-height: 18px;
   margin-top: 4px; }
 
@@ -242,7 +242,7 @@ h5 {
   color: $accent-color2;
   font-size: 16px;
   font-weight: 500;
-  font-family: "Quicksand";
+  font-family: "Roboto Condensed";
   text-transform: none; }
   .date{
     margin-top: 26px;
@@ -252,7 +252,7 @@ h6 {
   color: $accent-color2;
   font-size: 13px;
   font-weight: 500;
-  font-family: "Quicksand";
+  font-family: "Roboto Condensed";
   text-transform: none; }
 
 .btn {
@@ -2579,7 +2579,7 @@ body.vjs-full-window {
 .jumbotron {
   font-size: 60px;
   line-height: 70px;
-  font-family: "Quicksand";
+  font-family: "Roboto Condensed";
   position: relative;
   padding: 70px 0;
   color: $primary-color; }

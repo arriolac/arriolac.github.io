@@ -19,7 +19,7 @@
   line-height: 1.45em;
 
   color: $quote-color;
-  font-family: "Quicksand";
+  font-family: "Roboto Condensed";
 }
 
 .pullquote-left:before {
@@ -44,7 +44,7 @@ article blockquote {
   line-height: 1.5em;
   padding-left: 1em;
   color: $quote-color;
-  font-family: "Quicksand";
+  font-family: "Roboto Condensed";
   border-left: 4px solid rgba($secondary-color, .5);
   cite {
     font-size: 1.1em;
