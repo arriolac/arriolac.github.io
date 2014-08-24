@@ -8,7 +8,7 @@ footer: true
 
 {% img left ../images/profile-picture.jpg 225 300 %}
 
-Currently an Android Dev Freelancer.
+Co-Founder and Android Dev at Green Halo Labs.
 
 Previously an Android Developer at Edmodo and Software Engineer at HP.
 
