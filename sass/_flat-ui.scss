@@ -182,7 +182,10 @@ body {
   font: 18px/1.831 "Roboto", sans-serif; }
 
 p {
-  font-weight: 300; }
+  font-weight: 300;
+  line-height: 150%;
+  margin-bottom: 22px;
+  margin-top: 22px; }
 
 a {
   color: $secondary-color;
@@ -198,6 +201,8 @@ a {
 
 h1 {
   color: $primary-color;
+  margin-bottom: 22px;
+  margin-top: 22px;
   font-size: 32px;
   font-weight: 900; 
   font-family: "Roboto Condensed"; }
