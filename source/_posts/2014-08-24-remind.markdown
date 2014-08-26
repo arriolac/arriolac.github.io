@@ -8,14 +8,17 @@ categories: app, mindfulness
 
 ## Pay attention.
 
+{% img right ../images/procrastination.jpg 457 320 %}
+
 The statement above reminds us that being attentive costs something. To fully listen and be aware requires some level of deliberate focus. 
 
-Given the daily stimuli that try to grab our attention, it’s kind of hard to do that.
-
-{% img center ../images/procrastination.jpg 457 320 %}
+Given stimuli that constantly try to grab our attention, it’s kind of hard to do that.
 
 Recently, I’ve been meditating a lot and have been using apps like [Calm.com](http://calm.com) and [Headspace](https://www.headspace.com/). I find meditation extremely useful as it helps bring awareness to what you’re feeling in the moment. As simple as it sounds, it’s actually really important because your mood determines the quality of your actions. Feeling really motivated and energized? Do the hardest and most important task on your list. Feeling scatterbrained and under the weather? Do simple and menial tasks instead.
 
-Aside from meditation helping with self-awareness, I find that it also helps with appreciating the moment. Worries about the past or the future are irrelevant because the present is only *what is*. That knowledge brings peace to a distracted mind and helps appreciate the beauty of the moment.
+Aside from meditation helping with self-awareness, I find that it also helps with appreciating the moment. Worries about the past or the future are irrelevant because the present is only *what is*. That understanding brings peace of a mind and encourages just *being with it*.
 
-As a way to remind myself and others of this fact, I created an Android Wear app that reminds you throughout the day to be present. [Check it out](https://play.google.com/store/apps/details?id=chrisarriola.me.remind).
+As a way to remind myself and others of this fact, I created an Android Wear app that sends reminders throughout the day to be present. Upon being reminded, you can then do your personal mindfulness practice or simply appreciate the moment. [Check it out](https://play.google.com/store/apps/details?id=chrisarriola.me.remind).
+
+{% img center ../images/remind.png 457 320 %}
+<br />
