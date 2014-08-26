@@ -8,7 +8,7 @@ categories: app, mindfulness
 
 ## Pay attention.
 
-{% img right ../images/procrastination.jpg 457 320 %}
+{% img right http://chrisarriola.me/images/procrastination.jpg 457 320 %}
 
 The statement above reminds us that being attentive costs something. To fully listen and be aware requires some level of deliberate focus. 
 
@@ -20,5 +20,5 @@ Aside from meditation helping with self-awareness, I find that it also helps wit
 
 As a way to remind myself and others of this fact, I created an Android Wear app that sends reminders throughout the day to be present. Upon being reminded, you can then do your personal mindfulness practice or simply appreciate the moment. [Check it out](https://play.google.com/store/apps/details?id=chrisarriola.me.remind).
 
-{% img center ../images/remind.png 457 320 %}
+{% img center http://chrisarriola.me/images/remind.png 457 320 %}
 <br />
