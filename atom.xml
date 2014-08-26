@@ -4,7 +4,7 @@
   <title><![CDATA[Chris Arriola]]></title>
   <link href="http://chrisarriola.me/atom.xml" rel="self"/>
   <link href="http://chrisarriola.me/"/>
-  <updated>2014-08-12T19:07:00-07:00</updated>
+  <updated>2014-08-26T07:48:24-07:00</updated>
   <id>http://chrisarriola.me/</id>
   <author>
     <name><![CDATA[Chris Arriola]]></name>
@@ -12,6 +12,32 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Android Wear App: reMIND]]></title>
+    <link href="http://chrisarriola.me/blog/2014/08/24/remind/"/>
+    <updated>2014-08-24T13:29:55-07:00</updated>
+    <id>http://chrisarriola.me/blog/2014/08/24/remind</id>
+    <content type="html"><![CDATA[<h2>Pay attention.</h2>
+
+<p><img class="right" src="../images/procrastination.jpg" width="457" height="320"></p>
+
+<p>The statement above reminds us that being attentive costs something. To fully listen and be aware requires some level of deliberate focus.</p>
+
+<p>Given stimuli that constantly try to grab our attention, it’s kind of hard to do that.</p>
+
+<p>Recently, I’ve been meditating a lot and have been using apps like <a href="http://calm.com">Calm.com</a> and <a href="https://www.headspace.com/">Headspace</a>. I find meditation extremely useful as it helps bring awareness to what you’re feeling in the moment. As simple as it sounds, it’s actually really important because your mood determines the quality of your actions. Feeling really motivated and energized? Do the hardest and most important task on your list. Feeling scatterbrained and under the weather? Do simple and menial tasks instead.</p>
+
+<p>Aside from meditation helping with self-awareness, I find that it also helps with appreciating the moment. Worries about the past or the future are irrelevant because the present is only <em>what is</em>. That understanding brings peace of a mind and encourages just <em>being with it</em>.</p>
+
+<p>As a way to remind myself and others of this fact, I created an Android Wear app that sends reminders throughout the day to be present. Upon being reminded, you can then do your personal mindfulness practice or simply appreciate the moment. <a href="https://play.google.com/store/apps/details?id=chrisarriola.me.remind">Check it out</a>.</p>
+
+<p><img class="center" src="../images/remind.png" width="457" height="320"></p>
+
+<br />
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Deep Work]]></title>
@@ -548,19 +574,6 @@ Farewell, San Diego. You will be severely missed!
     <content type="html"><![CDATA[<a href="http://www.goodreads.com/book/show/12666695-i-was-blind-but-now-i-see" style="float:left;padding-right:20px;"><img alt="I Was Blind But Now I See" border="0" src="http://photo.goodreads.com/books/1316444777m/12666695.jpg" /></a><a href="http://www.goodreads.com/book/show/12666695-i-was-blind-but-now-i-see">I Was Blind But Now I See</a> by <a href="http://www.goodreads.com/author/show/740.James_Altucher">James Altucher</a><br />
 My rating: <a href="http://www.goodreads.com/review/show/243665584">4 of 5 stars</a><br /><br />
 Really fun to read and I found his writing style to be hilarious! If you read personal development books, there is no new principle/information you will learn here. If you internalize the concepts he writes about, however, it&#8217;s extremely liberating.
-<br /><br />
-<a href="http://www.goodreads.com/review/list/7114307-chris-arriola">View all my reviews</a>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Book Review: The Presentation of Self in Everyday Life]]></title>
-    <link href="http://chrisarriola.me/blog/2012/02/03/book-review-the-presentation-of-self-in-everyday-life/"/>
-    <updated>2012-02-03T00:00:00-08:00</updated>
-    <id>http://chrisarriola.me/blog/2012/02/03/book-review-the-presentation-of-self-in-everyday-life</id>
-    <content type="html"><![CDATA[<a href="http://www.goodreads.com/book/show/931984.The_Presentation_of_Self_in_Everyday_Life" style="float:left;padding-right:20px;"><img alt="The Presentation of Self in Everyday Life" border="0" src="http://photo.goodreads.com/books/1320487996m/931984.jpg" /></a><a href="http://www.goodreads.com/book/show/931984.The_Presentation_of_Self_in_Everyday_Life">The Presentation of Self in Everyday Life</a> by <a href="http://www.goodreads.com/author/show/149.Erving_Goffman">Erving Goffman</a><br />
-My rating: <a href="http://www.goodreads.com/review/show/243218045">4 of 5 stars</a><br /><br />
-I find that the analogy between performing on a stage and social interaction to be very accurate. Despite, however, all the contextual masks we wear in everyday life; actions, scripts, and facades put up by the wearer are still guided by one underlying principle: core values. Although not as emphasized in the book, Erving Goffman does a great job pointing this out.
 <br /><br />
 <a href="http://www.goodreads.com/review/list/7114307-chris-arriola">View all my reviews</a>
 ]]></content>

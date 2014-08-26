@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: mindfulness | Chris Arriola]]></title>
+  <link href="http://chrisarriola.me/blog/categories/mindfulness/atom.xml" rel="self"/>
+  <link href="http://chrisarriola.me/"/>
+  <updated>2014-08-26T07:48:24-07:00</updated>
+  <id>http://chrisarriola.me/</id>
+  <author>
+    <name><![CDATA[Chris Arriola]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Android Wear App: reMIND]]></title>
+    <link href="http://chrisarriola.me/blog/2014/08/24/remind/"/>
+    <updated>2014-08-24T13:29:55-07:00</updated>
+    <id>http://chrisarriola.me/blog/2014/08/24/remind</id>
+    <content type="html"><![CDATA[<h2>Pay attention.</h2>
+
+<p><img class="right" src="../images/procrastination.jpg" width="457" height="320"></p>
+
+<p>The statement above reminds us that being attentive costs something. To fully listen and be aware requires some level of deliberate focus.</p>
+
+<p>Given stimuli that constantly try to grab our attention, it’s kind of hard to do that.</p>
+
+<p>Recently, I’ve been meditating a lot and have been using apps like <a href="http://calm.com">Calm.com</a> and <a href="https://www.headspace.com/">Headspace</a>. I find meditation extremely useful as it helps bring awareness to what you’re feeling in the moment. As simple as it sounds, it’s actually really important because your mood determines the quality of your actions. Feeling really motivated and energized? Do the hardest and most important task on your list. Feeling scatterbrained and under the weather? Do simple and menial tasks instead.</p>
+
+<p>Aside from meditation helping with self-awareness, I find that it also helps with appreciating the moment. Worries about the past or the future are irrelevant because the present is only <em>what is</em>. That understanding brings peace of a mind and encourages just <em>being with it</em>.</p>
+
+<p>As a way to remind myself and others of this fact, I created an Android Wear app that sends reminders throughout the day to be present. Upon being reminded, you can then do your personal mindfulness practice or simply appreciate the moment. <a href="https://play.google.com/store/apps/details?id=chrisarriola.me.remind">Check it out</a>.</p>
+
+<p><img class="center" src="../images/remind.png" width="457" height="320"></p>
+
+<br />
+
+]]></content>
+  </entry>
+  
+</feed>

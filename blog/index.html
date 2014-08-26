@@ -101,6 +101,68 @@
   
 
 
+<i class="icon-calendar-empty"></i> <time datetime="2014-08-24T13:29:55-07:00" pubdate data-updated="true">Aug 24<span>th</span>, 2014</time></h5>
+          <div class="row-fluid">
+          
+          <a href="http://chrisarriola.me/blog/2014/08/24/remind/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/app,/"><span class="badge">app,</span></a>
+          
+          <a href="/blog/categories/mindfulness/"><span class="badge">mindfulness</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10 post-container">
+      <h1 class="link"><a href="/blog/2014/08/24/remind/">Android Wear App: reMIND</a></h1>
+      <h2>Pay attention.</h2>
+
+<p><img class="right" src="../images/procrastination.jpg" width="457" height="320"></p>
+
+<p>The statement above reminds us that being attentive costs something. To fully listen and be aware requires some level of deliberate focus.</p>
+
+<p>Given stimuli that constantly try to grab our attention, it’s kind of hard to do that.</p>
+
+<p>Recently, I’ve been meditating a lot and have been using apps like <a href="http://calm.com">Calm.com</a> and <a href="https://www.headspace.com/">Headspace</a>. I find meditation extremely useful as it helps bring awareness to what you’re feeling in the moment. As simple as it sounds, it’s actually really important because your mood determines the quality of your actions. Feeling really motivated and energized? Do the hardest and most important task on your list. Feeling scatterbrained and under the weather? Do simple and menial tasks instead.</p>
+
+<p>Aside from meditation helping with self-awareness, I find that it also helps with appreciating the moment. Worries about the past or the future are irrelevant because the present is only <em>what is</em>. That understanding brings peace of a mind and encourages just <em>being with it</em>.</p>
+
+<p>As a way to remind myself and others of this fact, I created an Android Wear app that sends reminders throughout the day to be present. Upon being reminded, you can then do your personal mindfulness practice or simply appreciate the moment. <a href="https://play.google.com/store/apps/details?id=chrisarriola.me.remind">Check it out</a>.</p>
+
+<p><img class="center" src="../images/remind.png" width="457" height="320"></p>
+
+<br />
+
+
+      
+      
+    </div>
+  </div>
+
+
+</article>
+
+
+    <article class="post">
+
+  <div class="row-fluid">
+    <div class="span2 post-meta">
+	  <h5 class="date-time">
+
+
+
+
+
+
+
+
+  
+
+
 <i class="icon-calendar-empty"></i> <time datetime="2014-01-17T20:19:00-08:00" pubdate data-updated="true">Jan 17<span>th</span>, 2014</time></h5>
           <div class="row-fluid">
           
@@ -723,77 +785,6 @@ If you&#8217;re a developer and would like to contribute to the project, please 
     <div class="span10 post-container">
       <h1 class="link"><a href="/blog/2012/05/30/incremental-goals/">Incremental Goals</a></h1>
       Check my post on the JOCC blog about setting <a href="http://wp.me/p1YHaV-3e">Incremental Goals</a>.
-
-      
-      
-    </div>
-  </div>
-
-
-</article>
-
-
-    <article class="post">
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
-
-
-
-
-
-
-
-
-  
-
-
-<i class="icon-calendar-empty"></i> <time datetime="2012-05-23T00:00:00-07:00" pubdate data-updated="true"></time></h5>
-          <div class="row-fluid">
-          
-          <a href="http://chrisarriola.me/blog/2012/05/23/optimizing-android-layouts/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/android/"><span class="badge">Android</span></a>
-          
-          <a href="/blog/categories/technology/"><span class="badge">Technology</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2012/05/23/optimizing-android-layouts/">Optimizing Android Layouts</a></h1>
-      I recently used the <strong>hierarchyviewer</strong> &amp; <strong>lint </strong>tool in the Android SDK and was pretty surprised with the results I saw. Many of the views I had were heavily nested and some views did not necessarily have to be inflated off the bat (progress indicators and refresh icons to name a few). As a result, my activity took a performance hit because of a badly designed layout.
-
-Here&#8217;s a technique I used that I picked up at AnDevCon III to flatten my layouts and in general make them more performant.
-<h3><strong>ViewStub</strong></h3>
-Essentially, ViewStub is a lightweight and cheap to inflate widget that you can include in a layout. Its purpose is basically to serve as a stub or placeholder for views that don&#8217;t necessarily need to be inflated on creation. For example, let&#8217;s say your app displays notifications on a SlidingDrawer; however, when there are no notifications, that SlidingDrawer should be hidden. What you can do then is create a ViewStub that points to your SlidingDrawer layout implementation and when notifications are present, you can simply inflate the ViewStub. Here&#8217;s an example taken from <a href="http://developer.android.com/resources/articles/layout-tricks-stubs.html">Android Developers</a> that displays the flattening of the view hierarchy using ViewStubs.
-
-Layout without ViewStub:
-
-[caption id=&#8221;attachment_341&#8221; align=&#8221;aligncenter&#8221; width=&#8221;510&#8221;]<a href="http://chrisarriola.files.wordpress.com/2012/05/viewstub41.png"><img class="size-full wp-image-341 " title="Layout Without ViewStub" src="http://chrisarriola.files.wordpress.com/2012/05/viewstub41.png" alt="" width="510" height="431" /></a> Layout Without ViewStub[/caption]
-
-Layout using ViewStub:
-
-[caption id=&#8221;attachment_342&#8221; align=&#8221;aligncenter&#8221; width=&#8221;468&#8221;]<a href="http://chrisarriola.files.wordpress.com/2012/05/viewstub3.png"><img class="size-full wp-image-342 " title="Layout With ViewStub" src="http://chrisarriola.files.wordpress.com/2012/05/viewstub3.png" alt="" width="468" height="476" /></a> Layout With ViewStub[/caption]
-
-The code for your layout:
-<blockquote>
-<pre><span style="color:#0000ff;">&lt;ViewStub</span>
-<span style="color:#ff00ff;">android:id</span>=<span style="color:#339966;">"@+id/stub_slidingdrawer"</span>
-<span style="color:#ff00ff;">android:layout</span>=<span style="color:#339966;">"@layout/slidingdrawer"</span>
-<span style="color:#ff00ff;">android:layout_width</span>=<span style="color:#339966;">"fill_parent"</span>
-<span style="color:#ff00ff;">android:layout_height</span>=<span style="color:#339966;">"wrap_content"</span>
-<span style="color:#0000ff;">/&gt;</span></pre>
-</blockquote>
-<span style="color:#0000ff;"><span style="color:#000000;">The code to inflate the ViewStub:</span></span>
-<blockquote><span style="color:#0000ff;"><span style="color:#000000;">ViewStub stub = (ViewStub) findViewById(R.id.<span style="color:#0000ff;"><em>stub_slidingdrawer</em></span>);</span>
-<span style="color:#000000;">View v = stub.inflate();</span> </span></blockquote>
-For my specific case, it took about half the time to inflate the entire layout tree by using a ViewStub for infrequently used child layouts. Pretty sweet.
 
       
       
