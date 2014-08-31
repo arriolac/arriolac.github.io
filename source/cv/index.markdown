@@ -7,7 +7,6 @@ footer: true
 ---
 
 ##Work Experience
-<br />
 __Co-Founder and Android Dev__, *Green Halo Labs (Jan. 2014 - Present)*
 
 We build Android apps.
@@ -35,7 +34,6 @@ __Tutor__, *Rutgers Learning Center (Oct. 2006 - Sept. 2007)*
 Tutored algebra, pre-calculus, basic caculus, honors calculus I, caculus I, II, III and physics. I was also assigned as the designated tutor for a pre-calculus class wherein I held office hours and posted homework solutions.
 <br />
 ##Professional Activities
-<br />
 __Director of mHealth Strategy__, *Global HEED - mHealth Team (Nov. 2010 - Present)*
 
 I'm currently volunteering to find an mHealth (mobile health) technology solution that would bring affordable and timely health services to regions of developing countries with poor healthcare access. At the moment, I'm assessing and investigating different technologies including SMS application frameworks, an Android-based telemedicine platform, and tele-consultation software on phones running Java ME.
@@ -53,7 +51,6 @@ __Open Source Contributor__, *Sana Mobile (Nov. 2010 - Present)*
 Pushing code to develop the Sana Mobile Android client.
 <br />
 ##Speaking/Teaching Events
-<br />
 __Android Workshop Instructor__, *Learning Android Development Meetup Group, San Francisco (March 2014)*
 
 __What to Expect as an Android Developer__, *Codepath, San Francisco (October 2013)*
@@ -63,13 +60,15 @@ __Introduction to Mobile Development__, *AngelHack, San Francisco (October 2013)
 __Evaluation, Management, and Monitoring, Innovations in Global Health Informatics__, _MIT (March 2013)_
 <br />
 ##Projects
-<br />
-__Napp, Android Application__ *(Feb. 2011 - March 2011)*
+__[reMIND](https://play.google.com/store/apps/details?id=chrisarriola.me.remind), Android Application__ *(Aug. 2014)*
+
+An app that reminds you to be present.
+
+__[Napp](https://play.google.com/store/apps/details?id=com.napp.napp), Android Application__ *(Feb. 2011 - March 2011)*
 
 Simple and convenient application for taking naps.
 <br />
 ##Education
-<br />
 __M.C.I.T. in Computer and Information Technology__ *(2010)
 University of Pennsylvania, Philadelphia, PA*
 
