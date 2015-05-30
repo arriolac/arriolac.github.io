@@ -10,7 +10,9 @@ footer: true
 
 Software Engineer at Operator.
 
-Previously an Android Developer Green Halo Labs, Edmodo and Software Engineer at HP.
+Android Dev Consultant.
+
+Previously at Edmodo and HP.
 
 Avid rock climber and loves all things fitness.
 
