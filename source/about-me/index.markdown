@@ -8,9 +8,9 @@ footer: true
 
 {% img left ../images/profile-picture.jpg 225 300 %}
 
-Co-Founder and Android Dev at Green Halo Labs.
+Software Engineer at Operator.
 
-Previously an Android Developer at Edmodo and Software Engineer at HP.
+Previously an Android Developer Green Halo Labs, Edmodo and Software Engineer at HP.
 
 Avid rock climber and loves all things fitness.
 
