@@ -7,9 +7,13 @@ footer: true
 ---
 
 ##Work Experience
-__Co-Founder and Android Dev__, *Green Halo Labs (Jan. 2014 - Present)*
+__Software Engineer__, *Operator (Jan. 2015 - Present)*
 
-We build Android apps.
+Building new experiences at [Operator](https://operator.com/).
+
+__Co-Founder and Android Dev__, *Green Halo Labs (Jan. 2014 - Dec. 2014)*
+
+Developed Android apps for [Leo](http://www.leo.co/), [Sprig](http://www.leo.co/), [Sincerely](https://sincerely.com/ink), and [Fluc](https://sincerely.com/ink).
 
 __Android Software Engineer__, *Edmodo (March 2012 - Jan. 2014)*
 
@@ -23,7 +27,7 @@ Worked on computer vision applications.
 
 __Technology Specialist__, *University of Pennsylvania - VPUL Technology (Jan. 2010 - Sept. 2010)*
 
-Provided help desk support and troubleshot a wide range of issues related to networking, software, and hardware.
+Technical support for a wide range of issues related to networking, software, and hardware.
 
 __Test Engineer__, *Zargis Medical (May 2009 - Aug. 2009)*
 
@@ -57,7 +61,7 @@ __What to Expect as an Android Developer__, *Codepath, San Francisco (October 20
 
 __Introduction to Mobile Development__, *AngelHack, San Francisco (October 2013)*
 
-__Evaluation, Management, and Monitoring, Innovations in Global Health Informatics__, _MIT (March 2013)_
+__Evaluation, Management, and Monitoring, Innovations in Global Health Informatics__, _Massachusetts Institute of Technology (March 2013)_
 <br />
 ##Projects
 __[reMIND](https://play.google.com/store/apps/details?id=chrisarriola.me.remind), Android Application__ *(Aug. 2014)*

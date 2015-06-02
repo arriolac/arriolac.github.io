@@ -6,7 +6,7 @@ sharing: true
 footer: true
 ---
 
-{% img left ../images/profile-picture.jpg 225 300 %}
+{% img left ../images/profile-picture2.png 250 375 %}
 
 Software Engineer at Operator.
 
