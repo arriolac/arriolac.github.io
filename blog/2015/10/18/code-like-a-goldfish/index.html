@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Android Wear App: reMIND - Chris Arriola</title>
+  <title>Code Like a Goldfish - Chris Arriola</title>
   <meta name="author" content="Chris Arriola">
 
    
@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://chrisarriola.me/blog/2014/08/24/remind">
+  <link rel="canonical" href="http://chrisarriola.me/blog/2015/10/18/code-like-a-goldfish">
   <link href="/favicon.png" rel="icon">
   <link href='http://fonts.googleapis.com/css?family=Quicksand:300,400' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
@@ -88,7 +88,7 @@
 
   <header>
   <div class="jumbotron">
-    Android Wear App: reMIND
+    Code Like a Goldfish
 	<h5>
 
 
@@ -101,29 +101,34 @@
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2014-08-24T13:29:55-07:00" pubdate data-updated="true">Aug 24<span>th</span>, 2014</time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2015-10-18T16:46:47-07:00" pubdate data-updated="true">Oct 18<span>th</span>, 2015</time></h5>
   </div>
 </header>
   <div class="row-fluid">
     <div class="span12">
-      <h2>Pay attention.</h2>
+      <p>There is an underlying hidden requirement in creating software products. It doesn&rsquo;t just have to &ldquo;work&rdquo;; it needs to be molded in such a way that it can be changed, maintained, and scaled easily.</p>
 
-<p><img class="right" src="http://chrisarriola.me/images/procrastination.jpg" width="457" height="320"></p>
+<p>Last month, I gave a talk addressing this topic to the 1st cohort at <a href="http://www.telegraphacademy.com/">Telegraph Academy</a>—an  immersive program that teaches underrepresented groups in tech on how to code. They were nearing their last week of the program so I thought it would be relevant to share some industry lessons.</p>
 
-<p>The statement above reminds us that being attentive costs something. To fully listen and be aware requires some level of deliberate focus.</p>
+<p><strong>TL;DR</strong></p>
 
-<p>Given stimuli that constantly try to grab our attention, it’s kind of hard to do that.</p>
+<ol>
+<li><p>Design early</p>
 
-<p>Recently, I’ve been meditating a lot and have been using apps like <a href="http://calm.com">Calm.com</a> and <a href="https://www.headspace.com/">Headspace</a>. I find meditation extremely useful as it helps bring awareness to what you’re feeling in the moment. As simple as it sounds, it’s actually really important because your mood determines the quality of your actions. Feeling really motivated and energized? Do the hardest and most important task on your list. Feeling scatterbrained and under the weather? Do simple and menial tasks instead.</p>
+<p> The biggest mistake beginners tend to make is not taking the time to think through the pros/cons of a software design. Designing early makes it easier to find flaws, it&rsquo;s much harder fixing those flaws once it&rsquo;s expressed in code.</p></li>
+<li><p>Don&rsquo;t over optimize</p>
 
-<p>Aside from meditation helping with self-awareness, I find that it also helps with appreciating the moment. Worries about the past or the future are irrelevant because the present is only <em>what is</em>. That understanding brings peace of a mind and encourages just <em>being with it</em>.</p>
+<p> This doesn&rsquo;t just apply to algorithms (e.g. trying to get O(n * log n) performance vs O(n<sup>2</sup>) on a small dataset), but it also applies to software design. Don&rsquo;t over-engineer or over-genericize a problem if it doesn&rsquo;t have to be.</p></li>
+<li><p>Don&rsquo;t repeat yourself (DRY)</p>
 
-<p>As a way to remind myself and others of this fact, I created an Android Wear app that sends reminders throughout the day to be present. Upon being reminded, you can then do your personal mindfulness practice or simply appreciate the moment. <a href="https://play.google.com/store/apps/details?id=chrisarriola.me.remind">Check it out</a>.</p>
+<p> Code repetition means if something needs to be changed/fixed, it needs to be changed in all parts of the code which is error-prone. Have one source of truth and abstract where appropriate.</p></li>
+<li><p>Think small</p>
 
-<p><img class="center" src="http://chrisarriola.me/images/remind.png" width="457" height="320"></p>
+<p> Smaller classes, methods, and files are easier to maintain.</p></li>
+</ol>
 
-<br />
 
+<p>Check out the slides <a href="https://speakerdeck.com/arriolac/code-like-a-goldfish">here</a>.</p>
 
     </div>
   </div>
@@ -142,9 +147,15 @@
 
 
 
-  <a href="/blog/categories/app,/"><span class="badge">app,</span></a>
+  <a href="/blog/categories/design/"><span class="badge">Design</span></a>
 
-  <a href="/blog/categories/mindfulness/"><span class="badge">mindfulness</span></a>
+  <a href="/blog/categories/design,/"><span class="badge">Design,</span></a>
+
+  <a href="/blog/categories/patterns,/"><span class="badge">Patterns,</span></a>
+
+  <a href="/blog/categories/software/"><span class="badge">Software</span></a>
+
+  <a href="/blog/categories/talks/"><span class="badge">Talks</span></a>
 
 
 
@@ -174,10 +185,8 @@
       <div class="span12">
         <p class="meta">
           
-            <a class="basic-alignment left" href="/blog/2014/01/17/deep-work/" title="Previous Post: Deep Work">&laquo; Deep Work</a>
+            <a class="basic-alignment left" href="/blog/2014/08/24/remind/" title="Previous Post: Android Wear App: reMIND">&laquo; Android Wear App: reMIND</a>
           
-          
-            <a class="basic-alignment right" href="/blog/2015/10/18/code-like-a-goldfish/" title="Next Post: Code Like a Goldfish">Code Like a Goldfish &raquo;</a>
           
         </p>
       </div>
@@ -215,8 +224,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://chrisarriola.me/blog/2014/08/24/remind/';
-        var disqus_url = 'http://chrisarriola.me/blog/2014/08/24/remind/';
+        var disqus_identifier = 'http://chrisarriola.me/blog/2015/10/18/code-like-a-goldfish/';
+        var disqus_url = 'http://chrisarriola.me/blog/2015/10/18/code-like-a-goldfish/';
         var disqus_script = 'embed.js';
       
     (function () {
