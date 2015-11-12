@@ -106,11 +106,21 @@
 </header>
   <div class="row-fluid">
     <div class="span12">
-      A pretty common UI design pattern for  ListViews on Android is displaying a loading footer for the dynamic loading of a list. It&#8217;s a pattern used by several well known apps - Twitter, Gmail and Instagram to mention a few - to display data without having to click a button to paginate through information. Essentially, as a user scrolls down to the end of a list, which indicates the end of the current page, a loading indicator is displayed at the footer of the list to notify the user that the list is in the process of populating more data.
+      <p>
+A pretty common UI design pattern for  ListViews on Android is displaying a loading footer for the dynamic loading of a list. It&#8217;s a pattern used by several well known apps - Twitter, Gmail and Instagram to mention a few - to display data without having to click a button to paginate through information. Essentially, as a user scrolls down to the end of a list, which indicates the end of the current page, a loading indicator is displayed at the footer of the list to notify the user that the list is in the process of populating more data.</p>
 
-[caption id=&#8221;attachment_389&#8221; align=&#8221;aligncenter&#8221; width=&#8221;510&#8221;]<a href="http://chrisarriola.files.wordpress.com/2012/06/dynamiclist.png"><img class="size-full wp-image-389" title="Dynamic List" src="http://chrisarriola.files.wordpress.com/2012/06/dynamiclist.png" alt="" width="510" height="340" /></a> Dynamic Loading of a List (<a href="http://www.androidpatterns.com/uap_pattern/dynamic-loading-of-a-list">http://www.androidpatterns.com/uap_pattern/dynamic-loading-of-a-list</a>)[/caption]
+<div style="text-align:center;">
+    <a href="http://chrisarriola.files.wordpress.com/2012/06/dynamiclist.png"><img class="size-full wp-image-389" title="Dynamic List" src="http://chrisarriola.files.wordpress.com/2012/06/dynamiclist.png" alt="" width="510" height="340" /></a> 
+</div>
 
+<div style="text-align:center;">
+    <a href="http://www.androidpatterns.com/uap_pattern/dynamic-loading-of-a-list">Dynamic Loading of a List</a>
+</div><br>
+
+<p>
 While playing around with this pattern, I was quite surprise how not-so-straightforward it was to implement this (then again, that&#8217;s programming for you). With that said, I&#8217;d like to share my implementation with you in case you&#8217;re trying to use this pattern in your application.
+</p>
+
 <h3>Trial 1</h3>
 The intuitive way to go about this is to (1) simply attach an Adapter with the first page of items to a ListView, (2) attach an OnScrollListener to detect if the bottom of the list has been reached, if so, (3) add a loading footer view to the list while retrieving more data, and when the retrieval process is done, remove the loading footer and (4) update the adapter with the recently pulled data.
 

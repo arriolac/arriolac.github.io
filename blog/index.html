@@ -496,17 +496,22 @@ Google introduced automatic support for <strong>ProGuard</strong>, a code obfusc
 Out of curiosity, I went ahead and did some reverse engineering on some popular apps (all have more than 1 million downloads on Google Play) that may contain user sensitive information and un/surprisingly, 10 out of 12 weren&#8217;t doing some sort of code obfuscation. I&#8217;m sharing in this post what and how I did that to point out 2 things: (1) how easy it is to reverse engineer an app, and (2) to increase awareness of the importance of security specifically code obfuscation.
 </p>
 
+<br />
 <h3>Methodology</h3>
+<br />
 
-My methodology was simple, in fact, a quick Google Search on &#8221;<em>Android Hacking</em>&#8221; should give anyone the tools to do this. Below are the steps:
+
+My methodology was simple, in fact, a quick Google Search on &#8221;<em>Android Hacking</em>&#8221; should give anyone the tools to do this. Below are the steps: <br /><br />
 <ol>
 	<li>Obtain the .apk files of the applications of interest by using <em>Astro File Manager</em>. Simply navigate to &#8220;tools&#8221; in the options menu, &#8220;Application Backup&#8221;, and then select all the apps you&#8217;re interested in. Once backup is perform, an image is obtained of the apps and the corresponding .apk files will be stored under your SD card&#8217;s <em>backups/</em> directory.</li>
 	<li>Unpack .apk file using <em>unzip</em>.</li>
 	<li>Disassemble compiled <em>classes.dex</em> file using <a title="smali/baksmali" href="http://code.google.com/p/smali/">baksmali</a>. This will generate tons of .smali files.</li>
 	<li>Perform static analysis on .smali files.</li>
 </ol>
+<br>
 For step 4, if an application does not have code obfuscation, then all static constant declarations can be read in plain text (<span style="color:#ff0000;">red flag</span>!). You can still take things a step further, for instance, by writing smali code and retracing your steps to create your own custom hacked-out app.
 
+<br /><br />
 <h3>Results</h3>
 
 Understanding <em>smali</em> code is pretty straightforward event without prior knowledge of the language especially when it comes to finding static member fields. Declared String values are human-readable.
@@ -518,23 +523,24 @@ Here are a few screen-shots of what I&#8217;ve found:
 <a href="http://chrisarriola.files.wordpress.com/2012/08/secret2.png"><img class="size-full wp-image-434" title="Key 2" src="http://chrisarriola.files.wordpress.com/2012/08/secret2.png" alt="" width="510" height="37" /></a> Fig. 2
 <a href="http://chrisarriola.files.wordpress.com/2012/08/secret3.png"><img class="size-full wp-image-433" title="Key 3" src="http://chrisarriola.files.wordpress.com/2012/08/secret3.png" alt="" width="510" height="26" /></a> Fig. 3
 <a href="http://chrisarriola.files.wordpress.com/2012/08/secret4.png"><img class="size-full wp-image-432" title="secret4" src="http://chrisarriola.files.wordpress.com/2012/08/secret4.png" alt="" width="510" height="16" /></a> Fig. 4
-<br />
 
+<br /> <br />
 <h3>Conclusion</h3>
+
 
 ProGuard creates drastic improvements in security. Here&#8217;s an example of how smali code would look like with ProGuard on vs. with ProGuard off.
 
 Say your <em>Activity </em>has a static member field <em>HACK_THIS</em>:<br />
 
-<a href="http://chrisarriola.files.wordpress.com/2012/08/java-code1.png"><img class="size-full wp-image-444" title="java-code" src="http://chrisarriola.files.wordpress.com/2012/08/java-code1.png" alt="" width="510" height="320" /></a> Fig. 5<br />
+<a href="http://chrisarriola.files.wordpress.com/2012/08/java-code1.png"><img class="size-full wp-image-444" title="java-code" src="http://chrisarriola.files.wordpress.com/2012/08/java-code1.png" alt="" width="510" height="320" /></a> Fig. 5<br /><br />
 
-When we disassemble the resulting .dex file without ProGuard enabled, we get this:
+When we disassemble the resulting .dex file without ProGuard enabled, we get this:<br /><br />
 
-<a href="http://chrisarriola.files.wordpress.com/2012/08/proguarded.png"><img class="size-full wp-image-442" title="ProGuarded" src="http://chrisarriola.files.wordpress.com/2012/08/proguarded.png" alt="" width="510" height="484" /></a> Fig. 6<br />
+<a href="http://chrisarriola.files.wordpress.com/2012/08/proguarded.png"><img class="size-full wp-image-442" title="ProGuarded" src="http://chrisarriola.files.wordpress.com/2012/08/proguarded.png" alt="" width="510" height="484" /></a> Fig. 6<br /><br />
 
-Whereas code obfuscation using ProGuard results in:
+Whereas code obfuscation using ProGuard results in: <br /><br />
 
-<a href="http://chrisarriola.files.wordpress.com/2012/08/proguarded1.png"><img class="aligncenter size-full wp-image-449" title="proguarded" src="http://chrisarriola.files.wordpress.com/2012/08/proguarded1.png" alt="" width="510" height="485" /></a><br />
+<a href="http://chrisarriola.files.wordpress.com/2012/08/proguarded1.png"><img class="aligncenter size-full wp-image-449" title="proguarded" src="http://chrisarriola.files.wordpress.com/2012/08/proguarded1.png" alt="" width="510" height="485" /></a><br /><br />
 
 From this comparison, you can observe the following: enabling ProGuard in this situation removes the human-readable static member field whereas disabling it leaves it in plain-text in smali assembly code. Although the content of the String gets copied wherever it is used in code as seen on line 39 in Figure 7, the context of what that String represents is virtually unknown. Again, a persistent hacker may deduce what that means through brute-force, but ProGuard increases the complexity of the task.
 
@@ -632,11 +638,21 @@ Great tutorial from mobile tuts+: <a href="http://mobile.tutsplus.com/tutorials
     </div>
     <div class="span10 post-container">
       <h1 class="link"><a href="/blog/2012/06/15/dynamic-data-with-listview-loading-footer/">Dynamic Data with ListView + Loading Footer</a></h1>
-      A pretty common UI design pattern for  ListViews on Android is displaying a loading footer for the dynamic loading of a list. It&#8217;s a pattern used by several well known apps - Twitter, Gmail and Instagram to mention a few - to display data without having to click a button to paginate through information. Essentially, as a user scrolls down to the end of a list, which indicates the end of the current page, a loading indicator is displayed at the footer of the list to notify the user that the list is in the process of populating more data.
+      <p>
+A pretty common UI design pattern for  ListViews on Android is displaying a loading footer for the dynamic loading of a list. It&#8217;s a pattern used by several well known apps - Twitter, Gmail and Instagram to mention a few - to display data without having to click a button to paginate through information. Essentially, as a user scrolls down to the end of a list, which indicates the end of the current page, a loading indicator is displayed at the footer of the list to notify the user that the list is in the process of populating more data.</p>
 
-[caption id=&#8221;attachment_389&#8221; align=&#8221;aligncenter&#8221; width=&#8221;510&#8221;]<a href="http://chrisarriola.files.wordpress.com/2012/06/dynamiclist.png"><img class="size-full wp-image-389" title="Dynamic List" src="http://chrisarriola.files.wordpress.com/2012/06/dynamiclist.png" alt="" width="510" height="340" /></a> Dynamic Loading of a List (<a href="http://www.androidpatterns.com/uap_pattern/dynamic-loading-of-a-list">http://www.androidpatterns.com/uap_pattern/dynamic-loading-of-a-list</a>)[/caption]
+<div style="text-align:center;">
+    <a href="http://chrisarriola.files.wordpress.com/2012/06/dynamiclist.png"><img class="size-full wp-image-389" title="Dynamic List" src="http://chrisarriola.files.wordpress.com/2012/06/dynamiclist.png" alt="" width="510" height="340" /></a> 
+</div>
 
+<div style="text-align:center;">
+    <a href="http://www.androidpatterns.com/uap_pattern/dynamic-loading-of-a-list">Dynamic Loading of a List</a>
+</div><br>
+
+<p>
 While playing around with this pattern, I was quite surprise how not-so-straightforward it was to implement this (then again, that&#8217;s programming for you). With that said, I&#8217;d like to share my implementation with you in case you&#8217;re trying to use this pattern in your application.
+</p>
+
 <h3>Trial 1</h3>
 The intuitive way to go about this is to (1) simply attach an Adapter with the first page of items to a ListView, (2) attach an OnScrollListener to detect if the bottom of the list has been reached, if so, (3) add a loading footer view to the list while retrieving more data, and when the retrieval process is done, remove the loading footer and (4) update the adapter with the recently pulled data.
 

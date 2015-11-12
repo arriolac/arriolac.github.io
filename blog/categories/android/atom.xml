@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Android | Chris Arriola]]></title>
   <link href="http://chrisarriola.me/blog/categories/android/atom.xml" rel="self"/>
   <link href="http://chrisarriola.me/"/>
-  <updated>2015-10-23T08:05:34-07:00</updated>
+  <updated>2015-11-12T00:10:37-08:00</updated>
   <id>http://chrisarriola.me/</id>
   <author>
     <name><![CDATA[Chris Arriola]]></name>
@@ -69,10 +69,16 @@ Out of curiosity, I went ahead and did some reverse engineering on some popular
 
 
 
+<br />
+
+
 <h3>Methodology</h3>
 
 
-<p>My methodology was simple, in fact, a quick Google Search on &ldquo;<em>Android Hacking</em>&rdquo; should give anyone the tools to do this. Below are the steps:</p>
+<br />
+
+
+<p>My methodology was simple, in fact, a quick Google Search on &ldquo;<em>Android Hacking</em>&rdquo; should give anyone the tools to do this. Below are the steps: <br /><br /></p>
 
 <ol>
     <li>Obtain the .apk files of the applications of interest by using <em>Astro File Manager</em>. Simply navigate to "tools" in the options menu, "Application Backup", and then select all the apps you're interested in. Once backup is perform, an image is obtained of the apps and the corresponding .apk files will be stored under your SD card's <em>backups/</em> directory.</li>
@@ -82,7 +88,13 @@ Out of curiosity, I went ahead and did some reverse engineering on some popular
 </ol>
 
 
+<br>
+
+
 <p>For step 4, if an application does not have code obfuscation, then all static constant declarations can be read in plain text (<span style="color:#ff0000;">red flag</span>!). You can still take things a step further, for instance, by writing smali code and retracing your steps to create your own custom hacked-out app.</p>
+
+<br /><br />
+
 
 <h3>Results</h3>
 
@@ -99,9 +111,7 @@ Out of curiosity, I went ahead and did some reverse engineering on some popular
 <a href="http://chrisarriola.files.wordpress.com/2012/08/secret3.png"><img class="size-full wp-image-433" title="Key 3" src="http://chrisarriola.files.wordpress.com/2012/08/secret3.png" alt="" width="510" height="26" /></a> Fig. 3
 <a href="http://chrisarriola.files.wordpress.com/2012/08/secret4.png"><img class="size-full wp-image-432" title="secret4" src="http://chrisarriola.files.wordpress.com/2012/08/secret4.png" alt="" width="510" height="16" /></a> Fig. 4</p>
 
-<br />
-
-
+<br /> <br />
 
 
 <h3>Conclusion</h3>
@@ -111,15 +121,15 @@ Out of curiosity, I went ahead and did some reverse engineering on some popular
 
 <p>Say your <em>Activity </em>has a static member field <em>HACK_THIS</em>:<br /></p>
 
-<p><a href="http://chrisarriola.files.wordpress.com/2012/08/java-code1.png"><img class="size-full wp-image-444" title="java-code" src="http://chrisarriola.files.wordpress.com/2012/08/java-code1.png" alt="" width="510" height="320" /></a> Fig. 5<br /></p>
+<p><a href="http://chrisarriola.files.wordpress.com/2012/08/java-code1.png"><img class="size-full wp-image-444" title="java-code" src="http://chrisarriola.files.wordpress.com/2012/08/java-code1.png" alt="" width="510" height="320" /></a> Fig. 5<br /><br /></p>
 
-<p>When we disassemble the resulting .dex file without ProGuard enabled, we get this:</p>
+<p>When we disassemble the resulting .dex file without ProGuard enabled, we get this:<br /><br /></p>
 
-<p><a href="http://chrisarriola.files.wordpress.com/2012/08/proguarded.png"><img class="size-full wp-image-442" title="ProGuarded" src="http://chrisarriola.files.wordpress.com/2012/08/proguarded.png" alt="" width="510" height="484" /></a> Fig. 6<br /></p>
+<p><a href="http://chrisarriola.files.wordpress.com/2012/08/proguarded.png"><img class="size-full wp-image-442" title="ProGuarded" src="http://chrisarriola.files.wordpress.com/2012/08/proguarded.png" alt="" width="510" height="484" /></a> Fig. 6<br /><br /></p>
 
-<p>Whereas code obfuscation using ProGuard results in:</p>
+<p>Whereas code obfuscation using ProGuard results in: <br /><br /></p>
 
-<p><a href="http://chrisarriola.files.wordpress.com/2012/08/proguarded1.png"><img class="aligncenter size-full wp-image-449" title="proguarded" src="http://chrisarriola.files.wordpress.com/2012/08/proguarded1.png" alt="" width="510" height="485" /></a><br /></p>
+<p><a href="http://chrisarriola.files.wordpress.com/2012/08/proguarded1.png"><img class="aligncenter size-full wp-image-449" title="proguarded" src="http://chrisarriola.files.wordpress.com/2012/08/proguarded1.png" alt="" width="510" height="485" /></a><br /><br /></p>
 
 <p>From this comparison, you can observe the following: enabling ProGuard in this situation removes the human-readable static member field whereas disabling it leaves it in plain-text in smali assembly code. Although the content of the String gets copied wherever it is used in code as seen on line 39 in Figure 7, the context of what that String represents is virtually unknown. Again, a persistent hacker may deduce what that means through brute-force, but ProGuard increases the complexity of the task.</p>
 
@@ -145,11 +155,35 @@ Out of curiosity, I went ahead and did some reverse engineering on some popular
     <link href="http://chrisarriola.me/blog/2012/06/15/dynamic-data-with-listview-loading-footer/"/>
     <updated>2012-06-15T00:00:00-07:00</updated>
     <id>http://chrisarriola.me/blog/2012/06/15/dynamic-data-with-listview-loading-footer</id>
-    <content type="html"><![CDATA[<p>A pretty common UI design pattern for  ListViews on Android is displaying a loading footer for the dynamic loading of a list. It&rsquo;s a pattern used by several well known apps &ndash; Twitter, Gmail and Instagram to mention a few &ndash; to display data without having to click a button to paginate through information. Essentially, as a user scrolls down to the end of a list, which indicates the end of the current page, a loading indicator is displayed at the footer of the list to notify the user that the list is in the process of populating more data.</p>
+    <content type="html"><![CDATA[<p>
+A pretty common UI design pattern for  ListViews on Android is displaying a loading footer for the dynamic loading of a list. It's a pattern used by several well known apps - Twitter, Gmail and Instagram to mention a few - to display data without having to click a button to paginate through information. Essentially, as a user scrolls down to the end of a list, which indicates the end of the current page, a loading indicator is displayed at the footer of the list to notify the user that the list is in the process of populating more data.</p>
 
-<p>[caption id=&ldquo;attachment_389&rdquo; align=&ldquo;aligncenter&rdquo; width=&ldquo;510&rdquo;]<a href="http://chrisarriola.files.wordpress.com/2012/06/dynamiclist.png"><img class="size-full wp-image-389" title="Dynamic List" src="http://chrisarriola.files.wordpress.com/2012/06/dynamiclist.png" alt="" width="510" height="340" /></a> Dynamic Loading of a List (<a href="http://www.androidpatterns.com/uap_pattern/dynamic-loading-of-a-list"><a href="http://www.androidpatterns.com/uap_pattern/dynamic-loading-of-a-list">http://www.androidpatterns.com/uap_pattern/dynamic-loading-of-a-list</a></a>)[/caption]</p>
 
-<p>While playing around with this pattern, I was quite surprise how not-so-straightforward it was to implement this (then again, that&rsquo;s programming for you). With that said, I&rsquo;d like to share my implementation with you in case you&rsquo;re trying to use this pattern in your application.</p>
+
+
+<div style="text-align:center;">
+    <a href="http://chrisarriola.files.wordpress.com/2012/06/dynamiclist.png"><img class="size-full wp-image-389" title="Dynamic List" src="http://chrisarriola.files.wordpress.com/2012/06/dynamiclist.png" alt="" width="510" height="340" /></a> 
+</div>
+
+
+
+
+<div style="text-align:center;">
+    <a href="http://www.androidpatterns.com/uap_pattern/dynamic-loading-of-a-list">Dynamic Loading of a List</a>
+</div>
+
+
+<br>
+
+
+
+
+<p>
+While playing around with this pattern, I was quite surprise how not-so-straightforward it was to implement this (then again, that's programming for you). With that said, I'd like to share my implementation with you in case you're trying to use this pattern in your application.
+</p>
+
+
+
 
 <h3>Trial 1</h3>
 
