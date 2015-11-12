@@ -37,17 +37,22 @@ Google introduced automatic support for <strong>ProGuard</strong>, a code obfusc
 Out of curiosity, I went ahead and did some reverse engineering on some popular apps (all have more than 1 million downloads on Google Play) that may contain user sensitive information and un/surprisingly, 10 out of 12 weren't doing some sort of code obfuscation. I'm sharing in this post what and how I did that to point out 2 things: (1) how easy it is to reverse engineer an app, and (2) to increase awareness of the importance of security specifically code obfuscation.
 </p>
 
+<br />
 <h3>Methodology</h3>
+<br />
 
-My methodology was simple, in fact, a quick Google Search on "<em>Android Hacking</em>" should give anyone the tools to do this. Below are the steps:
+
+My methodology was simple, in fact, a quick Google Search on "<em>Android Hacking</em>" should give anyone the tools to do this. Below are the steps: <br /><br />
 <ol>
 	<li>Obtain the .apk files of the applications of interest by using <em>Astro File Manager</em>. Simply navigate to "tools" in the options menu, "Application Backup", and then select all the apps you're interested in. Once backup is perform, an image is obtained of the apps and the corresponding .apk files will be stored under your SD card's <em>backups/</em> directory.</li>
 	<li>Unpack .apk file using <em>unzip</em>.</li>
 	<li>Disassemble compiled <em>classes.dex</em> file using <a title="smali/baksmali" href="http://code.google.com/p/smali/">baksmali</a>. This will generate tons of .smali files.</li>
 	<li>Perform static analysis on .smali files.</li>
 </ol>
+<br>
 For step 4, if an application does not have code obfuscation, then all static constant declarations can be read in plain text (<span style="color:#ff0000;">red flag</span>!). You can still take things a step further, for instance, by writing smali code and retracing your steps to create your own custom hacked-out app.
 
+<br /><br />
 <h3>Results</h3>
 
 Understanding <em>smali</em> code is pretty straightforward event without prior knowledge of the language especially when it comes to finding static member fields. Declared String values are human-readable.
@@ -59,23 +64,24 @@ Here are a few screen-shots of what I've found:
 <a href="http://chrisarriola.files.wordpress.com/2012/08/secret2.png"><img class="size-full wp-image-434" title="Key 2" src="http://chrisarriola.files.wordpress.com/2012/08/secret2.png" alt="" width="510" height="37" /></a> Fig. 2
 <a href="http://chrisarriola.files.wordpress.com/2012/08/secret3.png"><img class="size-full wp-image-433" title="Key 3" src="http://chrisarriola.files.wordpress.com/2012/08/secret3.png" alt="" width="510" height="26" /></a> Fig. 3
 <a href="http://chrisarriola.files.wordpress.com/2012/08/secret4.png"><img class="size-full wp-image-432" title="secret4" src="http://chrisarriola.files.wordpress.com/2012/08/secret4.png" alt="" width="510" height="16" /></a> Fig. 4
-<br />
 
+<br /> <br />
 <h3>Conclusion</h3>
+
 
 ProGuard creates drastic improvements in security. Here's an example of how smali code would look like with ProGuard on vs. with ProGuard off.
 
 Say your <em>Activity </em>has a static member field <em>HACK_THIS</em>:<br />
 
-<a href="http://chrisarriola.files.wordpress.com/2012/08/java-code1.png"><img class="size-full wp-image-444" title="java-code" src="http://chrisarriola.files.wordpress.com/2012/08/java-code1.png" alt="" width="510" height="320" /></a> Fig. 5<br />
+<a href="http://chrisarriola.files.wordpress.com/2012/08/java-code1.png"><img class="size-full wp-image-444" title="java-code" src="http://chrisarriola.files.wordpress.com/2012/08/java-code1.png" alt="" width="510" height="320" /></a> Fig. 5<br /><br />
 
-When we disassemble the resulting .dex file without ProGuard enabled, we get this:
+When we disassemble the resulting .dex file without ProGuard enabled, we get this:<br /><br />
 
-<a href="http://chrisarriola.files.wordpress.com/2012/08/proguarded.png"><img class="size-full wp-image-442" title="ProGuarded" src="http://chrisarriola.files.wordpress.com/2012/08/proguarded.png" alt="" width="510" height="484" /></a> Fig. 6<br />
+<a href="http://chrisarriola.files.wordpress.com/2012/08/proguarded.png"><img class="size-full wp-image-442" title="ProGuarded" src="http://chrisarriola.files.wordpress.com/2012/08/proguarded.png" alt="" width="510" height="484" /></a> Fig. 6<br /><br />
 
-Whereas code obfuscation using ProGuard results in:
+Whereas code obfuscation using ProGuard results in: <br /><br />
 
-<a href="http://chrisarriola.files.wordpress.com/2012/08/proguarded1.png"><img class="aligncenter size-full wp-image-449" title="proguarded" src="http://chrisarriola.files.wordpress.com/2012/08/proguarded1.png" alt="" width="510" height="485" /></a><br />
+<a href="http://chrisarriola.files.wordpress.com/2012/08/proguarded1.png"><img class="aligncenter size-full wp-image-449" title="proguarded" src="http://chrisarriola.files.wordpress.com/2012/08/proguarded1.png" alt="" width="510" height="485" /></a><br /><br />
 
 From this comparison, you can observe the following: enabling ProGuard in this situation removes the human-readable static member field whereas disabling it leaves it in plain-text in smali assembly code. Although the content of the String gets copied wherever it is used in code as seen on line 39 in Figure 7, the context of what that String represents is virtually unknown. Again, a persistent hacker may deduce what that means through brute-force, but ProGuard increases the complexity of the task.
 
