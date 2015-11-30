@@ -8,12 +8,8 @@ footer: true
 
 {% img left ../images/profile-picture2.png 250 375 %}
 
-Software Engineer at Operator.
+Hi, I'm Chris.
 
-Android Dev Consultant.
+I'm an **Android Developer** currently working as a fullstack engineer at [Operator](www.operator.com). I'm passionate about creating beautiful mobile experiences that reach a global audience.
 
-Previously at Edmodo and HP.
-
-Avid rock climber and loves all things fitness.
-
-Life-long learner.
+When I'm not coding, you can find me climbing, cycling, or taking a nap.
