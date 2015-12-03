@@ -9,7 +9,7 @@
   <meta name="author" content="Chris Arriola">
 
    
-  <meta name="description" content="">
+  <meta name="description" content="This is a test.">
   
   <meta name="keywords" content="">
 
@@ -117,29 +117,81 @@
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2012-02-13T00:00:00-08:00" pubdate data-updated="true"></time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2012-08-31T00:00:00-07:00" pubdate data-updated="true"></time></h5>
           <div class="row-fluid">
           
-          <a href="http://chrisarriola.me/blog/2012/02/13/book-review-i-was-blind-but-now-i-see/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
+          <a href="http://chrisarriola.me/blog/2012/08/31/android-security-part-1-reverse-engineering-android-apps/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
           
           </div>
           
           <div class="row-fluid">
           
-          <a href="/blog/categories/books/"><span class="badge">Books</span></a>
+          <a href="/blog/categories/android/"><span class="badge">Android</span></a>
           
-          <a href="/blog/categories/personal-development/"><span class="badge">Personal Development</span></a>
+          <a href="/blog/categories/programming-tutorials/"><span class="badge">Programming Tutorials</span></a>
           
           </div>
           
     </div>
     <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2012/02/13/book-review-i-was-blind-but-now-i-see/">Book Review: I Was Blind But Now I See</a></h1>
-      <a href="http://www.goodreads.com/book/show/12666695-i-was-blind-but-now-i-see" style="float:left;padding-right:20px;"><img alt="I Was Blind But Now I See" border="0" src="http://photo.goodreads.com/books/1316444777m/12666695.jpg" /></a><a href="http://www.goodreads.com/book/show/12666695-i-was-blind-but-now-i-see">I Was Blind But Now I See</a> by <a href="http://www.goodreads.com/author/show/740.James_Altucher">James Altucher</a><br />
-My rating: <a href="http://www.goodreads.com/review/show/243665584">4 of 5 stars</a><br /><br />
-Really fun to read and I found his writing style to be hilarious! If you read personal development books, there is no new principle/information you will learn here. If you internalize the concepts he writes about, however, it&#8217;s extremely liberating.
+      <h1 class="link"><a href="/blog/2012/08/31/android-security-part-1-reverse-engineering-android-apps/">Android Security Part 1 - Reverse Engineering Android Apps</a></h1>
+      <p>
+Google introduced automatic support for <strong>ProGuard</strong>, a code obfuscation tool, in ADT as early as December 2010 in version 8.0.0. It is integrated into the build system to make code obfuscation a pretty &#8220;straightforward&#8221; process. Since then, Google has encouraged—albeit not proactively—developers to enable ProGuard to prevent hackers from reverse engineering and hacking applications. Despite enabling ProGuard, however, a very persistent hacker may still be able to reverse engineer a ProGuard-ed application but the task becomes exponentially harder. There are other good practices developers should abide by to ensure a secure app, but code obfuscation should always be the first line of defense (more information on code obfuscation on Android <a title="ProGuard" href="http://android-developers.blogspot.com/2010/09/proguard-android-and-licensing-server.html">here</a> and <a title="ProGuard 2" href="http://android-developers.blogspot.com/2010/09/securing-android-lvl-applications.html">here</a>).
+
+Out of curiosity, I went ahead and did some reverse engineering on some popular apps (all have more than 1 million downloads on Google Play) that may contain user sensitive information and un/surprisingly, 10 out of 12 weren&#8217;t doing some sort of code obfuscation. I&#8217;m sharing in this post what and how I did that to point out 2 things: (1) how easy it is to reverse engineer an app, and (2) to increase awareness of the importance of security specifically code obfuscation.
+</p>
+
+<br />
+<h3>Methodology</h3>
+<br />
+
+
+My methodology was simple, in fact, a quick Google Search on &#8221;<em>Android Hacking</em>&#8221; should give anyone the tools to do this. Below are the steps: <br /><br />
+<ol>
+	<li>Obtain the .apk files of the applications of interest by using <em>Astro File Manager</em>. Simply navigate to &#8220;tools&#8221; in the options menu, &#8220;Application Backup&#8221;, and then select all the apps you&#8217;re interested in. Once backup is perform, an image is obtained of the apps and the corresponding .apk files will be stored under your SD card&#8217;s <em>backups/</em> directory.</li>
+	<li>Unpack .apk file using <em>unzip</em>.</li>
+	<li>Disassemble compiled <em>classes.dex</em> file using <a title="smali/baksmali" href="http://code.google.com/p/smali/">baksmali</a>. This will generate tons of .smali files.</li>
+	<li>Perform static analysis on .smali files.</li>
+</ol>
+<br>
+For step 4, if an application does not have code obfuscation, then all static constant declarations can be read in plain text (<span style="color:#ff0000;">red flag</span>!). You can still take things a step further, for instance, by writing smali code and retracing your steps to create your own custom hacked-out app.
+
 <br /><br />
-<a href="http://www.goodreads.com/review/list/7114307-chris-arriola">View all my reviews</a>
+<h3>Results</h3>
+
+Understanding <em>smali</em> code is pretty straightforward event without prior knowledge of the language especially when it comes to finding static member fields. Declared String values are human-readable.
+
+Here are a few screen-shots of what I&#8217;ve found:
+
+<br />
+<a href="http://chrisarriola.files.wordpress.com/2012/08/secret.png"><img class="size-full wp-image-435" title="Key 1" src="http://chrisarriola.files.wordpress.com/2012/08/secret.png" alt="" width="510" height="22" /></a> Fig. 1
+<a href="http://chrisarriola.files.wordpress.com/2012/08/secret2.png"><img class="size-full wp-image-434" title="Key 2" src="http://chrisarriola.files.wordpress.com/2012/08/secret2.png" alt="" width="510" height="37" /></a> Fig. 2
+<a href="http://chrisarriola.files.wordpress.com/2012/08/secret3.png"><img class="size-full wp-image-433" title="Key 3" src="http://chrisarriola.files.wordpress.com/2012/08/secret3.png" alt="" width="510" height="26" /></a> Fig. 3
+<a href="http://chrisarriola.files.wordpress.com/2012/08/secret4.png"><img class="size-full wp-image-432" title="secret4" src="http://chrisarriola.files.wordpress.com/2012/08/secret4.png" alt="" width="510" height="16" /></a> Fig. 4
+
+<br /> <br />
+<h3>Conclusion</h3>
+
+
+ProGuard creates drastic improvements in security. Here&#8217;s an example of how smali code would look like with ProGuard on vs. with ProGuard off.
+
+Say your <em>Activity </em>has a static member field <em>HACK_THIS</em>:<br />
+
+<a href="http://chrisarriola.files.wordpress.com/2012/08/java-code1.png"><img class="size-full wp-image-444" title="java-code" src="http://chrisarriola.files.wordpress.com/2012/08/java-code1.png" alt="" width="510" height="320" /></a> Fig. 5<br /><br />
+
+When we disassemble the resulting .dex file without ProGuard enabled, we get this:<br /><br />
+
+<a href="http://chrisarriola.files.wordpress.com/2012/08/proguarded.png"><img class="size-full wp-image-442" title="ProGuarded" src="http://chrisarriola.files.wordpress.com/2012/08/proguarded.png" alt="" width="510" height="484" /></a> Fig. 6<br /><br />
+
+Whereas code obfuscation using ProGuard results in: <br /><br />
+
+<a href="http://chrisarriola.files.wordpress.com/2012/08/proguarded1.png"><img class="aligncenter size-full wp-image-449" title="proguarded" src="http://chrisarriola.files.wordpress.com/2012/08/proguarded1.png" alt="" width="510" height="485" /></a><br /><br />
+
+From this comparison, you can observe the following: enabling ProGuard in this situation removes the human-readable static member field whereas disabling it leaves it in plain-text in smali assembly code. Although the content of the String gets copied wherever it is used in code as seen on line 39 in Figure 7, the context of what that String represents is virtually unknown. Again, a persistent hacker may deduce what that means through brute-force, but ProGuard increases the complexity of the task.
+
+#####
+
+Any tips on how to create a secure Android app? Leave a comment below!
 
       
       
@@ -171,27 +223,27 @@ Really fun to read and I found his writing style to be hilarious! If you read pe
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2012-02-03T00:00:00-08:00" pubdate data-updated="true"></time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2012-07-18T00:00:00-07:00" pubdate data-updated="true"></time></h5>
           <div class="row-fluid">
           
-          <a href="http://chrisarriola.me/blog/2012/02/03/book-review-the-presentation-of-self-in-everyday-life/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
+          <a href="http://chrisarriola.me/blog/2012/07/18/android-capture-and-crop-an-image/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
           
           </div>
           
           <div class="row-fluid">
           
-          <a href="/blog/categories/books/"><span class="badge">Books</span></a>
+          <a href="/blog/categories/android/"><span class="badge">Android</span></a>
+          
+          <a href="/blog/categories/programming-tutorials/"><span class="badge">Programming Tutorials</span></a>
           
           </div>
           
     </div>
     <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2012/02/03/book-review-the-presentation-of-self-in-everyday-life/">Book Review: The Presentation of Self in Everyday Life</a></h1>
-      <a href="http://www.goodreads.com/book/show/931984.The_Presentation_of_Self_in_Everyday_Life" style="float:left;padding-right:20px;"><img alt="The Presentation of Self in Everyday Life" border="0" src="http://photo.goodreads.com/books/1320487996m/931984.jpg" /></a><a href="http://www.goodreads.com/book/show/931984.The_Presentation_of_Self_in_Everyday_Life">The Presentation of Self in Everyday Life</a> by <a href="http://www.goodreads.com/author/show/149.Erving_Goffman">Erving Goffman</a><br />
-My rating: <a href="http://www.goodreads.com/review/show/243218045">4 of 5 stars</a><br /><br />
-I find that the analogy between performing on a stage and social interaction to be very accurate. Despite, however, all the contextual masks we wear in everyday life; actions, scripts, and facades put up by the wearer are still guided by one underlying principle: core values. Although not as emphasized in the book, Erving Goffman does a great job pointing this out.
-<br /><br />
-<a href="http://www.goodreads.com/review/list/7114307-chris-arriola">View all my reviews</a>
+      <h1 class="link"><a href="/blog/2012/07/18/android-capture-and-crop-an-image/">Android: Capture and Crop an Image</a></h1>
+      One line: Intent cropIntent = <span style="color:#3366ff;"><strong>new</strong></span> Intent(<span style="color:#0000ff;">&#8220;com.android.camera.action.CROP&#8221;</span>);
+
+Great tutorial from mobile tuts+: <a href="http://mobile.tutsplus.com/tutorials/android/capture-and-crop-an-image-with-the-device-camera/">http://mobile.tutsplus.com/tutorials/android/capture-and-crop-an-image-with-the-device-camera/</a>
 
       
       
@@ -223,405 +275,160 @@ I find that the analogy between performing on a stage and social interaction to 
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2012-01-22T00:00:00-08:00" pubdate data-updated="true"></time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2012-06-15T00:00:00-07:00" pubdate data-updated="true"></time></h5>
           <div class="row-fluid">
           
-          <a href="http://chrisarriola.me/blog/2012/01/22/the-lean-startup-review/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
+          <a href="http://chrisarriola.me/blog/2012/06/15/dynamic-data-with-listview-loading-footer/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
           
           </div>
           
           <div class="row-fluid">
           
-          <a href="/blog/categories/books/"><span class="badge">Books</span></a>
+          <a href="/blog/categories/android/"><span class="badge">Android</span></a>
           
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2012/01/22/the-lean-startup-review/">Book Review: The Lean Startup</a></h1>
-      <a style="float:left;padding-right:20px;" href="http://www.goodreads.com/book/show/10127019-the-lean-startup"><img src="http://photo.goodreads.com/books/1320411464m/10127019.jpg" alt="The Lean Startup: How Today's Entrepreneurs Use Continuous Innovation to Create Radically Successful Businesses" border="0" /></a><a href="http://www.goodreads.com/book/show/10127019-the-lean-startup">The Lean Startup: How Today&#8217;s Entrepreneurs Use Continuous Innovation to Create Radically Successful Businesses</a> by <a href="http://www.goodreads.com/author/show/278960.Eric_Ries">Eric Ries</a>
-My rating: <a href="http://www.goodreads.com/review/show/243192342">5 of 5 stars</a>
-
-It was such a great read! Eric&#8217;s methodology fits perfectly with human behavior.
-
-<a href="http://www.goodreads.com/review/list/7114307-chris-arriola">View all my reviews</a>
-
-      
-      
-    </div>
-  </div>
-
-
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
-
-
-
-
-
-
-
-
-  
-
-
-<i class="icon-calendar-empty"></i> <time datetime="2011-11-22T00:00:00-08:00" pubdate data-updated="true"></time></h5>
-          <div class="row-fluid">
-          
-          <a href="http://chrisarriola.me/blog/2011/11/22/stepping-up/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/personal-development/"><span class="badge">Personal Development</span></a>
-          
-          <a href="/blog/categories/quotes/"><span class="badge">Quotes</span></a>
+          <a href="/blog/categories/programming-tutorials/"><span class="badge">Programming Tutorials</span></a>
           
           </div>
           
     </div>
     <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2011/11/22/stepping-up/">Stepping Up!</a></h1>
-      <blockquote>
-<p style="text-align:center;"><a href="http://chrisarriola.files.wordpress.com/2011/11/img_20111106_180953.jpg"><img class="aligncenter size-medium wp-image-215" title="UPW-2011" src="http://chrisarriola.files.wordpress.com/2011/11/img_20111106_180953.jpg?w=300" alt="" width="300" height="224" /></a></p>
-<p style="text-align:center;">&#8220;<strong>Step Up and Set a New Standard!</strong>&#8221;</p>
-</blockquote>
+      <h1 class="link"><a href="/blog/2012/06/15/dynamic-data-with-listview-loading-footer/">Dynamic Data with ListView + Loading Footer</a></h1>
+      <p>
+A pretty common UI design pattern for  ListViews on Android is displaying a loading footer for the dynamic loading of a list. It&#8217;s a pattern used by several well known apps - Twitter, Gmail and Instagram to mention a few - to display data without having to click a button to paginate through information. Essentially, as a user scrolls down to the end of a list, which indicates the end of the current page, a loading indicator is displayed at the footer of the list to notify the user that the list is in the process of populating more data.</p>
 
-      
-      
-    </div>
-  </div>
-
-
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
-
-
-
-
-
-
-
-
-  
-
-
-<i class="icon-calendar-empty"></i> <time datetime="2011-10-31T00:00:00-07:00" pubdate data-updated="true"></time></h5>
-          <div class="row-fluid">
-          
-          <a href="http://chrisarriola.me/blog/2011/10/31/halloween-and-superpowers/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/personal-development/"><span class="badge">Personal Development</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2011/10/31/halloween-and-superpowers/">Halloween and Superpowers</a></h1>
-      <div>When we were kids, my sister and I would be glued to the television any time Power Rangers would come on. We were absolutely obsessed with that show and couldn&#8217;t comprehend why it didn&#8217;t play on every channel, 24/7. We role played a lot: I was the Green Ranger (I frequently whistled the dragonzord dagger call), and she was the Pink Ranger. We speculated often about what&#8217;ll happen in the next episode (it wasn&#8217;t hard to figure out since the plot was always the same), and we often would bust out out a &#8220;Morphin&#8217; Time!&#8221;
-
-[caption id=&#8221;attachment_212&#8221; align=&#8221;aligncenter&#8221; width=&#8221;300&#8221; caption=&#8221;Power Rangers&#8221;]<a href="http://chrisarriola.files.wordpress.com/2011/10/powerrangerspowerrangersmmpr.jpg"><img class="size-medium wp-image-212" title="Power Rangers" src="http://chrisarriola.files.wordpress.com/2011/10/powerrangerspowerrangersmmpr.jpg?w=300&h=271" alt="" width="300" height="271" /></a>[/caption]
-
-Those were the days&#8230;
-
-Looking back at that experience, what amused us the most wasn&#8217;t the multi-colored spandexes nor the biker helmets—it was the concept of superpowers that caught our imagination. Here were six normal folks that functioned in society the same way you and I would, but when they would morph, they would transform into superheroes—people capable of doing things that an average person cannot do. This concept impressed upon us the idea that possessing such traits can potentially change the world for the better (assuming we&#8217;re talking about a good guy, of course). This fascination even extended beyond Power Rangers. We idolized Marvel superheroes, Street Fighter and Mortal Kombat characters, dinosaurs (I know they&#8217;re not superheroes, but we frikin&#8217; love dinosaurs!), etc. Powers such as superhuman strength/intelligence, x-ray vision, spirit balls; these were all intriguing to our imaginative,  overloaded-with-sugar minds. Like a lot of other kids, we believed that one day we too will discover our superpower. However, as the years progressed, and learned a bit of something called science, reality hit us hard. We gradually came to the realization that what we were seeking would never be found. We thought to ourselves, &#8220;it&#8217;s impossible&#8230;&#8221;
-
-Just yesterday while debating if I should dress up for Halloween, I wondered: &#8220;do I still believe in superpowers?&#8221; In the fictional sense of the word, I hold firm to the belief that superpowers illustrated in TV, games, and comic books are impossible (with a confidence level of 99.99%—left 0.01% to save me from the embarrassment in case someone proves me wrong). However, if we define superpowers as the uncanny ability of a person to achieve a seemingly impossible task, I would say absolutely; I believe in superpowers with 100% certainty.
-
-Although real-life superpowers don&#8217;t consist of 3 minute upward flying kicks, they seem to share some similarities to the superpowers we all admire in science fiction—<strong>they defy what seems impossible</strong>. The fortunate few who possess such powers are admired and idolized by many. Their range of influence extends throughout the globe; we read about them in the news, we hear about them on the radio, we watch them on TV, and we even see them in real life!
-
-So, who are they?
-
-Modern superheroes are the &#8220;self-made&#8221; men and women of society, they are the non-conformists: leaders, entrepreneurs, scholars—people who stand for what they believe in. They are in constant motion and they direct their future with the same skill a world-class captain of a vessel would. They excel in hardships and shine in any condition, no matter how out of their control those conditions may be. Looking at their status may be intimidating to some and it can easily be deduced that these people are simply &#8220;born that way.&#8221; But is this necessarily the case? What if we entertain the converse—that superpowers are made through time—and suppose that there is an underlying perceptual framework shared amongst these heroes. Can we draw the conclusion that anyone who adapts this framework can achieve superpower-dom? Intuitively, the answer would be yes; however, the question becomes: what is this framework? And how can it be adapted?
-
-I believe the answer lies in a little something called personal development.
-
-In our own unique way, we all possess superpowers. For some, they lie dormant awaiting to be woken up, for others, they are effortlessly expressed. In the same way that a superhero must train to maximize his/her powers, we too must train to  maximize, and sometimes discover, our powers. It doesn&#8217;t mean we should start bench pressing 2 tons or start training in a <a href="http://dragonball.wikia.com/wiki/Hyperbolic_Time_Chamber">hyperbolic time chamber</a>, instead, we need to train ourselves through personal development.
-
-The image of personal development has been degraded over the years. What comes to mind when the word &#8220;personal development&#8221; or &#8220;self-help&#8221; is heard is typically the image of a person (usually a stranger) telling you what to do, giving you generalized—sometimes impractical/inapplicable—step-by-step ways on how to achieve success and happiness in life. For this reason alone, many people have been deterred to muster up even a tad bit of interest in the field.
-
-Despite the current image of personal development, there are still invaluable bits of information that can be used to achieve a superhero life. Personal development encourages self-knowledge, reflection, and awareness which can contribute as measures for quantifying how far one is from the direction they want to go towards. Am I almost there? Or am I light-years away from my goal? Simple questions such as these can significantly bring a person closer towards achieving their goals. Although step-by-step details of how to get there may not be available, self-awareness can at least tell you if you’re moving away or towards that destination.
-
-So why even bother becoming a superhero? I think it&#8217;s the same exact reason why we dress up for Halloween—because we all in some way want to be like them.
-
+<div style="text-align:center;">
+    <a href="http://chrisarriola.files.wordpress.com/2012/06/dynamiclist.png"><img class="size-full wp-image-389" title="Dynamic List" src="http://chrisarriola.files.wordpress.com/2012/06/dynamiclist.png" alt="" width="510" height="340" /></a> 
 </div>
 
-      
-      
-    </div>
-  </div>
-
-
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
-
-
-
-
-
-
-
-
-  
-
-
-<i class="icon-calendar-empty"></i> <time datetime="2011-09-25T00:00:00-07:00" pubdate data-updated="true"></time></h5>
-          <div class="row-fluid">
-          
-          <a href="http://chrisarriola.me/blog/2011/09/25/persistence/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/quotes/"><span class="badge">Quotes</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2011/09/25/persistence/">Persistence</a></h1>
-      <blockquote><a href="http://chrisarriola.files.wordpress.com/2011/09/starbucks_final.jpg"><img class="aligncenter size-full wp-image-174" title="starbucks_final" src="http://chrisarriola.files.wordpress.com/2011/09/starbucks_final.jpg" alt="" width="229" height="275" /></a></blockquote>
-<blockquote>&#8220;<strong>Life is a series of near misses. But a lot of what we ascribe to luck is not luck at all. It&#8217;s seizing the day and accepting responsibility for your future. It&#8217;s seeing what other people don&#8217;t see, and pursuing that vision, no matter who tells you not to.</strong>&#8221; - Howard Schultz, CEO of Starbucks</blockquote>
-
-      
-      
-    </div>
-  </div>
-
-
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
-
-
-
-
-
-
-
-
-  
-
-
-<i class="icon-calendar-empty"></i> <time datetime="2011-07-09T00:00:00-07:00" pubdate data-updated="true"></time></h5>
-          <div class="row-fluid">
-          
-          <a href="http://chrisarriola.me/blog/2011/07/09/mount-roraima/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/travel/"><span class="badge">Travel</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2011/07/09/mount-roraima/">Mount Roraima</a></h1>
-      [caption id=&#8221;attachment_169&#8221; align=&#8221;aligncenter&#8221; width=&#8221;300&#8221; caption=&#8221;Mount Roraima - Venezuela&#8221;]<a href="http://chrisarriola.files.wordpress.com/2011/07/mount_roraima_venezuela1.jpg"><img class="size-medium wp-image-169 " title="Mount_Roraima_Venezuela1" src="http://chrisarriola.files.wordpress.com/2011/07/mount_roraima_venezuela1.jpg?w=300&h=221" alt="" width="300" height="221" /></a>[/caption]
-
-[caption id=&#8221;attachment_170&#8221; align=&#8221;aligncenter&#8221; width=&#8221;300&#8221; caption=&#8221;Mount Roraima &#8211; Venezuela&#8221;]<a href="http://chrisarriola.files.wordpress.com/2011/07/247503xcitefun-mount-roraima1.jpg"><img class="size-medium wp-image-170" title="247503,xcitefun-mount-roraima1" src="http://chrisarriola.files.wordpress.com/2011/07/247503xcitefun-mount-roraima1.jpg?w=300&h=201" alt="" width="300" height="201" /></a>[/caption]
-
-The highest tepui plateau (table-top surface) of the Pacaraima Mountains &#8211; Mount Roraima. It&#8217;s surrounded by 400 meter tall cliffs and most of the environment on the summit is rock. Despite minute resources such as soil, plants and animals THRIVE in this environment. Many of which, if not all, only exist on Mount Roraima. <a href="http://www.crunchgear.com/2009/10/16/the-crazy-rolling-pebble-toad/">CHECK OUT THIS TOAD</a>!!!
-
-This habitat is truly a &#8220;lost world.&#8221;
-
-      
-      
-    </div>
-  </div>
-
-
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
-
-
-
-
-
-
-
-
-  
-
-
-<i class="icon-calendar-empty"></i> <time datetime="2011-06-06T00:00:00-07:00" pubdate data-updated="true"></time></h5>
-          <div class="row-fluid">
-          
-          <a href="http://chrisarriola.me/blog/2011/06/06/das-keyboard/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/technology/"><span class="badge">Technology</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2011/06/06/das-keyboard/">Das Keyboard</a></h1>
-      I just got my Das Keyboard in the mail today which is a super clicky mechanical keyboard. I&#8217;ve been wanting to get it for months now and it&#8217;s everything that I expected. The sound and tactile feedback makes typing ORGASMIC. Esp. programming!
-
-[caption id=&#8221;attachment_165&#8221; align=&#8221;aligncenter&#8221; width=&#8221;300&#8221; caption=&#8221;Das Keyboard Model S Professional&#8221;]<a href="http://chrisarriola.files.wordpress.com/2011/06/daskeyboard.jpg"><img class="size-medium wp-image-165" title="Das Keyboard" src="http://chrisarriola.files.wordpress.com/2011/06/daskeyboard.jpg?w=300&h=224" alt="" width="300" height="224" /></a>[/caption]
-<p style="text-align:center;">&nbsp;</p>
-
-      
-      
-    </div>
-  </div>
-
-
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
-
-
-
-
-
-
-
-
-  
-
-
-<i class="icon-calendar-empty"></i> <time datetime="2011-05-26T00:00:00-07:00" pubdate data-updated="true"></time></h5>
-          <div class="row-fluid">
-          
-          <a href="http://chrisarriola.me/blog/2011/05/26/post-college-success/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/jocc/"><span class="badge">JOCC</span></a>
-          
-          <a href="/blog/categories/personal-development/"><span class="badge">Personal Development</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2011/05/26/post-college-success/">Post-College Success</a></h1>
-      2 days ago I posted my take on how to achieve success in the &#8220;real world.&#8221; I spoke a little bit about my experiences going into college and how my perception of success changed over the years. It can be found at the JOCC blog (<a href="http://thelifeofajocc.blogspot.com/2011/05/achieving-success-in-real-worldits-not.html">http://thelifeofajocc.blogspot.com/2011/05/achieving-success-in-real-worldits-not.html</a>/).
-
-      
-      
-    </div>
-  </div>
-
-
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
-
-
-
-
-
-
-
-
-  
-
-
-<i class="icon-calendar-empty"></i> <time datetime="2011-05-26T00:00:00-07:00" pubdate data-updated="true"></time></h5>
-          <div class="row-fluid">
-          
-          <a href="http://chrisarriola.me/blog/2011/05/26/blog-relocation/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2011/05/26/blog-relocation/">Blog Relocation</a></h1>
-      I&#8217;m hosting my blog at my website and it can be found at: <del>www.chrisarriola.me/blog</del> All my subsequent posts will be there instead. Thanks! =]
+<div style="text-align:center;">
+    <a href="http://www.androidpatterns.com/uap_pattern/dynamic-loading-of-a-list">Dynamic Loading of a List</a>
+</div><br>
+
+<p>
+While playing around with this pattern, I was quite surprise how not-so-straightforward it was to implement this (then again, that&#8217;s programming for you). With that said, I&#8217;d like to share my implementation with you in case you&#8217;re trying to use this pattern in your application.
+</p>
+
+<h3>Trial 1</h3>
+The intuitive way to go about this is to (1) simply attach an Adapter with the first page of items to a ListView, (2) attach an OnScrollListener to detect if the bottom of the list has been reached, if so, (3) add a loading footer view to the list while retrieving more data, and when the retrieval process is done, remove the loading footer and (4) update the adapter with the recently pulled data.
+
+Sounds pretty straightforward right? Turns out, it&#8217;s not.
+
+Here&#8217;s some code snippets of the above approach.
+
+(1) &amp; (2)
+<pre>ListView list = (ListView) findViewById(R.id.listview);
+MyAdapter adapter = new MyAdapter(context, items);
+list.setAdapter(adapter);
+
+list.setOnScrollListener(new OnScrollListener() {
+    @Override
+    public void onScrollStateChanged(AbsListView view, 
+            int scrollState) {
+         <span style="color:#339966;">// Do nothing</span>
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, 
+            int visibleItemCount, int totalItemCount) {
+
+        <span style="color:#339966;">// threshold being indicator if bottom of list is hit</span>
+        if (firstVisibleItem = threshold) {
+            pullMoreData();
+        }
+    }
+});</pre>
+(3) &amp; (4)
+<pre>private void pullMoreData() {
+    doNetworkRequest(page); <span style="color:#339966;">// Perform request for next page</span>
+    list.addFooterView(loadingFooter);
+}
+
+@Override
+public void onNetworkRequestComplete(Request request) {
+    list.removeFooterView(loadingFooter);
+    adapter.addAll(request.getData());
+    adapter.notifyDataSetChanged();
+}</pre>
+This implementation, however, does not result in the intended action - the footer never gets displayed. A work-around I did for this leads me to&#8230;
+<h3>Trial 2</h3>
+With my second trial, I did this: (1) attached the footer first before the adapter, and when the bottom of the list has been reached and new data has been retrieved, (2) reattach the footer and create a new adapter with the old+new data which is then reattached to the list. Finally, to bring the user back to the scroll position, I (3) keep track of the first visible item on the scroll view and set the list selection to be this item.
+
+Immediately, a few things must be popping up in your head such as: that must be slow! it&#8217;s a hack! there has to be a cleaner way! etc. I can&#8217;t agree with you more.
+
+(1), (2) &amp; (3)
+<pre>ListView list = (ListView) findViewById(R.id.listview);
+list.addFooterView(loadingFooter);
+
+MyAdapter adapter = new MyAdapter(context, items);
+list.setAdapter(adapter);
+
+list.setOnScrollListener(new OnScrollListener() {
+    @Override
+    public void onScrollStateChanged(AbsListView view, 
+            int scrollState) {
+         <span style="color:#339966;">// Do nothing</span>
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, 
+            int visibleItemCount, int totalItemCount) {
+
+<span style="color:#339966;"> // member variable for restoring selection</span>
+        mSelection = firstVisibleItem;
+
+<span style="color:#339966;"> // threshold being indicator if bottom of list is hit</span>
+        if (firstVisibleItem = threshold) {
+            pullMoreData();
+        }
+    }
+});
+
+@Override
+public void onNetworkRequestComplete(Request request) {
+    list.removeFooterView(loadingFooter);
+    list.addFooterView(loadingFooter);
+
+    MyAdapter newAdapter = new MyAdapter(this);
+    newAdapter.addOldData(adapter);
+    newAdapter.addAll(request.getData());
+
+    list.setAdapter(newAdapter);
+    adapter = newAdapter;
+
+<span style="color:#339966;"> // Set table to last selection</span>
+    list.setSelection(mSelection)
+}</pre>
+Albeit some performance issues and jerkiness because of (3), this implementation actually works.
+
+Can we do better than this?
+<h3>Trial 3</h3>
+The trick, it turns out, is to <strong>attach the footer view before setting the adapter</strong>, this way, any combination of adding and removing of the footer view/s just works. <strong>Why does it have to be in order</strong>!? If you have the answer, please leave a comment. I&#8217;d love to know
+<pre>ListView list = (ListView) findViewById(R.id.listview);
+list.addFooterView(loadingFooter);
+
+MyAdapter adapter = new MyAdapter(context, items);
+list.setAdapter(adapter);
+
+<span style="color:#339966;">// this step is important to not display the footer view // right of the bat.</span>
+list.removeFooterView(loadingFooter);
+
+list.setOnScrollListener(new OnScrollListener() {
+    @Override
+    public void onScrollStateChanged(AbsListView view, 
+            int scrollState) {
+<span style="color:#339966;"> // Do nothing</span>
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, 
+            int visibleItemCount, int totalItemCount) {
+<span style="color:#339966;"> // threshold being indicator if bottom of list is hit</span>
+        if (firstVisibleItem = threshold) {
+            pullMoreData();
+        }
+    }
+});</pre>
+I&#8217;ll share more Android quirks as they come up, I hope this helped.
 
       
       
@@ -649,7 +456,17 @@ This habitat is truly a &#8220;lost world.&#8221;
       </div>
       <div class="row-fluid">
         <footer class="footer-page" role="contentinfo">
-          <p>
+          
+<section>
+	<h2>Subscribe</h2>
+	Subscribe and get notified of new Android articles.
+	<form action="//chrisarriola.us10.list-manage.com/subscribe/post?u=f57ac58f6cfb6b88bb2ec77f3&amp;id=91c15e4ccc" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank">
+		<input type="text" placeholder="Your Email Here" autocomplete="off" name="EMAIL" id="mce-EMAIL">
+		<input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn btn-subscribe">
+	</form>
+</section>
+
+<p>
   Copyright &copy; 2015 - Chris Arriola -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>

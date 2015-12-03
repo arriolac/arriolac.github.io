@@ -9,7 +9,7 @@
   <meta name="author" content="Chris Arriola">
 
    
-  <meta name="description" content="">
+  <meta name="description" content="This is a test.">
   
   <meta name="keywords" content="">
 
@@ -117,21 +117,25 @@
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2012-05-30T00:00:00-07:00" pubdate data-updated="true"></time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2014-01-11T11:06:18-08:00" pubdate data-updated="true">Jan 11<span>th</span>, 2014</time></h5>
           <div class="row-fluid">
           
-          <a href="http://chrisarriola.me/blog/2012/05/30/incremental-goals/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
+          <a href="http://chrisarriola.me/blog/2014/01/11/blog-migration/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
           
           </div>
           
           <div class="row-fluid">
+          
+          <a href="/blog/categories/uncategorized/"><span class="badge">Uncategorized</span></a>
           
           </div>
           
     </div>
     <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2012/05/30/incremental-goals/">Incremental Goals</a></h1>
-      Check my post on the JOCC blog about setting <a href="http://wp.me/p1YHaV-3e">Incremental Goals</a>.
+      <h1 class="link"><a href="/blog/2014/01/11/blog-migration/">Blog Migration</a></h1>
+      <p>Just moved my blog from a <a href="http://chrisarriola.wordpress.com">wordpress.com site</a> to Octopress hosted on GitHub. Surprisingly, the set-up was really quick including migrating all of my posts and tweaking some colors from the theme I chose. Not everything went smoothly though; I lost all of my comments and images on posts had some formatting issues. Aside from that, it only took a few hours.</p>
+
+<p>Feel free to leave a comment for any suggestions!</p>
 
       
       
@@ -163,463 +167,10 @@
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2012-05-23T00:00:00-07:00" pubdate data-updated="true"></time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2013-11-21T00:00:00-08:00" pubdate data-updated="true"></time></h5>
           <div class="row-fluid">
           
-          <a href="http://chrisarriola.me/blog/2012/05/23/optimizing-android-layouts/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/android/"><span class="badge">Android</span></a>
-          
-          <a href="/blog/categories/technology/"><span class="badge">Technology</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2012/05/23/optimizing-android-layouts/">Optimizing Android Layouts</a></h1>
-      I recently used the <strong>hierarchyviewer</strong> &amp; <strong>lint </strong>tool in the Android SDK and was pretty surprised with the results I saw. Many of the views I had were heavily nested and some views did not necessarily have to be inflated off the bat (progress indicators and refresh icons to name a few). As a result, my activity took a performance hit because of a badly designed layout.
-
-Here&#8217;s a technique I used that I picked up at AnDevCon III to flatten my layouts and in general make them more performant.
-<h3><strong>ViewStub</strong></h3>
-Essentially, ViewStub is a lightweight and cheap to inflate widget that you can include in a layout. Its purpose is basically to serve as a stub or placeholder for views that don&#8217;t necessarily need to be inflated on creation. For example, let&#8217;s say your app displays notifications on a SlidingDrawer; however, when there are no notifications, that SlidingDrawer should be hidden. What you can do then is create a ViewStub that points to your SlidingDrawer layout implementation and when notifications are present, you can simply inflate the ViewStub. Here&#8217;s an example taken from <a href="http://developer.android.com/resources/articles/layout-tricks-stubs.html">Android Developers</a> that displays the flattening of the view hierarchy using ViewStubs.
-
-Layout without ViewStub:
-
-[caption id=&#8221;attachment_341&#8221; align=&#8221;aligncenter&#8221; width=&#8221;510&#8221;]<a href="http://chrisarriola.files.wordpress.com/2012/05/viewstub41.png"><img class="size-full wp-image-341 " title="Layout Without ViewStub" src="http://chrisarriola.files.wordpress.com/2012/05/viewstub41.png" alt="" width="510" height="431" /></a> Layout Without ViewStub[/caption]
-
-Layout using ViewStub:
-
-[caption id=&#8221;attachment_342&#8221; align=&#8221;aligncenter&#8221; width=&#8221;468&#8221;]<a href="http://chrisarriola.files.wordpress.com/2012/05/viewstub3.png"><img class="size-full wp-image-342 " title="Layout With ViewStub" src="http://chrisarriola.files.wordpress.com/2012/05/viewstub3.png" alt="" width="468" height="476" /></a> Layout With ViewStub[/caption]
-
-The code for your layout:
-<blockquote>
-<pre><span style="color:#0000ff;">&lt;ViewStub</span>
-<span style="color:#ff00ff;">android:id</span>=<span style="color:#339966;">"@+id/stub_slidingdrawer"</span>
-<span style="color:#ff00ff;">android:layout</span>=<span style="color:#339966;">"@layout/slidingdrawer"</span>
-<span style="color:#ff00ff;">android:layout_width</span>=<span style="color:#339966;">"fill_parent"</span>
-<span style="color:#ff00ff;">android:layout_height</span>=<span style="color:#339966;">"wrap_content"</span>
-<span style="color:#0000ff;">/&gt;</span></pre>
-</blockquote>
-<span style="color:#0000ff;"><span style="color:#000000;">The code to inflate the ViewStub:</span></span>
-<blockquote><span style="color:#0000ff;"><span style="color:#000000;">ViewStub stub = (ViewStub) findViewById(R.id.<span style="color:#0000ff;"><em>stub_slidingdrawer</em></span>);</span>
-<span style="color:#000000;">View v = stub.inflate();</span> </span></blockquote>
-For my specific case, it took about half the time to inflate the entire layout tree by using a ViewStub for infrequently used child layouts. Pretty sweet.
-
-      
-      
-    </div>
-  </div>
-
-
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
-
-
-
-
-
-
-
-
-  
-
-
-<i class="icon-calendar-empty"></i> <time datetime="2012-05-14T00:00:00-07:00" pubdate data-updated="true"></time></h5>
-          <div class="row-fluid">
-          
-          <a href="http://chrisarriola.me/blog/2012/05/14/how-to-avoid-getting-a-ticket-when-running-a-red-light/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/technology/"><span class="badge">Technology</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2012/05/14/how-to-avoid-getting-a-ticket-when-running-a-red-light/">How To Avoid Getting a Ticket When Running a Red Light</a></h1>
-      [caption id=&#8221;attachment_331&#8221; align=&#8221;aligncenter&#8221; width=&#8221;510&#8221;]<a href="http://chrisarriola.files.wordpress.com/2012/05/xlarge_8ca4aa827c1151851324895f5ffb778b.jpg"><img class="size-full wp-image-331" title="SQL Injection" src="http://chrisarriola.files.wordpress.com/2012/05/xlarge_8ca4aa827c1151851324895f5ffb778b.jpg" alt="" width="510" height="286" /></a> http://gizmodo.com/5498412/sql-injection-license-plate-hopes-to-foil-euro-traffic-cameras[/caption]
-
-&nbsp;
-
-      
-      
-    </div>
-  </div>
-
-
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
-
-
-
-
-
-
-
-
-  
-
-
-<i class="icon-calendar-empty"></i> <time datetime="2012-05-10T00:00:00-07:00" pubdate data-updated="true"></time></h5>
-          <div class="row-fluid">
-          
-          <a href="http://chrisarriola.me/blog/2012/05/10/how-to-create-popups-in-android/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/android/"><span class="badge">Android</span></a>
-          
-          <a href="/blog/categories/programming-tutorials/"><span class="badge">Programming Tutorials</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2012/05/10/how-to-create-popups-in-android/">How to create popups in Android</a></h1>
-      Great tutorial!
-
-<a href="http://wp.me/p26YYL-8n">How to create popups in Android</a>.
-
-      
-      
-    </div>
-  </div>
-
-
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
-
-
-
-
-
-
-
-
-  
-
-
-<i class="icon-calendar-empty"></i> <time datetime="2012-05-01T00:00:00-07:00" pubdate data-updated="true"></time></h5>
-          <div class="row-fluid">
-          
-          <a href="http://chrisarriola.me/blog/2012/05/01/self-learning-resources/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/education/"><span class="badge">Education</span></a>
-          
-          <a href="/blog/categories/personal-development/"><span class="badge">Personal Development</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2012/05/01/self-learning-resources/">Self-Learning Resources</a></h1>
-      One of the many pleasures in life involves learning something new. Whether it be learning a new culture, learning how to paint, learning how to write creatively, or learning how to fly a kite; the act of &#8220;knowing&#8221; something is nothing less than exciting. With that said, I&#8217;m a firm believer in the active pursuit of self-learning and self-education—who said learning should stop in school? Perhaps graduating school is the end of formal learning, but if it were the end of learning in itself, life would be very, very, boring.
-
-Below are some resources I&#8217;ve used in the past for taking free online classes. As my Calc 2 professor would say, these resources are &#8220;jewels in a priceless treasure chest&#8221;.
-
-<strong>Coursera: </strong><a href="https://www.coursera.org/">https://www.coursera.org/</a>
-
-<strong>Academic Earth: </strong><a href="http://www.academicearth.org/">http://www.academicearth.org/</a>
-
-<strong>Khan Academy: </strong><a href="http://www.khanacademy.org/">http://www.khanacademy.org/</a>
-
-<strong></strong><strong>MIT Open Courseware: </strong><a href="http://ocw.mit.edu/">http://ocw.mit.edu/</a>
-
-<strong></strong><strong>Engineer Guy: </strong><a href="http://www.engineerguy.com/">http://www.engineerguy.com/</a>
-
-<strong>Google Code University: </strong><a href="http://code.google.com/edu/">http://code.google.com/edu/</a>
-
-<strong></strong>&#8230;and of course it goes without saying that another great resource for self-learning is&#8230; a book! I&#8217;m currently using <a href="www.goodreads.com">www.goodreads.com</a> to find good recommendations based on books I&#8217;ve read on the past, and it&#8217;s also a good social website to view what your friends are currently reading and what they&#8217;ve read in the past.
-
-I hope you find these priceless &#8220;jewels&#8221; as invaluable as I found them. Enjoy!
-
-      
-      
-    </div>
-  </div>
-
-
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
-
-
-
-
-
-
-
-
-  
-
-
-<i class="icon-calendar-empty"></i> <time datetime="2012-05-01T00:00:00-07:00" pubdate data-updated="true"></time></h5>
-          <div class="row-fluid">
-          
-          <a href="http://chrisarriola.me/blog/2012/05/01/countdown-timer-on-android/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/android/"><span class="badge">Android</span></a>
-          
-          <a href="/blog/categories/programming-tutorials/"><span class="badge">Programming Tutorials</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2012/05/01/countdown-timer-on-android/">Countdown Timer on Android</a></h1>
-      An <a href="http://chrisarriola.wordpress.com/2012/03/12/first-android-application-napp/">exercise</a> I did to practice threading on Android is to implement a simple countdown timer. To do this, I used a <em>Handler</em> and added a <em>Runnable</em> Object—which performs the countdown—to it&#8217;s message queue.
-
-Here&#8217;s a snippet of the Runnable Object:
-<pre>Runnable mTimerTask = new Runnable() {
-@Override
-public void run() {
-  long currTime = System.currentTimeMillis();
-  long currTimeSysClock = SystemClock.uptimeMillis();
-  long timeLeftMillis = mWakeUpTime - currTime;
-  int seconds = (int) timeLeftMillis / 1000;
-  int minutes = seconds / 60;
-  int hours = minutes / 60;
-  seconds %= 60;
-  minutes %= 60;
-  updateTime(mSecondView, seconds);
-  updateTime(mMinuteView, minutes);
-  updateTime(mHourView, hours);
-
-  if (hours == 0 &amp;&amp; minutes == 0 &amp;&amp; seconds == 0) {
-    mTimerHandler.removeCallbacks(this);
-  } else {
-    mTimerHandler.postAtTime(this, currTimeSysClock + 1000);
-  }
-  }
-};</pre>
-Finally, passing the Runnable object to the Handler&#8217;s <em>post()</em> method will initiate the countdown sequence.
-
-Essentially, the run method gets called every 1 second following the first call to run ( <em>postAtTime()</em> ). The process is then repeated until the countdown reaches 0. To prevent reseting the wake up time, the wake up time (<em>mWakeUpTime</em>) is saved in the app&#8217;s shared preferences.
-
-Another approach that could&#8217;ve also been used is through the use of an <em>AsyncTask</em>. However, for a simple task such as a countdown timer and since we want to control the specific time a thread runs, a Handler would be the best way to go.
-
-      
-      
-    </div>
-  </div>
-
-
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
-
-
-
-
-
-
-
-
-  
-
-
-<i class="icon-calendar-empty"></i> <time datetime="2012-04-12T00:00:00-07:00" pubdate data-updated="true"></time></h5>
-          <div class="row-fluid">
-          
-          <a href="http://chrisarriola.me/blog/2012/04/12/android-ftw/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/android/"><span class="badge">Android</span></a>
-          
-          <a href="/blog/categories/technology/"><span class="badge">Technology</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2012/04/12/android-ftw/">Android FTW</a></h1>
-      At last, the most anticipated app for Android came out a few days ago: Instagram for Android. For the first 12 hours, they hit an amazing 1 million Android app downloads! Now they&#8217;re at the ~6 million mark and they just got bought out by Facebook for $1 billion. I thought to myself: &#8220;great, now everyone is happy.&#8221;
-
-I couldn&#8217;t have been more wrong.
-
-An alarming number of iPhone users and apple fans were ranting about how lame Instagram is now that it&#8217;s open to Android users. Here&#8217;s a few example of what people were saying:
-<p style="text-align:center;"><a href="http://chrisarriola.files.wordpress.com/2012/04/hatetweets.png"><img class="size-full wp-image-305 aligncenter" title="hatetweets" src="http://chrisarriola.files.wordpress.com/2012/04/hatetweets.png" alt="" width="510" height="492" /></a></p>
-For the majority of the smartphone population, Android has always been perceived as being &#8220;low quality&#8221; compared to the iPhone. Social status has a big influence to Android being perceived this way. All the wealthy folks can brag about how awesome their iPhone is whereas people on the low-end have to compromise with shitty Android phones since they&#8217;re too poor to buy iPhones, right? If you look at a lot of high-end Android phones though, this is obviously not the case. iPhone users, however, still feel that they&#8217;re getting the best bang for their buck because of the exceptional brand-value Apple established for itself thanks to Steve Jobs. Looking beyond the surface though, there are many pros about Android which makes me believe otherwise.
-
-Here&#8217;s why I think Android is pure awesomeness.
-
-<h3>Options</h3>
-
-I enjoy having many options. This goes for food, clothes, places, as well as phones. One of the features I particularly enjoy that some Android phones have is a physical keyboard—which is something iPhone lacks. Not going to lie though, iPhone&#8217;s hardware is beautiful but the idea of having only a single option doesn&#8217;t really float my boat.
-
-<h3>Inexpensive</h3>
-
-When I first used a smartphone I was frikin&#8217; hooked. I could simply Google questions like: &#8220;what&#8217;s the weather tomorrow?&#8221;, &#8220;how does the internet work?&#8221;, &#8220;when and where will be the next meteor shower?&#8221;, etc. Better yet, I can find location and context-specific answers to questions such as &#8220;where&#8217;s the closest restaurant/bar?&#8221;, &#8220;where can I get orange juice?&#8221;, etc. With smartphones, answers to such questions are virtually at your fingertips, anywhere you go. In the past, this was only available to the privileged, however, nowadays (thanks to Android) <a href="http://singularityhub.com/2011/08/16/80-android-phone-sells-like-hotcakes-in-kenya-the-world-next/">anyone can get a smartphone for as cheap as $80</a>! Why should only the rich have access to things like this when the less-fortunate would benefit from it the most?
-
-<h3>Open-Source</h3>
-
-Anyone can go in and look at Android&#8217;s source code and create a custom OS. Because Android is Open Source, we can expect many different flavors that suit different needs—android running on <a href="http://www.shopping.hp.com/product/printer/Photosmart/1/storefronts/CQ140A%2523B1H">printers</a>, android running on <a href="http://www.barnesandnoble.com/u/nook/379003208/">e-readers</a>, etc. These are only a few examples and expect Android to dominate the OS of choice for other embedded systems.
-
-<h3>Cross-Application Integration</h3>
-
-One word: Intents.
-
-Android Intents essentially enable applications to &#8220;talk&#8221; to each other. What that means to the end-user is that you have many different options (depending on the apps installed on your device) when let&#8217;s say for instance you want to share a location, article, photo, etc. Whereas on other platforms such as the iPhone, you&#8217;re limited to only what the OS provides which is typically the native apps such as messaging/e-mail. This of course is not only limited to sharing content. Another example would be if you have a camera/photo application and want to launch that app for another app that takes pictures. Assuming that app exposes it&#8217;s functionality (side note: why doesn&#8217;t Instagram do this?), on Android you would be able to do that without going through intermediate steps, i.e. capturing a photo with app 1, saving image, opening app 2&#8230; I think you get the point.
-<p style="text-align:center;"><a href="http://chrisarriola.files.wordpress.com/2012/04/androideatingapple.png"><img class="aligncenter" title="androideatingapple" src="http://chrisarriola.files.wordpress.com/2012/04/androideatingapple.png?w=258" alt="" width="258" height="300" /></a><a href="http://chrisarriola.files.wordpress.com/2012/04/androideatingapple.png">
-</a></p>
-
-      
-      
-    </div>
-  </div>
-
-
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
-
-
-
-
-
-
-
-
-  
-
-
-<i class="icon-calendar-empty"></i> <time datetime="2012-03-12T00:00:00-07:00" pubdate data-updated="true"></time></h5>
-          <div class="row-fluid">
-          
-          <a href="http://chrisarriola.me/blog/2012/03/12/first-android-application-napp/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/android/"><span class="badge">Android</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2012/03/12/first-android-application-napp/">First Android Application: Napp</a></h1>
-      <a href="http://chrisarriola.files.wordpress.com/2012/03/launcher.png"><img class="aligncenter" src="http://chrisarriola.files.wordpress.com/2012/03/launcher.png?w=86" alt="Image" /></a>
-
-Just published my first Android application: Napp. Check it out on Google Play!
-
-      
-      
-    </div>
-  </div>
-
-
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
-
-
-
-
-
-
-
-
-  
-
-
-<i class="icon-calendar-empty"></i> <time datetime="2012-02-25T00:00:00-08:00" pubdate data-updated="true"></time></h5>
-          <div class="row-fluid">
-          
-          <a href="http://chrisarriola.me/blog/2012/02/25/writing-it-down/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
+          <a href="http://chrisarriola.me/blog/2013/11/21/480/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
           
           </div>
           
@@ -627,16 +178,18 @@ Just published my first Android application: Napp. Check it out on Google Play!
           
           <a href="/blog/categories/books/"><span class="badge">Books</span></a>
           
-          <a href="/blog/categories/quotes/"><span class="badge">Quotes</span></a>
-          
           </div>
           
     </div>
     <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2012/02/25/writing-it-down/">Writing It Down</a></h1>
-      <blockquote><strong>&#8220;Most slow hunches never last long enough to turn into something useful, because they pass in and out of our memory too quickly, precisely because they possess a certain murkiness. You get a feeling that there&#8217;s an interesting avenue to explore, a problem that might someday lead you to a solution, but then you get distracted by more pressing matters and the hunch disappears. So part of the secret of hunch cultivation is simple: write everything down.&#8221; </strong>
-<p style="text-align:right;"><strong></strong><em>—</em> <em>Steven Johnson</em></p>
-</blockquote>
+      <h1 class="link"><a href="/blog/2013/11/21/480/">The Power of Now by Eckhart Tolle</a></h1>
+      <a style="float:left;padding-right:20px;" href="https://www.goodreads.com/book/show/6708.The_Power_of_Now"><img alt="The Power of Now: A Guide to Spiritual Enlightenment" src="https://d202m5krfqbpi5.cloudfront.net/books/1328746059m/6708.jpg" border="0" /></a><a href="https://www.goodreads.com/book/show/6708.The_Power_of_Now">The Power of Now: A Guide to Spiritual Enlightenment</a> by <a href="https://www.goodreads.com/author/show/4493.Eckhart_Tolle">Eckhart Tolle</a>
+
+My rating: <a href="https://www.goodreads.com/review/show/721445353">5 of 5 stars</a>
+
+Added more context to my understanding of why the present is what&#8217;s most important.
+
+<a href="https://www.goodreads.com/review/list/7114307-chris-arriola">View all my reviews</a>
 
       
       
@@ -668,30 +221,41 @@ Just published my first Android application: Napp. Check it out on Google Play!
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2012-02-21T00:00:00-08:00" pubdate data-updated="true"></time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2013-07-23T00:00:00-07:00" pubdate data-updated="true"></time></h5>
           <div class="row-fluid">
           
-          <a href="http://chrisarriola.me/blog/2012/02/21/last-week-in-san-diego/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
+          <a href="http://chrisarriola.me/blog/2013/07/23/preparing-for-a-hackathon-a-mobile-perspective/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
           
           </div>
           
           <div class="row-fluid">
           
-          <a href="/blog/categories/travel/"><span class="badge">Travel</span></a>
+          <a href="/blog/categories/android/"><span class="badge">Android</span></a>
+          
+          <a href="/blog/categories/education/"><span class="badge">Education</span></a>
+          
+          <a href="/blog/categories/productivity/"><span class="badge">Productivity</span></a>
+          
+          <a href="/blog/categories/technology/"><span class="badge">Technology</span></a>
           
           </div>
           
     </div>
     <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2012/02/21/last-week-in-san-diego/">Last Week in San Diego</a></h1>
-      <p style="text-align:center;"><a href="http://chrisarriola.files.wordpress.com/2012/02/torreypines2_sandiego.jpg"><img class="aligncenter" title="Torrey Pines" src="http://chrisarriola.files.wordpress.com/2012/02/torreypines2_sandiego.jpg?w=300" alt="" width="300" height="225" /></a></p>
-It&#8217;s officially my last week of living here in San Diego. It&#8217;s been a tremendous experience and it&#8217;s hard to believe I&#8217;m leaving this piece of paradise (I&#8217;m going to miss you yearlong mid-70 degree weather)!
+      <h1 class="link"><a href="/blog/2013/07/23/preparing-for-a-hackathon-a-mobile-perspective/">Preparing for a Hackathon (A Mobile Perspective)</a></h1>
+      <a href="http://chrisarriola.files.wordpress.com/2013/07/536444_10150917662022200_1083819652_a.jpg"><img class="size-full wp-image  " id="i-461" alt="Image" align="middle" src="http://chrisarriola.files.wordpress.com/2013/07/536444_10150917662022200_1083819652_a.jpg?w=170" width="170" height="261" /></a>
+<p dir="ltr">The time-pressure imposed at hackathons make it essential for teams to prepare ahead of time so that they can focus on the most critical tasks (building the actual product) the day of the event. Typically though, hackers come in without a team or idea. Whether you fall under this category or not, <em>preparation is still important</em>. Given that a full-blown business and a polished working product is unlikely to be built overnight, the point of a hackathon should be to learn as much as you can as well as form long-lasting relationships with people in your team—<strong>the burning desire for building and creating new things does not stop after a weekend</strong>!</p>
+<p dir="ltr">Let’s say you do have a team and an idea to work on over the course of a sleep-deprived weekend. So where should you start? I thought I’d share some mobile-specific (Android and iOS) tools and projects you can leverage to bootstrap the development process.</p>
 
-I&#8217;ve always been a huge advocate of goal-setting and having the end in mind. To me, if one is compelled by a vision, then one must make the steps to fulfill that vision. This entails making all the necessary changes to get to the end point. Every action, I view, should be a result of striving for a larger goal. No matter the difficulty of the action, if it is necessary, it must be made. Failure to do so, makes all the difference between getting what you want, and what you don&#8217;t want.
+<h3>Back-end</h3>
+<p dir="ltr">If you want to do data-persistence you can always build your own server logic, create RESTful APIs and create database schemas, but if you want a simple back-end service solution, the best option right now is to use <a title="Parse" href="www.parse.com" target="_blank">Parse</a>. <em>Parse</em> allows you to create models in a nice visual dashboard and then automatically creates a RESTful API for you to do CRUD operations on that model. Best of all, <em>Parse</em> is free until you hit a million requests on the API which is something you don’t have to worry about in a hackathon setting. In short, if you’re building a mobile app and you don’t have a dedicated server guy, go with <em>Parse</em>.</p>
 
-With that said, zooming out 10,000 feet and putting into perspective the bigger picture, for me to achieve my long-term goals, I need to make the necessary steps in the present to get to where I want to be. At the moment, that means leaving the confines of HP and joining an exciting startup in the bay area. Startups and social innovation have always fascinated me and it only makes sense for me to move towards that direction. Personally, I find it easy to get sucked into something simply because it&#8217;s interesting or comforting. However, I know that for me to feel a sense of fulfillment, I need look beyond the mist and act in accordance to my goals and follow my passion. Even if that means leaving something as beautiful as San Diego.
+<h3>Networking</h3>
+<p dir="ltr">If you’re going to be integrating with some sort of web service (Facebook, Twitter, etc.), chances are, you’ll be using their APIs. Perhaps you might build your own API. Regardless, client-side you’ll need a pretty solid networking library to use. iOS and Android have their native implementations but you’ll be better of using a 3rd party library with a much simpler API that abstracts all the nitty-gritty details of HTTP. For iOS, <a title="AFNetworking" href="https://github.com/AFNetworking/AFNetworking" target="_blank">AFNetworking</a> and <a title="RestKit" href="https://github.com/RestKit/RestKit" target="_blank">RestKit</a> (uses <em>AFNetworking</em>) are the common solutions, whereas for Android, you have a couple of options but to name a few <a title="OkHTTP" href="https://github.com/square/okhttp" target="_blank">OkHTTP</a>, <a title="Retrofit" href="http://square.github.io/retrofit/" target="_blank">Retrofit</a> and <a title="android-async-http" href="https://github.com/loopj/android-async-http" target="_blank">android-async-http</a> are pretty solid.</p>
 
-Farewell, San Diego. You will be severely missed!
+<h3>Convenience Libraries</h3>
+<p dir="ltr">Do you make common mistakes on Android such as forgetting to check for <em>null</em>? Do you have the issue of stale objects such as Fragments and/or Activities when doing callbacks? A couple of ways to get around that is to use <a title="Guava" href="https://code.google.com/p/guava-libraries/" target="_blank">Guava</a> which has a lot of convenience classes that for Java, and to use some sort of event bus such as Square’s <a title="Otto" href="https://github.com/square/otto" target="_blank">Otto</a> to avoid callback nightmare.</p>
+<p dir="ltr">Hopefully these tools help you with your next Hackathon. If you have any suggestions/tips please feel free to leave a comment. Keep hacking!</p>
 
       
       
@@ -719,7 +283,17 @@ Farewell, San Diego. You will be severely missed!
       </div>
       <div class="row-fluid">
         <footer class="footer-page" role="contentinfo">
-          <p>
+          
+<section>
+	<h2>Subscribe</h2>
+	Subscribe and get notified of new Android articles.
+	<form action="//chrisarriola.us10.list-manage.com/subscribe/post?u=f57ac58f6cfb6b88bb2ec77f3&amp;id=91c15e4ccc" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank">
+		<input type="text" placeholder="Your Email Here" autocomplete="off" name="EMAIL" id="mce-EMAIL">
+		<input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn btn-subscribe">
+	</form>
+</section>
+
+<p>
   Copyright &copy; 2015 - Chris Arriola -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
