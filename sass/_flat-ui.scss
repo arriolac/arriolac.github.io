@@ -262,9 +262,14 @@ h6 {
   font-family: "Roboto Condensed";
   text-transform: none; }
 
+.btn-subscribe {
+    padding: 10px 12px;
+    margin-bottom: 9px;
+}
+
 .btn {
   border: none;
-  background: $bg-color;
+  background: $primary-color;
   color: white;
   font-size: 16.5px;
   text-decoration: none;
@@ -855,7 +860,7 @@ input[type="tel"],
 input[type="color"],
 .uneditable-input {
   border: 2px solid #dce4ec;
-  color: $bg-color;
+  color: $text-color;
   font-family: "Lato", sans-serif;
   font-size: 14px;
   padding: 8px 0 9px 10px;
@@ -1110,7 +1115,7 @@ textarea[readonly] {
 input,
 textarea,
 .uneditable-input {
-  width: 192px; }
+  width: 400px; }
 
 .checkbox,
 .radio {
@@ -1741,7 +1746,7 @@ textarea,
   background-color: #e74c3c; }
 
 .palette-pomegranate {
-  background-color: #c0392b; }
+  background-color: #ff5544; }
 
 .palette-clouds {
   background-color: $accent-color2;
