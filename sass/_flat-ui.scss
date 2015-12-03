@@ -263,7 +263,7 @@ h6 {
   text-transform: none; }
 
 .btn-subscribe {
-    padding: 10px 12px;
+    padding: 11px 12px;
     margin-bottom: 9px;
 }
 
@@ -2678,4 +2678,20 @@ a:hover > .badge {
 	text-align: left !important; }
 }
 
+}
+
+.after-footer {
+    background: $navbar-color;
+    text-align: center;
+    padding: 20px 0px;
+    color: $accent-color2;
+}
+
+.after-footer-inner p {
+    margin-top: 0px;
+}
+
+.after-footer-inner h2 {
+    margin-top: 0px;
+    color: $accent-color3;
 }
