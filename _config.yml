@@ -7,7 +7,7 @@ title: Chris Arriola
 subtitle: Mobile app developer. Android enthusiast.
 author: Chris Arriola
 simple_search: http://google.com/search
-description:
+description: This is a test.
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in
@@ -41,7 +41,7 @@ rdiscount:
     - smart
 pygments: false # default python pygments have been replaced by pygments.rb
 
-paginate: 10          # Posts per page on the blog index
+paginate: 5           # Posts per page on the blog index
 pagination_dir: blog  # Directory base for pagination URLs eg. /blog/page/2/
 recent_posts: 5       # Posts in the sidebar Recent Posts section
 excerpt_link: "Read on &rarr;"  # "Continue reading" link text at the bottom of excerpted articles
@@ -110,3 +110,9 @@ navigation:
   url: /cv
 - text: About Me
   url: /about-me
+
+
+mailchimp : true
+mailchimp_list_name : Chris Arriola
+mailchimp_list_why : YEAH MANGZ!
+mailchimp_embed_action : a custom URL Mail Chimp provides to you.
