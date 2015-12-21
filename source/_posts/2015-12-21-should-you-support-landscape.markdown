@@ -15,7 +15,7 @@ To simplify things, wouldn't it be great to lock the orientation mode of all scr
 
 Seriously though, should you support landscape on Android?
 
-Like any product decision, the answer isn’t always quite that simple.
+Like any product decision, *the answer isn’t always quite that simple*.
 
 There are a set of applications and screens where landscape makes sense. Say for example, when playing games, or, when watching videos. However, an overwhelming majority of apps used on phones are in portrait.
 
@@ -25,13 +25,14 @@ Because of these reasons, I can see why it is tempting to lock an app to only su
 
 I can think of one good reason though why you shouldn’t do this and consider supporting landscape: **configuration changes**.
 
-Configuration changes occur in runtime and are caused by various events such as: when keyboard visibility changes, when language changes, or  when orientation changes. This in turn causes the current foreground Activity to be reconstructed once the change finishes and all instance state will be recovered using Android’s parcelling mechanism via Bundle. 
+Configuration changes occur in runtime and are caused by various events such as: when keyboard visibility changes, when language changes, or  when orientation changes. This in turn causes the current foreground Activity to be reconstructed once the change finishes and all instance state will be recovered using Android’s parcelling mechanism via Bundle.
 
-Instance state is not automatically recovered by the framework though and it needs to be explicitly retained in certain life cycle events. It's easy to miss an instance state that should be recovered, especially when orientation is locked, and so it's good practice to test configuration changes while developing. Changing the orientation of the device is the simplest way to simulate that.
+Framework views automatically handle saving/restoring state (ethis is why you don't lose the content in an `EditText` on a configuration change); however, a custom view, an Activity, or a Fragment instance state will not be automatically recovered by the framework. Instead, this needs to be explicitly retained in certain life cycle events. It's really easy to miss an instance state that should be recovered, especially when orientation is locked, and so it's good practice to test configuration changes while developing. *Changing the orientation of the device is the simplest way to simulate that*.
 
-Here's an example of how you should retain state across configuration changes in an Activity:
+Here's an example of how you should retain state across configuration changes in an `Activity`:
 
 ```
+public class MainActivity extends Activity {
 
     private int someIntValue;
 
@@ -48,6 +49,7 @@ Here's an example of how you should retain state across configuration changes in
         super.onRestoreInstanceState(savedInstanceState);
         someIntValue = savedInstanceState.getInt(SOME_VALUE);
     }
+}
 ```
 
 There are other lifecycle events where state can be restored such as in `Activity#onCreate()`. If you want to learn more about how this works, check out [CodePath’s wiki](https://guides.codepath.com/android/Handling-Configuration-Changes).
@@ -62,7 +64,7 @@ i.e.
 
 ```
 
-Although there are some valid use cases where you want to do this, this should be done as a last resort. This is a very common beginner mistake as it appears to get around the issue of saving state; however, doing so might have some unintended consequences. For example, say you want to declare a landscape/portrait-specific resource, that resource will not be loaded automatically and you need to explicitly load the resource in Activity#onConfigurationChanged(). Not knowing this consequence can be a pain to debug.
+Although there are some valid use cases where you want to do this, this should be done as a last resort. This is a very common beginner mistake as it appears to get around the issue of saving state; however, doing so might have some unintended consequences. For example, say you want to declare a landscape/portrait-specific resource, that resource will not be loaded automatically on a configuration change and you need to instead explicitly load the resource in `Activity#onConfigurationChanged()`. Not knowing this consequence can be a pain to debug.
 
 A quote from [Romain Guy](http://www.curious-creature.com/):
 
@@ -74,5 +76,7 @@ In conclusion, locking the device on a particular orientation—or letting the A
 
 #### TL;DR
  * if it’s purely a UX reason for locking orientation, do so but be cautious that the app still handles configuration changes properly.
+ 
  * if `configChanges=”orientation”` is added, make sure it’s actually needed (e.g. for performance reasons maybe because it’s really expensive to reconstruct the Activity, etc.).
+ 
  * if the above solutions are used merely to “solve” saving state on an orientation change, don’t do it.
