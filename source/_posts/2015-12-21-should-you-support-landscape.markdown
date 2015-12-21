@@ -7,7 +7,10 @@ categories: Android
 ---
 Android fragmentation is no joke. There are a total of [~24,000 unique Android devices and 10 different versions of the OS in use as of 2015](http://opensignal.com/reports/2015/08/android-fragmentation/). As Android developers, we want to support as many different devices and versions as possible but doing so can feel like going down a rabbit hole.
 
-{% img http://chrisarriola.me/images/android_device_fragmentation_2015.png 750 500 %}
+<div id="image" style="text-align:center; text-size:10px;">
+{% img center http://chrisarriola.me/images/android_device_fragmentation_2015.png 750 500 description="halsdkjfhasldjkhf"%}
+<i>Android device fragmentation as of August 2015. <a href="http://opensignal.com/reports/2015/08/android-fragmentation">Source</a></i>
+</div>
 
 On top of device and OS fragmentation, having to supporting yet another screen variant, landscape, adds even more complexity.
 
@@ -23,7 +26,9 @@ Based on a [mobile UX survey done by UXmatters in 2013](http://www.uxmatters.com
 
 Because of these reasons, I can see why it is tempting to lock an app to only support portrait mode.
 
-I can think of one good reason though why you shouldn’t do this and consider supporting landscape: **configuration changes**.
+I can think of one good reason though why you shouldn’t do this and consider supporting landscape.
+
+### Configuration Changes
 
 Configuration changes occur in runtime and are caused by various events such as: when keyboard visibility changes, when language changes, or  when orientation changes. This in turn causes the current foreground Activity to be reconstructed once the change finishes and all instance state will be recovered using Android’s parcelling mechanism via Bundle.
 
@@ -74,7 +79,7 @@ Indeed, it is good practice to allow the system to do what it was designed to do
 
 In conclusion, locking the device on a particular orientation—or letting the Activity handle orientation configuration changes—is a stopgap solution without taking into consideration how configuration changes work. Develop apps as if the user may drop off from the screen that they are currently on and ensure that state is appropriately saved/restored.
 
-#### TL;DR
+### TL;DR
  * if it’s purely a UX reason for locking orientation, do so but be cautious that the app still handles configuration changes properly.
  
  * if `configChanges=”orientation”` is added, make sure it’s actually needed (e.g. for performance reasons maybe because it’s really expensive to reconstruct the Activity, etc.).
