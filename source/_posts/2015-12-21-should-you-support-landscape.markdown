@@ -30,9 +30,9 @@ I can think of one good reason though why you shouldn’t do this and consider s
 
 ### Configuration Changes
 
-Configuration changes occur in runtime and are caused by various events such as: when keyboard visibility changes, when language changes, or  when orientation changes. This in turn causes the current foreground Activity to be reconstructed once the change finishes and all instance state will be recovered using Android’s parcelling mechanism via Bundle.
+Configuration changes occur in runtime and are caused by various events such as: when keyboard visibility changes, when language changes, or  when orientation changes. This in turn causes the current foreground `Activity` to be reconstructed once the change finishes and all instance state will be recovered using Android’s parcelling mechanism via `Bundle`.
 
-Framework views automatically handle saving/restoring state (ethis is why you don't lose the content in an `EditText` on a configuration change); however, a custom view, an Activity, or a Fragment instance state will not be automatically recovered by the framework. Instead, this needs to be explicitly retained in certain life cycle events. It's really easy to miss an instance state that should be recovered, especially when orientation is locked, and so it's good practice to test configuration changes while developing. *Changing the orientation of the device is the simplest way to simulate that*.
+Framework Views automatically handle saving/restoring state (this is why you don't lose the content in an `EditText` on a configuration change); however, for a custom view, an `Activity`, or a `Fragment`, instance state will not be automatically recovered by the framework. Instead, instance state needs to be explicitly retained in certain life cycle events. It's really easy to miss an instance state that should be recovered, especially when orientation is locked, and so it's good practice to test configuration changes while developing. *Changing the orientation of the device is the simplest way to simulate that*.
 
 Here's an example of how you should retain state across configuration changes in an `Activity`:
 
