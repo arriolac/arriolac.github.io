@@ -1,24 +1,25 @@
 ---
 layout: post
-title: "Should you support landscape?"
-date: 2015-12-21 15:49:18 -0500
+title: "Why You Should Test Landscape, Even If You Don't Support It"
+date: 2015-12-26 15:49:18 -0500
 comments: true
+published: false
 categories: Android
 ---
-Android fragmentation is no joke. There are a total of [~24,000 unique Android devices and 10 different versions of the OS in use as of 2015](http://opensignal.com/reports/2015/08/android-fragmentation/). As Android developers, we want to support as many different devices and versions as possible but doing so can feel like going down a rabbit hole.
+There are a total of [~24,000 unique Android devices and 10 different versions of the OS in use as of 2015](http://opensignal.com/reports/2015/08/android-fragmentation/). As Android developers, we want to support as many different devices and versions as possible but doing so can feel like going down a rabbit hole.
+
+On top of device and OS fragmentation, having to supporting yet another screen variant, landscape, adds even more complexity.
 
 <div id="image" style="text-align:center; text-size:10px;">
 {% img center http://chrisarriola.me/images/android_device_fragmentation_2015.png 750 500 %}
 <i>Android device fragmentation as of August 2015. <a href="http://opensignal.com/reports/2015/08/android-fragmentation">Source</a></i>
 </div>
 
-On top of device and OS fragmentation, having to supporting yet another screen variant, landscape, adds even more complexity.
-
 To simplify things, wouldn't it be great to lock the orientation mode of all screens to portrait and just say “our app doesn't support landscape?” And hey, while we're at it, “our app doesn't support anything below the latest version of Android, too.”
 
 Seriously though, should you support landscape on Android?
 
-Like any product decision, *the answer isn’t always quite that simple*.
+Like any product decision, the answer isn’t always quite that simple.
 
 There are a set of applications and screens where landscape makes sense. Say for example, when playing games, or, when watching videos. However, an overwhelming majority of apps used on phones are in portrait.
 
@@ -80,7 +81,7 @@ Indeed, it is good practice to allow the system to do what it was designed to do
 In conclusion, locking the device on a particular orientation—or letting the Activity handle orientation configuration changes—is a stopgap solution without taking into consideration how configuration changes work. Develop apps as if the user may drop off from the screen that they are currently on and ensure that state is appropriately saved/restored.
 
 ### TL;DR
- * if it’s purely a UX reason for locking orientation, do so but be cautious that the app still handles configuration changes properly.
+ * if it’s purely a design or UX reason for locking orientation, do so but be cautious that the app still handles configuration changes properly.
  
  * if `configChanges=”orientation”` is added, make sure it’s actually needed (e.g. for performance reasons maybe because it’s really expensive to reconstruct the Activity, etc.).
  
