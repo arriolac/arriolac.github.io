@@ -4,7 +4,7 @@
   <title><![CDATA[Chris Arriola]]></title>
   <link href="http://chrisarriola.me/atom.xml" rel="self"/>
   <link href="http://chrisarriola.me/"/>
-  <updated>2015-12-21T16:26:32-05:00</updated>
+  <updated>2015-12-24T11:09:24-05:00</updated>
   <id>http://chrisarriola.me/</id>
   <author>
     <name><![CDATA[Chris Arriola]]></name>
@@ -21,7 +21,7 @@
     <content type="html"><![CDATA[<p>Android fragmentation is no joke. There are a total of <a href="http://opensignal.com/reports/2015/08/android-fragmentation/">~24,000 unique Android devices and 10 different versions of the OS in use as of 2015</a>. As Android developers, we want to support as many different devices and versions as possible but doing so can feel like going down a rabbit hole.</p>
 
 <div id="image" style="text-align:center; text-size:10px;">
-<img class="center" src="http://chrisarriola.me/images/android_device_fragmentation_2015.png" width="750" height="500" title="description=&#34;halsdkjfhasldjkhf&#34;" alt="description=&#34;halsdkjfhasldjkhf&#34;">
+<img class="center" src="http://chrisarriola.me/images/android_device_fragmentation_2015.png" width="750" height="500">
 <i>Android device fragmentation as of August 2015. <a href="http://opensignal.com/reports/2015/08/android-fragmentation">Source</a></i>
 </div>
 
