@@ -4,7 +4,7 @@
   <title><![CDATA[Chris Arriola]]></title>
   <link href="http://chrisarriola.me/atom.xml" rel="self"/>
   <link href="http://chrisarriola.me/"/>
-  <updated>2015-12-25T14:23:47-05:00</updated>
+  <updated>2015-12-25T15:36:59-05:00</updated>
   <id>http://chrisarriola.me/</id>
   <author>
     <name><![CDATA[Chris Arriola]]></name>
@@ -12,115 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[Should you support landscape?]]></title>
-    <link href="http://chrisarriola.me/blog/2015/12/21/should-you-support-landscape/"/>
-    <updated>2015-12-21T15:49:18-05:00</updated>
-    <id>http://chrisarriola.me/blog/2015/12/21/should-you-support-landscape</id>
-    <content type="html"><![CDATA[<p>Android fragmentation is no joke. There are a total of <a href="http://opensignal.com/reports/2015/08/android-fragmentation/">~24,000 unique Android devices and 10 different versions of the OS in use as of 2015</a>. As Android developers, we want to support as many different devices and versions as possible but doing so can feel like going down a rabbit hole.</p>
-
-<div id="image" style="text-align:center; text-size:10px;">
-<img class="center" src="http://chrisarriola.me/images/android_device_fragmentation_2015.png" width="750" height="500">
-<i>Android device fragmentation as of August 2015. <a href="http://opensignal.com/reports/2015/08/android-fragmentation">Source</a></i>
-</div>
-
-
-<p>On top of device and OS fragmentation, having to supporting yet another screen variant, landscape, adds even more complexity.</p>
-
-<p>To simplify things, wouldn&rsquo;t it be great to lock the orientation mode of all screens to portrait and just say “our app doesn&rsquo;t support landscape?” And hey, while we&rsquo;re at it, “our app doesn&rsquo;t support anything below the latest version of Android, too.”</p>
-
-<p>Seriously though, should you support landscape on Android?</p>
-
-<p>Like any product decision, <em>the answer isn’t always quite that simple</em>.</p>
-
-<p>There are a set of applications and screens where landscape makes sense. Say for example, when playing games, or, when watching videos. However, an overwhelming majority of apps used on phones are in portrait.</p>
-
-<p>Based on a <a href="http://www.uxmatters.com/mt/archives/2013/02/how-do-users-really-hold-mobile-devices.php">mobile UX survey done by UXmatters in 2013</a>, only 10% of users orient the phone in landscape when using their phone with two-hands. This does not surprise me. Think about it, when was the last time you used your phone and an unintended screen rotation occurred? It can be annoying.</p>
-
-<p>Because of these reasons, I can see why it is tempting to lock an app to only support portrait mode.</p>
-
-<p>I can think of one good reason though why you shouldn’t do this and consider supporting landscape.</p>
-
-<h3>Configuration Changes</h3>
-
-<p>Configuration changes occur in runtime and are caused by various events such as: when keyboard visibility changes, when language changes, or  when orientation changes. This in turn causes the current foreground <code>Activity</code> to be reconstructed once the change finishes and all instance state will be recovered using Android’s parcelling mechanism via <code>Bundle</code>.</p>
-
-<p>Framework Views automatically handle saving/restoring state (this is why you don&rsquo;t lose the content in an <code>EditText</code> on a configuration change); however, for a custom view, an <code>Activity</code>, or a <code>Fragment</code>, instance state will not be automatically recovered by the framework. Instead, instance state needs to be explicitly retained in certain life cycle events. It&rsquo;s really easy to miss an instance state that should be recovered, especially when orientation is locked, and so it&rsquo;s good practice to test configuration changes while developing. Changing the orientation of the device is the simplest way to simulate that.</p>
-
-<p>Here&rsquo;s an example of how you should retain state across configuration changes in an <code>Activity</code>:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>public class MainActivity extends Activity {
-</span><span class='line'>
-</span><span class='line'>    private int someIntValue;
-</span><span class='line'>
-</span><span class='line'>    @Override
-</span><span class='line'>    public void onSaveInstanceState(Bundle savedInstanceState) {
-</span><span class='line'>        // This is called by the system so that any instance that can be recovered
-</span><span class='line'>        // when the Activity is recreated.
-</span><span class='line'>        savedInstanceState.putInt(SOME_VALUE, someIntValue);
-</span><span class='line'>        super.onSaveInstanceState(savedInstanceState);
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    public void onRestoreInstanceState(Bundle savedInstanceState) {
-</span><span class='line'>        // This is called by the system when the Activity is reconstructed.
-</span><span class='line'>        super.onRestoreInstanceState(savedInstanceState);
-</span><span class='line'>        someIntValue = savedInstanceState.getInt(SOME_VALUE);
-</span><span class='line'>    }
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
-
-
-<p>There are other lifecycle events where state can be restored such as in <code>Activity#onCreate()</code>. If you want to learn more about how this works, check out <a href="https://guides.codepath.com/android/Handling-Configuration-Changes">CodePath’s wiki</a>.</p>
-
-<p>You might be saying, why not declare in the AndroidManifest that the Activity handles orientation configuration changes so that state will be retained automatically?</p>
-
-<p>i.e.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;activity android:name=”com.app.MyActivity”
-</span><span class='line'>          android:configChanges=”orientation|screenSize” /&gt;
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Although there are some valid use cases where you want to do this, this should be done as a last resort. This is a very common beginner mistake as it appears to get around the issue of saving state; however, doing so might have some unintended consequences. For example, say you want to declare a landscape/portrait-specific resource, that resource will not be loaded automatically on a configuration change and you need to instead explicitly load the resource in <code>Activity#onConfigurationChanged()</code>. Not knowing this consequence can be a pain to debug.</p>
-
-<p>A quote from <a href="http://www.curious-creature.com/">Romain Guy</a>:</p>
-
-<blockquote><p>&hellip;it is sometimes confusing for new Android developers who wonder why their activity is destroyed and recreated. Facing this “issue,” some developers choose to handle configuration changes themselves which is, in my opinion, a short-term solution that will complicate their life when other devices come out or when the application becomes more complex. The automatic resource handling is a very efficient and easy way to adapt your application’s user interface to various devices and devices configurations.</p></blockquote>
-
-<p>Indeed, it is good practice to allow the system to do what it was designed to do as it allows your application to behave correctly on varying devices especially as your application gets more complex.</p>
-
-<p>In conclusion, locking the device on a particular orientation—or letting the Activity handle orientation configuration changes—is a stopgap solution without taking into consideration how configuration changes work. Develop apps as if the user may drop off from the screen that they are currently on and ensure that state is appropriately saved/restored.</p>
-
-<h3>TL;DR</h3>
-
-<ul>
-<li><p>if it’s purely a UX reason for locking orientation, do so but be cautious that the app still handles configuration changes properly.</p></li>
-<li><p>if <code>configChanges=”orientation”</code> is added, make sure it’s actually needed (e.g. for performance reasons maybe because it’s really expensive to reconstruct the Activity, etc.).</p></li>
-<li><p>if the above solutions are used merely to “solve” saving state on an orientation change, don’t do it.</p></li>
-</ul>
-
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[Code Like a Goldfish]]></title>
@@ -703,6 +594,22 @@ Just published my first Android application: Napp. Check it out on Google Play!
     <content type="html"><![CDATA[<blockquote><strong>&#8220;Most slow hunches never last long enough to turn into something useful, because they pass in and out of our memory too quickly, precisely because they possess a certain murkiness. You get a feeling that there&#8217;s an interesting avenue to explore, a problem that might someday lead you to a solution, but then you get distracted by more pressing matters and the hunch disappears. So part of the secret of hunch cultivation is simple: write everything down.&#8221; </strong>
 <p style="text-align:right;"><strong></strong><em>—</em> <em>Steven Johnson</em></p>
 </blockquote>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Last Week in San Diego]]></title>
+    <link href="http://chrisarriola.me/blog/2012/02/21/last-week-in-san-diego/"/>
+    <updated>2012-02-21T00:00:00-05:00</updated>
+    <id>http://chrisarriola.me/blog/2012/02/21/last-week-in-san-diego</id>
+    <content type="html"><![CDATA[<p style="text-align:center;"><a href="http://chrisarriola.files.wordpress.com/2012/02/torreypines2_sandiego.jpg"><img class="aligncenter" title="Torrey Pines" src="http://chrisarriola.files.wordpress.com/2012/02/torreypines2_sandiego.jpg?w=300" alt="" width="300" height="225" /></a></p>
+It&#8217;s officially my last week of living here in San Diego. It&#8217;s been a tremendous experience and it&#8217;s hard to believe I&#8217;m leaving this piece of paradise (I&#8217;m going to miss you yearlong mid-70 degree weather)!
+
+I&#8217;ve always been a huge advocate of goal-setting and having the end in mind. To me, if one is compelled by a vision, then one must make the steps to fulfill that vision. This entails making all the necessary changes to get to the end point. Every action, I view, should be a result of striving for a larger goal. No matter the difficulty of the action, if it is necessary, it must be made. Failure to do so, makes all the difference between getting what you want, and what you don&#8217;t want.
+
+With that said, zooming out 10,000 feet and putting into perspective the bigger picture, for me to achieve my long-term goals, I need to make the necessary steps in the present to get to where I want to be. At the moment, that means leaving the confines of HP and joining an exciting startup in the bay area. Startups and social innovation have always fascinated me and it only makes sense for me to move towards that direction. Personally, I find it easy to get sucked into something simply because it&#8217;s interesting or comforting. However, I know that for me to feel a sense of fulfillment, I need look beyond the mist and act in accordance to my goals and follow my passion. Even if that means leaving something as beautiful as San Diego.
+
+Farewell, San Diego. You will be severely missed!
 ]]></content>
   </entry>
   
