@@ -7,17 +7,19 @@ footer: true
 ---
 
 ##Work Experience
-__Software Engineer__, *Operator (Jan. 2015 - Present)*
+__Software Engineer__, *[Operator](https://operator.com) (Jan. 2015 - Present)*
 
-Building new experiences at [Operator](https://operator.com/).
+Currently doing fullstack mobile development (iOS, Python & Javascript).
+
+Built Operator's early Android specialist app in ~1 month.
 
 __Co-Founder and Android Dev__, *Green Halo Labs (Jan. 2014 - Dec. 2014)*
 
 Developed Android apps for [Leo](http://www.leo.co/), [Sprig](http://www.leo.co/), [Sincerely](https://sincerely.com/ink), and [Fluc](https://sincerely.com/ink).
 
-__Android Software Engineer__, *Edmodo (March 2012 - Jan. 2014)*
+__Android Software Engineer__, *[Edmodo](https://edmodo.com) (March 2012 - Jan. 2014)*
 
-Working on Edmodo's Android application. Previously worked on the iPad application as well.
+Worked on Edmodo's Android application. Previously worked on the iPad application as well.
 
 Edmodo helps connect all learners with the people and resources needed to reach their full potential.
 
@@ -50,18 +52,20 @@ __Developer__, *Startup Weekend NYC - Artmented (Nov. 2010)*
 
 Over a weekend, formed a group with other software developers, designers, and business developers, to create a prototype and business model for an Android application called Artmented. Artmented is an augmented reality (AR) application which allows a user to place and share digital art in a location which can then be viewed through the phone's camera.
 
-__Open Source Contributor__, *Sana Mobile (Nov. 2010 - Present)*
+__Open Source Contributor__, *Sana Mobile (Nov. 2010 - 2013)*
 
 Pushing code to develop the Sana Mobile Android client.
 <br />
 ##Speaking/Teaching Events
-__Android Workshop Instructor__, *Learning Android Development Meetup Group, San Francisco (March 2014)*
+__[Code Like A Goldfish](http://chrisarriola.me/blog/2015/10/18/code-like-a-goldfish/)__, *Telegraph Academy, Berkeley (Oct. 2015)*
 
-__What to Expect as an Android Developer__, *Codepath, San Francisco (October 2013)*
+__Android Workshop Instructor__, *Learning Android Development Meetup Group, San Francisco (Mar. 2014)*
 
-__Introduction to Mobile Development__, *AngelHack, San Francisco (October 2013)*
+__What to Expect as an Android Developer__, *Codepath, San Francisco (Oct. 2013)*
 
-__Evaluation, Management, and Monitoring, Innovations in Global Health Informatics__, _Massachusetts Institute of Technology (March 2013)_
+__Introduction to Mobile Development__, *AngelHack, San Francisco (Oct. 2013)*
+
+__Evaluation, Management, and Monitoring, Innovations in Global Health Informatics__, _Massachusetts Institute of Technology (Mar. 2013)_
 <br />
 ##Projects
 __[reMIND](https://play.google.com/store/apps/details?id=chrisarriola.me.remind), Android Application__ *(Aug. 2014)*
