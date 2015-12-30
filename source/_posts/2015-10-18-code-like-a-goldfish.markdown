@@ -3,7 +3,7 @@ layout: post
 title: "Code Like a Goldfish"
 date: 2015-10-18 16:46:47 -0700
 comments: true
-categories: "Software Design", "Design Patterns", Talks
+categories: SoftwareDesign, DesignPatterns, Talks
 ---
 
 There is an underlying hidden requirement in creating software products. It doesn't just have to "work"; it needs to be molded in such a way that it can be changed, maintained, and scaled easily.
