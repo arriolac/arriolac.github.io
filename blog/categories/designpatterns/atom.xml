@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: DesignPatterns, | Chris Arriola]]></title>
+  <link href="http://chrisarriola.me/blog/categories/designpatterns/atom.xml" rel="self"/>
+  <link href="http://chrisarriola.me/"/>
+  <updated>2015-12-29T17:30:08-08:00</updated>
+  <id>http://chrisarriola.me/</id>
+  <author>
+    <name><![CDATA[Chris Arriola]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Code Like a Goldfish]]></title>
+    <link href="http://chrisarriola.me/blog/2015/10/18/code-like-a-goldfish/"/>
+    <updated>2015-10-18T16:46:47-07:00</updated>
+    <id>http://chrisarriola.me/blog/2015/10/18/code-like-a-goldfish</id>
+    <content type="html"><![CDATA[<p>There is an underlying hidden requirement in creating software products. It doesn&rsquo;t just have to &ldquo;work&rdquo;; it needs to be molded in such a way that it can be changed, maintained, and scaled easily.</p>
+
+<p>Last month, I gave a talk addressing this topic to the 1st cohort at <a href="http://www.telegraphacademy.com/">Telegraph Academy</a>—an  immersive program that teaches underrepresented groups in tech on how to code. They were nearing their last week of the program so I thought it would be relevant to share some industry lessons.</p>
+
+<p><strong>TL;DR</strong></p>
+
+<ol>
+<li><p>Design early</p>
+
+<p> The biggest mistake beginners tend to make is not taking the time to think through the pros/cons of a software design. Designing early makes it easier to find flaws, it&rsquo;s much harder fixing those flaws once it&rsquo;s expressed in code.</p></li>
+<li><p>Don&rsquo;t over optimize</p>
+
+<p> This doesn&rsquo;t just apply to algorithms (e.g. trying to get O(n * log n) performance vs O(n<sup>2</sup>) on a small dataset), but it also applies to software design. Don&rsquo;t over-engineer or over-genericize a problem if it doesn&rsquo;t have to be.</p></li>
+<li><p>Don&rsquo;t repeat yourself (DRY)</p>
+
+<p> Code repetition means if something needs to be changed/fixed, it needs to be changed in all parts of the code which is error-prone. Have one source of truth and abstract where appropriate.</p></li>
+<li><p>Think small</p>
+
+<p> Smaller classes, methods, and files are easier to maintain.</p></li>
+</ol>
+
+
+<p>Check out the slides <a href="https://speakerdeck.com/arriolac/code-like-a-goldfish">here</a>.</p>
+]]></content>
+  </entry>
+  
+</feed>
