@@ -64,7 +64,7 @@ Luckily, framework Views will automatically be saved and recovered for you—*as
     }
 ```
     
-There are other lifecycle events where state can be restored such as in **Activity#onCreate()**. Retaining state in a Fragment can be done in a similar way via **Fragment#onSaveInstanceState()**. Here’s [a good resource](https://guides.codepath.com/android/Handling-Configuration-Changes) for learning more about how this works.
+There are other lifecycle events where state can be restored such as in **Activity#onCreate()**. Retaining state in a Fragment can be done in a similar way via **Fragment#onSaveInstanceState()**. Here’s [a good resource by CodePath](https://guides.codepath.com/android/Handling-Configuration-Changes) for learning more about how this works.
 
 #### Retaining State in A Custom View
 
