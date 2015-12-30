@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Android | Chris Arriola]]></title>
   <link href="http://chrisarriola.me/blog/categories/android/atom.xml" rel="self"/>
   <link href="http://chrisarriola.me/"/>
-  <updated>2015-12-29T17:05:44-08:00</updated>
+  <updated>2015-12-29T17:21:47-08:00</updated>
   <id>http://chrisarriola.me/</id>
   <author>
     <name><![CDATA[Chris Arriola]]></name>
@@ -85,7 +85,7 @@ public void onRestoreInstanceState(Bundle savedInstanceState) {
 
 <p>```</p>
 
-<p>There are other lifecycle events where state can be restored such as in <strong>Activity#onCreate()</strong>. Retaining state in a Fragment can be done in a similar way via <strong>Fragment#onSaveInstanceState()</strong>. Here’s <a href="https://guides.codepath.com/android/Handling-Configuration-Changes">a good resource</a> for learning more about how this works.</p>
+<p>There are other lifecycle events where state can be restored such as in <strong>Activity#onCreate()</strong>. Retaining state in a Fragment can be done in a similar way via <strong>Fragment#onSaveInstanceState()</strong>. Here’s <a href="https://guides.codepath.com/android/Handling-Configuration-Changes">a good resource by CodePath</a> for learning more about how this works.</p>
 
 <h4>Retaining State in A Custom View</h4>
 
