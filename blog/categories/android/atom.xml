@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Android | Chris Arriola]]></title>
   <link href="http://chrisarriola.me/blog/categories/android/atom.xml" rel="self"/>
   <link href="http://chrisarriola.me/"/>
-  <updated>2015-12-28T21:26:11-08:00</updated>
+  <updated>2015-12-29T17:05:44-08:00</updated>
   <id>http://chrisarriola.me/</id>
   <author>
     <name><![CDATA[Chris Arriola]]></name>
@@ -12,6 +12,166 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Getting Attached To Your State]]></title>
+    <link href="http://chrisarriola.me/blog/2015/12/29/getting-attached-to-your-state/"/>
+    <updated>2015-12-29T15:38:18-08:00</updated>
+    <id>http://chrisarriola.me/blog/2015/12/29/getting-attached-to-your-state</id>
+    <content type="html"><![CDATA[<p><a href="http://developer.android.com/guide/topics/resources/runtime-changes.html#HandlingTheChange">Configuration changes</a> occur in runtime and are caused by various events such as: when keyboard visibility changes, when language changes, or when orientation changes. This in turn causes any <em>visible Activity</em> to be reconstructed once the change finishes. For state to be recovered, it needs to be explicitly tied to Android’s parcelling mechanism via Bundle.</p>
+
+<h3>Saving State, The Wrong Way</h3>
+
+<p>Upon encountering state loss caused by a configuration change, say on an orientation change, 2 poor solutions are:</p>
+
+<h4>1. Locking the orientation mode</h4>
+
+<p>```</p>
+
+<pre><code>&lt;activity 
+    android:name="com.app.app.MainActivity"
+    android:screenOrientation="portrait" /&gt;
+</code></pre>
+
+<p>```</p>
+
+<p>This is an anti-solution and simply prevents the configuration change from occurring. This will not guard against <a href="http://developer.android.com/guide/topics/manifest/activity-element.html#config">the other 13 configuration changes</a> as of API level 23.</p>
+
+<blockquote><p>Orientation should only be locked as a result of a UI/UX decision, and not for retaining state.</p></blockquote>
+
+<h4>2. Handling configuration changes manually</h4>
+
+<p>```</p>
+
+<pre><code>&lt;activity 
+    android:name="com.app.app.MainActivity"
+    android:configChanges="orientation" /&gt;
+</code></pre>
+
+<p>```</p>
+
+<p>Again, this is a band-aid and not a proper solution. What if new configuration changes are introduced? Also this might cause some unintended consequences. Say for example you want to declare a landscape/portrait-specific resource, that resource will not be loaded automatically anymore and you need to explicitly load and apply it in <strong>Activity#onConfigurationChanged()</strong> instead. Not knowing this consequence may be a pain to debug.</p>
+
+<p>Quoting <a href="http://www.curious-creature.com/">Roman Guy</a>:</p>
+
+<blockquote><p>“&hellip;it is sometimes confusing for new Android developers who wonder why their activity is destroyed and recreated. Facing this “issue,” some developers choose to handle configuration changes themselves which is, in my opinion, a short-term solution that will complicate their life when other devices come out or when the application becomes more complex. The automatic resource handling is a very efficient and easy way to adapt your application’s user interface to various devices and devices configurations.”</p></blockquote>
+
+<p>Indeed, it is good practice to allow the system to do what it was designed to do as it allows your application to behave correctly on varying devices especially as your application gets more complex.</p>
+
+<blockquote><p>Manually handling configuration changes should only be done sparingly and as a result of some constraint (e.g. performance reasons).</p></blockquote>
+
+<h3>Saving State, The Right Way</h3>
+
+<p>Luckily, framework Views will automatically be saved and recovered for you—<em>assuming all your Views have unique IDs</em>. In other instances you need to explicitly retain state.</p>
+
+<h4>Retaining State In An Activity</h4>
+
+<p>```</p>
+
+<pre><code>@Override
+public void onSaveInstanceState(Bundle savedInstanceState) {
+    // This is called by the system so that any instance that can be recovered
+    // when the Activity is recreated.
+    savedInstanceState.putInt(SOME_VALUE, someIntValue);
+    super.onSaveInstanceState(savedInstanceState);
+}
+
+public void onRestoreInstanceState(Bundle savedInstanceState) {
+    // This is called by the system when the Activity is reconstructed.
+    super.onRestoreInstanceState(savedInstanceState);
+    someIntValue = savedInstanceState.getInt(SOME_VALUE);
+}
+</code></pre>
+
+<p>```</p>
+
+<p>There are other lifecycle events where state can be restored such as in <strong>Activity#onCreate()</strong>. Retaining state in a Fragment can be done in a similar way via <strong>Fragment#onSaveInstanceState()</strong>. Here’s <a href="https://guides.codepath.com/android/Handling-Configuration-Changes">a good resource</a> for learning more about how this works.</p>
+
+<h4>Retaining State in A Custom View</h4>
+
+<p>Retaining state in a custom View is a bit more involved but nonetheless also fairly straightforward.</p>
+
+<p>```
+package com.operator.android;</p>
+
+<p>import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.view.View;</p>
+
+<p>/<em>*
+ * A custom {@link View} that demonstrates how to save/restore instance state.
+ </em>/
+public class CustomView extends View {</p>
+
+<pre><code>private boolean someState;
+
+public CustomView(Context context) {
+    super(context);
+}
+
+public boolean isSomeState() {
+    return someState;
+}
+
+public void setSomeState(boolean someState) {
+    this.someState = someState;
+}
+
+@Override protected Parcelable onSaveInstanceState() {
+    final Parcelable superState = super.onSaveInstanceState();
+    final CustomViewSavedState customViewSavedState = new CustomViewSavedState(superState);
+    customViewSavedState.someState = this.someState;
+    return customViewSavedState;
+}
+
+@Override protected void onRestoreInstanceState(Parcelable state) {
+    final CustomViewSavedState customViewSavedState = (CustomViewSavedState) state;
+    setSomeState(customViewSavedState.someState);
+    super.onRestoreInstanceState(customViewSavedState.getSuperState());
+}
+
+private static class CustomViewSavedState extends BaseSavedState {
+
+    boolean someState;
+
+    public static final Parcelable.Creator&lt;CustomViewSavedState&gt; CREATOR = new Creator&lt;CustomViewSavedState&gt;() {
+        @Override public CustomViewSavedState createFromParcel(Parcel source) {
+            return new CustomViewSavedState(source);
+        }
+
+        @Override public CustomViewSavedState[] newArray(int size) {
+            return new CustomViewSavedState[size];
+        }
+    };
+
+    public CustomViewSavedState(Parcelable superState) {
+        super(superState);
+    }
+
+    private CustomViewSavedState(Parcel source) {
+        super(source);
+        someState = source.readInt() == 1;
+    }
+
+    @Override public void writeToParcel(Parcel out, int flags) {
+        super.writeToParcel(out, flags);
+        out.writeInt(someState ? 1 : 0);
+    }
+}
+</code></pre>
+
+<p>}
+```</p>
+
+<h3>TL;DR</h3>
+
+<ul>
+<li>Don’t save your state the wrong way 😅 Save your state the right way 😁</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Preparing for a Hackathon (A Mobile Perspective)]]></title>
@@ -326,50 +486,6 @@ list.setOnScrollListener(new OnScrollListener() {
 
 
 <p>I&rsquo;ll share more Android quirks as they come up, I hope this helped.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Optimizing Android Layouts]]></title>
-    <link href="http://chrisarriola.me/blog/2012/05/23/optimizing-android-layouts/"/>
-    <updated>2012-05-23T00:00:00-07:00</updated>
-    <id>http://chrisarriola.me/blog/2012/05/23/optimizing-android-layouts</id>
-    <content type="html"><![CDATA[<p>I recently used the <strong>hierarchyviewer</strong> &amp; <strong>lint </strong>tool in the Android SDK and was pretty surprised with the results I saw. Many of the views I had were heavily nested and some views did not necessarily have to be inflated off the bat (progress indicators and refresh icons to name a few). As a result, my activity took a performance hit because of a badly designed layout.</p>
-
-<p>Here&rsquo;s a technique I used that I picked up at AnDevCon III to flatten my layouts and in general make them more performant.</p>
-
-<h3><strong>ViewStub</strong></h3>
-
-
-<p>Essentially, ViewStub is a lightweight and cheap to inflate widget that you can include in a layout. Its purpose is basically to serve as a stub or placeholder for views that don&rsquo;t necessarily need to be inflated on creation. For example, let&rsquo;s say your app displays notifications on a SlidingDrawer; however, when there are no notifications, that SlidingDrawer should be hidden. What you can do then is create a ViewStub that points to your SlidingDrawer layout implementation and when notifications are present, you can simply inflate the ViewStub. Here&rsquo;s an example taken from <a href="http://developer.android.com/resources/articles/layout-tricks-stubs.html">Android Developers</a> that displays the flattening of the view hierarchy using ViewStubs.</p>
-
-<p>Layout without ViewStub:</p>
-
-<p>[caption id=&ldquo;attachment_341&rdquo; align=&ldquo;aligncenter&rdquo; width=&ldquo;510&rdquo;]<a href="http://chrisarriola.files.wordpress.com/2012/05/viewstub41.png"><img class="size-full wp-image-341 " title="Layout Without ViewStub" src="http://chrisarriola.files.wordpress.com/2012/05/viewstub41.png" alt="" width="510" height="431" /></a> Layout Without ViewStub[/caption]</p>
-
-<p>Layout using ViewStub:</p>
-
-<p>[caption id=&ldquo;attachment_342&rdquo; align=&ldquo;aligncenter&rdquo; width=&ldquo;468&rdquo;]<a href="http://chrisarriola.files.wordpress.com/2012/05/viewstub3.png"><img class="size-full wp-image-342 " title="Layout With ViewStub" src="http://chrisarriola.files.wordpress.com/2012/05/viewstub3.png" alt="" width="468" height="476" /></a> Layout With ViewStub[/caption]</p>
-
-<p>The code for your layout:</p>
-
-<blockquote>
-<pre><span style="color:#0000ff;">&lt;ViewStub</span>
-<span style="color:#ff00ff;">android:id</span>=<span style="color:#339966;">"@+id/stub_slidingdrawer"</span>
-<span style="color:#ff00ff;">android:layout</span>=<span style="color:#339966;">"@layout/slidingdrawer"</span>
-<span style="color:#ff00ff;">android:layout_width</span>=<span style="color:#339966;">"fill_parent"</span>
-<span style="color:#ff00ff;">android:layout_height</span>=<span style="color:#339966;">"wrap_content"</span>
-<span style="color:#0000ff;">/&gt;</span></pre>
-</blockquote>
-
-
-<p><span style="color:#0000ff;"><span style="color:#000000;">The code to inflate the ViewStub:</span></span></p>
-
-<blockquote><span style="color:#0000ff;"><span style="color:#000000;">ViewStub stub = (ViewStub) findViewById(R.id.<span style="color:#0000ff;"><em>stub_slidingdrawer</em></span>);</span>
-<span style="color:#000000;">View v = stub.inflate();</span> </span></blockquote>
-
-
-<p>For my specific case, it took about half the time to inflate the entire layout tree by using a ViewStub for infrequently used child layouts. Pretty sweet.</p>
 ]]></content>
   </entry>
   

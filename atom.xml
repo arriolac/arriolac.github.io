@@ -4,7 +4,7 @@
   <title><![CDATA[Chris Arriola]]></title>
   <link href="http://chrisarriola.me/atom.xml" rel="self"/>
   <link href="http://chrisarriola.me/"/>
-  <updated>2015-12-28T21:26:11-08:00</updated>
+  <updated>2015-12-29T17:05:44-08:00</updated>
   <id>http://chrisarriola.me/</id>
   <author>
     <name><![CDATA[Chris Arriola]]></name>
@@ -12,6 +12,240 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Getting Attached To Your State]]></title>
+    <link href="http://chrisarriola.me/blog/2015/12/29/getting-attached-to-your-state/"/>
+    <updated>2015-12-29T15:38:18-08:00</updated>
+    <id>http://chrisarriola.me/blog/2015/12/29/getting-attached-to-your-state</id>
+    <content type="html"><![CDATA[<p><a href="http://developer.android.com/guide/topics/resources/runtime-changes.html#HandlingTheChange">Configuration changes</a> occur in runtime and are caused by various events such as: when keyboard visibility changes, when language changes, or when orientation changes. This in turn causes any <em>visible Activity</em> to be reconstructed once the change finishes. For state to be recovered, it needs to be explicitly tied to Android’s parcelling mechanism via Bundle.</p>
+
+<h3>Saving State, The Wrong Way</h3>
+
+<p>Upon encountering state loss caused by a configuration change, say on an orientation change, 2 poor solutions are:</p>
+
+<h4>1. Locking the orientation mode</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;activity 
+</span><span class='line'>    android:name="com.app.app.MainActivity"
+</span><span class='line'>    android:screenOrientation="portrait" /&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is an anti-solution and simply prevents the configuration change from occurring. This will not guard against <a href="http://developer.android.com/guide/topics/manifest/activity-element.html#config">the other 13 configuration changes</a> as of API level 23.</p>
+
+<blockquote><p>Orientation should only be locked as a result of a UI/UX decision, and not for retaining state.</p></blockquote>
+
+<h4>2. Handling configuration changes manually</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;activity 
+</span><span class='line'>    android:name="com.app.app.MainActivity"
+</span><span class='line'>    android:configChanges="orientation" /&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Again, this is a band-aid and not a proper solution. What if new configuration changes are introduced? Also this might cause some unintended consequences. Say for example you want to declare a landscape/portrait-specific resource, that resource will not be loaded automatically anymore and you need to explicitly load and apply it in <strong>Activity#onConfigurationChanged()</strong> instead. Not knowing this consequence may be a pain to debug.</p>
+
+<p>Quoting <a href="http://www.curious-creature.com/">Roman Guy</a>:</p>
+
+<blockquote><p>“&hellip;it is sometimes confusing for new Android developers who wonder why their activity is destroyed and recreated. Facing this “issue,” some developers choose to handle configuration changes themselves which is, in my opinion, a short-term solution that will complicate their life when other devices come out or when the application becomes more complex. The automatic resource handling is a very efficient and easy way to adapt your application’s user interface to various devices and devices configurations.”</p></blockquote>
+
+<p>Indeed, it is good practice to allow the system to do what it was designed to do as it allows your application to behave correctly on varying devices especially as your application gets more complex.</p>
+
+<blockquote><p>Manually handling configuration changes should only be done sparingly and as a result of some constraint (e.g. performance reasons).</p></blockquote>
+
+<h3>Saving State, The Right Way</h3>
+
+<p>Luckily, framework Views will automatically be saved and recovered for you—<em>assuming all your Views have unique IDs</em>. In other instances you need to explicitly retain state.</p>
+
+<h4>Retaining State In An Activity</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>@Override
+</span><span class='line'>public void onSaveInstanceState(Bundle savedInstanceState) {
+</span><span class='line'>    // This is called by the system so that any instance that can be recovered
+</span><span class='line'>    // when the Activity is recreated.
+</span><span class='line'>    savedInstanceState.putInt(SOME_VALUE, someIntValue);
+</span><span class='line'>    super.onSaveInstanceState(savedInstanceState);
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>public void onRestoreInstanceState(Bundle savedInstanceState) {
+</span><span class='line'>    // This is called by the system when the Activity is reconstructed.
+</span><span class='line'>    super.onRestoreInstanceState(savedInstanceState);
+</span><span class='line'>    someIntValue = savedInstanceState.getInt(SOME_VALUE);
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There are other lifecycle events where state can be restored such as in <strong>Activity#onCreate()</strong>. Retaining state in a Fragment can be done in a similar way via <strong>Fragment#onSaveInstanceState()</strong>. Here’s <a href="https://guides.codepath.com/android/Handling-Configuration-Changes">a good resource</a> for learning more about how this works.</p>
+
+<h4>Retaining State in A Custom View</h4>
+
+<p>Retaining state in a custom View is a bit more involved but nonetheless also fairly straightforward.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>package com.operator.android;
+</span><span class='line'>
+</span><span class='line'>import android.content.Context;
+</span><span class='line'>import android.os.Parcel;
+</span><span class='line'>import android.os.Parcelable;
+</span><span class='line'>import android.view.View;
+</span><span class='line'>
+</span><span class='line'>/**
+</span><span class='line'> * A custom {@link View} that demonstrates how to save/restore instance state.
+</span><span class='line'> */
+</span><span class='line'>public class CustomView extends View {
+</span><span class='line'>
+</span><span class='line'>    private boolean someState;
+</span><span class='line'>
+</span><span class='line'>    public CustomView(Context context) {
+</span><span class='line'>        super(context);
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    public boolean isSomeState() {
+</span><span class='line'>        return someState;
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    public void setSomeState(boolean someState) {
+</span><span class='line'>        this.someState = someState;
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    @Override protected Parcelable onSaveInstanceState() {
+</span><span class='line'>        final Parcelable superState = super.onSaveInstanceState();
+</span><span class='line'>        final CustomViewSavedState customViewSavedState = new CustomViewSavedState(superState);
+</span><span class='line'>        customViewSavedState.someState = this.someState;
+</span><span class='line'>        return customViewSavedState;
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    @Override protected void onRestoreInstanceState(Parcelable state) {
+</span><span class='line'>        final CustomViewSavedState customViewSavedState = (CustomViewSavedState) state;
+</span><span class='line'>        setSomeState(customViewSavedState.someState);
+</span><span class='line'>        super.onRestoreInstanceState(customViewSavedState.getSuperState());
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    private static class CustomViewSavedState extends BaseSavedState {
+</span><span class='line'>
+</span><span class='line'>        boolean someState;
+</span><span class='line'>
+</span><span class='line'>        public static final Parcelable.Creator&lt;CustomViewSavedState&gt; CREATOR = new Creator&lt;CustomViewSavedState&gt;() {
+</span><span class='line'>            @Override public CustomViewSavedState createFromParcel(Parcel source) {
+</span><span class='line'>                return new CustomViewSavedState(source);
+</span><span class='line'>            }
+</span><span class='line'>
+</span><span class='line'>            @Override public CustomViewSavedState[] newArray(int size) {
+</span><span class='line'>                return new CustomViewSavedState[size];
+</span><span class='line'>            }
+</span><span class='line'>        };
+</span><span class='line'>
+</span><span class='line'>        public CustomViewSavedState(Parcelable superState) {
+</span><span class='line'>            super(superState);
+</span><span class='line'>        }
+</span><span class='line'>
+</span><span class='line'>        private CustomViewSavedState(Parcel source) {
+</span><span class='line'>            super(source);
+</span><span class='line'>            someState = source.readInt() == 1;
+</span><span class='line'>        }
+</span><span class='line'>
+</span><span class='line'>        @Override public void writeToParcel(Parcel out, int flags) {
+</span><span class='line'>            super.writeToParcel(out, flags);
+</span><span class='line'>            out.writeInt(someState ? 1 : 0);
+</span><span class='line'>        }
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>TL;DR</h3>
+
+<ul>
+<li>Don’t save your state the wrong way 😅 Save your state the right way 😁</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Code Like a Goldfish]]></title>
@@ -594,22 +828,6 @@ Just published my first Android application: Napp. Check it out on Google Play!
     <content type="html"><![CDATA[<blockquote><strong>&#8220;Most slow hunches never last long enough to turn into something useful, because they pass in and out of our memory too quickly, precisely because they possess a certain murkiness. You get a feeling that there&#8217;s an interesting avenue to explore, a problem that might someday lead you to a solution, but then you get distracted by more pressing matters and the hunch disappears. So part of the secret of hunch cultivation is simple: write everything down.&#8221; </strong>
 <p style="text-align:right;"><strong></strong><em>—</em> <em>Steven Johnson</em></p>
 </blockquote>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Last Week in San Diego]]></title>
-    <link href="http://chrisarriola.me/blog/2012/02/21/last-week-in-san-diego/"/>
-    <updated>2012-02-21T00:00:00-08:00</updated>
-    <id>http://chrisarriola.me/blog/2012/02/21/last-week-in-san-diego</id>
-    <content type="html"><![CDATA[<p style="text-align:center;"><a href="http://chrisarriola.files.wordpress.com/2012/02/torreypines2_sandiego.jpg"><img class="aligncenter" title="Torrey Pines" src="http://chrisarriola.files.wordpress.com/2012/02/torreypines2_sandiego.jpg?w=300" alt="" width="300" height="225" /></a></p>
-It&#8217;s officially my last week of living here in San Diego. It&#8217;s been a tremendous experience and it&#8217;s hard to believe I&#8217;m leaving this piece of paradise (I&#8217;m going to miss you yearlong mid-70 degree weather)!
-
-I&#8217;ve always been a huge advocate of goal-setting and having the end in mind. To me, if one is compelled by a vision, then one must make the steps to fulfill that vision. This entails making all the necessary changes to get to the end point. Every action, I view, should be a result of striving for a larger goal. No matter the difficulty of the action, if it is necessary, it must be made. Failure to do so, makes all the difference between getting what you want, and what you don&#8217;t want.
-
-With that said, zooming out 10,000 feet and putting into perspective the bigger picture, for me to achieve my long-term goals, I need to make the necessary steps in the present to get to where I want to be. At the moment, that means leaving the confines of HP and joining an exciting startup in the bay area. Startups and social innovation have always fascinated me and it only makes sense for me to move towards that direction. Personally, I find it easy to get sucked into something simply because it&#8217;s interesting or comforting. However, I know that for me to feel a sense of fulfillment, I need look beyond the mist and act in accordance to my goals and follow my passion. Even if that means leaving something as beautiful as San Diego.
-
-Farewell, San Diego. You will be severely missed!
 ]]></content>
   </entry>
   
