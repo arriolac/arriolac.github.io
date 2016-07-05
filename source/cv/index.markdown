@@ -57,6 +57,8 @@ __Open Source Contributor__, *Sana Mobile (Nov. 2010 - 2013)*
 Pushing code to develop the Sana Mobile Android client.
 <br />
 ##Speaking/Teaching Events
+__[Introduction to RxJava on Android](https://speakerdeck.com/arriolac/introduction-to-rxjava-on-android)__, *CodePath, San Francisco (June 2016)*
+
 __[Code Like A Goldfish](http://chrisarriola.me/blog/2015/10/18/code-like-a-goldfish/)__, *Telegraph Academy, Berkeley (Oct. 2015)*
 
 __Android Workshop Instructor__, *Learning Android Development Meetup Group, San Francisco (Mar. 2014)*
