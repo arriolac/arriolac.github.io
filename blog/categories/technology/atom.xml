@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Technology | Chris Arriola]]></title>
   <link href="http://chrisarriola.me/blog/categories/technology/atom.xml" rel="self"/>
   <link href="http://chrisarriola.me/"/>
-  <updated>2015-12-29T17:30:08-08:00</updated>
+  <updated>2016-07-05T16:50:41-05:00</updated>
   <id>http://chrisarriola.me/</id>
   <author>
     <name><![CDATA[Chris Arriola]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Preparing for a Hackathon (A Mobile Perspective)]]></title>
     <link href="http://chrisarriola.me/blog/2013/07/23/preparing-for-a-hackathon-a-mobile-perspective/"/>
-    <updated>2013-07-23T00:00:00-07:00</updated>
+    <updated>2013-07-23T00:00:00-05:00</updated>
     <id>http://chrisarriola.me/blog/2013/07/23/preparing-for-a-hackathon-a-mobile-perspective</id>
     <content type="html"><![CDATA[<p><a href="http://chrisarriola.files.wordpress.com/2013/07/536444_10150917662022200_1083819652_a.jpg"><img class="size-full wp-image  " id="i-461" alt="Image" align="middle" src="http://chrisarriola.files.wordpress.com/2013/07/536444_10150917662022200_1083819652_a.jpg?w=170" width="170" height="261" /></a></p>
 
@@ -58,7 +58,7 @@
   <entry>
     <title type="html"><![CDATA[Too Many to One - Implementing mHealth]]></title>
     <link href="http://chrisarriola.me/blog/2012/06/06/too-many-to-one/"/>
-    <updated>2012-06-06T00:00:00-07:00</updated>
+    <updated>2012-06-06T00:00:00-05:00</updated>
     <id>http://chrisarriola.me/blog/2012/06/06/too-many-to-one</id>
     <content type="html"><![CDATA[<p>For about a year and a half now, I&rsquo;ve been volunteering with <a title="Global HEED" href="http://globalheed.org/">Global HEED</a>—a non-profit organization focused on supporting health, education, and economic development globally. Global HEED was started in 2008 by founders Sonny Bandyopadhyay and Zain Ahmed while both pursuing their degrees at the University of Emory. Over the course of 5 years, Global HEED has made a tremendous impact in communities around the world, most notably, in a small village in Guatemala called Calhuitz. Medical students enroll to become a summer fellow wherein they will be responsible for any of the following: developing &amp; teaching public health topics, assessing the communities needs, shadowing/assisting a doctor or nurse, etc. Some of the projects in the past involved building a pharmacy, a community health worker training center, and even first community health clinic in Calhuitz.</p>
 
@@ -93,7 +93,7 @@ by <em>Justin Rosentein</em></blockquote>
   <entry>
     <title type="html"><![CDATA[Optimizing Android Layouts]]></title>
     <link href="http://chrisarriola.me/blog/2012/05/23/optimizing-android-layouts/"/>
-    <updated>2012-05-23T00:00:00-07:00</updated>
+    <updated>2012-05-23T00:00:00-05:00</updated>
     <id>http://chrisarriola.me/blog/2012/05/23/optimizing-android-layouts</id>
     <content type="html"><![CDATA[<p>I recently used the <strong>hierarchyviewer</strong> &amp; <strong>lint </strong>tool in the Android SDK and was pretty surprised with the results I saw. Many of the views I had were heavily nested and some views did not necessarily have to be inflated off the bat (progress indicators and refresh icons to name a few). As a result, my activity took a performance hit because of a badly designed layout.</p>
 
@@ -137,7 +137,7 @@ by <em>Justin Rosentein</em></blockquote>
   <entry>
     <title type="html"><![CDATA[How To Avoid Getting a Ticket When Running a Red Light]]></title>
     <link href="http://chrisarriola.me/blog/2012/05/14/how-to-avoid-getting-a-ticket-when-running-a-red-light/"/>
-    <updated>2012-05-14T00:00:00-07:00</updated>
+    <updated>2012-05-14T00:00:00-05:00</updated>
     <id>http://chrisarriola.me/blog/2012/05/14/how-to-avoid-getting-a-ticket-when-running-a-red-light</id>
     <content type="html"><![CDATA[<p>[caption id=&ldquo;attachment_331&rdquo; align=&ldquo;aligncenter&rdquo; width=&ldquo;510&rdquo;]<a href="http://chrisarriola.files.wordpress.com/2012/05/xlarge_8ca4aa827c1151851324895f5ffb778b.jpg"><img class="size-full wp-image-331" title="SQL Injection" src="http://chrisarriola.files.wordpress.com/2012/05/xlarge_8ca4aa827c1151851324895f5ffb778b.jpg" alt="" width="510" height="286" /></a> <a href="http://gizmodo.com/5498412/sql-injection-license-plate-hopes-to-foil-euro-traffic-cameras">http://gizmodo.com/5498412/sql-injection-license-plate-hopes-to-foil-euro-traffic-cameras</a>[/caption]</p>
 
@@ -148,7 +148,7 @@ by <em>Justin Rosentein</em></blockquote>
   <entry>
     <title type="html"><![CDATA[Android FTW]]></title>
     <link href="http://chrisarriola.me/blog/2012/04/12/android-ftw/"/>
-    <updated>2012-04-12T00:00:00-07:00</updated>
+    <updated>2012-04-12T00:00:00-05:00</updated>
     <id>http://chrisarriola.me/blog/2012/04/12/android-ftw</id>
     <content type="html"><![CDATA[<p>At last, the most anticipated app for Android came out a few days ago: Instagram for Android. For the first 12 hours, they hit an amazing 1 million Android app downloads! Now they&rsquo;re at the ~6 million mark and they just got bought out by Facebook for $1 billion. I thought to myself: &ldquo;great, now everyone is happy.&rdquo;</p>
 
