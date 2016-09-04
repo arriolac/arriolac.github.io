@@ -1,0 +1,720 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: RxJava | Chris Arriola]]></title>
+  <link href="http://chrisarriola.me/blog/categories/rxjava/atom.xml" rel="self"/>
+  <link href="http://chrisarriola.me/"/>
+  <updated>2016-09-04T17:38:04+08:00</updated>
+  <id>http://chrisarriola.me/</id>
+  <author>
+    <name><![CDATA[Chris Arriola]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Introduction to RxJava for Android]]></title>
+    <link href="http://chrisarriola.me/blog/2016/09/04/introduction-to-rxjava-for-android/"/>
+    <updated>2016-09-04T15:52:08+08:00</updated>
+    <id>http://chrisarriola.me/blog/2016/09/04/introduction-to-rxjava-for-android</id>
+    <content type="html"><![CDATA[<blockquote><p>This post was originally published on <a href="https://www.toptal.com/android/functional-reactive-android-rxjava">Toptal</a> under my Toptal <a href="https://www.toptal.com/resume/christopher-arriola">account</a>.</p></blockquote>
+
+<p>If you’re an Android developer, chances are you’ve heard of <a href="https://github.com/ReactiveX/RxJava">RxJava</a>. It’s one of the most discussed libraries for enabling Functional Reactive Programming (FRP) in Android development. It’s touted as the go-to framework for simplifying concurrency/asynchronous tasks inherent in mobile programming.</p>
+
+<p>But… what is RxJava and how does it “simplify” things?</p>
+
+<p><img class="<a" src="href="http://chrisarriola.me/images/rxjava_ooo.jpg">http://chrisarriola.me/images/rxjava_ooo.jpg</a>"></p>
+
+<p>While there are lots of resources already available online explaining what RxJava is, in this article my goal is to give you a basic introduction to RxJava and specifically how it fits into Android development. I’ll also give some concrete examples and suggestions on how you can integrate it in a new or existing project.</p>
+
+<h3>Why Consider RxJava</h3>
+
+<p>At its core, RxJava simplifies development because it <a href="http://reactivex.io/intro.html">raises the level of abstraction</a> around threading. That is, as a developer you don’t have to worry too much about the details of how to perform operations that should occur on different threads. This is particularly attractive since threading is challenging to get right and, if not correctly implemented, can cause some of the most difficult bugs to debug and fix.</p>
+
+<p>Granted, this doesn’t mean RxJava is bulletproof when it comes to threading and it is still important to understand what’s happening behind the scenes; however, RxJava can definitely make your life easier.</p>
+
+<p>Let’s look at an example.</p>
+
+<h4>Network Call &ndash; RxJava vs AsyncTask</h4>
+
+<p>Say we want to obtain data over the network and update the UI as a result. One way to do this is to (1) create an inner <code>AsyncTask</code> subclass in our <code>Activity</code>/<code>Fragment</code>, (2) perform the network operation in the background, and (3) take the result of that operation and update the UI in the main thread.</p>
+
+<p>```
+public class NetworkRequestTask extends AsyncTask&lt;Void, Void, User> {</p>
+
+<pre><code>private final int userId;
+
+public NetworkRequestTask(int userId) {
+    this.userId = userId;
+}
+
+@Override protected User doInBackground(Void... params) {
+    return networkService.getUser(userId);
+}
+
+@Override protected void onPostExecute(User user) {
+    nameTextView.setText(user.getName());
+    // ...set other views
+}
+</code></pre>
+
+<p>}</p>
+
+<p>private void onButtonClicked(Button button) {
+   new NetworkRequestTask(123).execute()
+}
+```</p>
+
+<p>Harmless as this may seem, this approach has some issues and limitations. Namely, memory/context leaks are easily created since <code>NetworkRequestTask</code> is an inner class and thus holds an implicit reference to the outer class. Also, what if we want to chain another long operation after the network call? We’d have to nest two <code>AsyncTask</code>s which can significantly reduce readability.</p>
+
+<p>In contrast, an RxJava approach to performing a network call might look something like this:</p>
+
+<p>```
+private Subscription subscription;</p>
+
+<p>private void onButtonClicked(Button button) {
+   subscription = networkService.getObservableUser(123)</p>
+
+<pre><code>             .subscribeOn(Schedulers.io())
+             .observeOn(AndroidSchedulers.mainThread())
+             .subscribe(new Action1&lt;User&gt;() {
+                 @Override public void call(User user) {
+                     nameTextView.setText(user.getName());
+                     // ... set other views
+                 }
+             });
+</code></pre>
+
+<p>}</p>
+
+<p>@Override protected void onDestroy() {
+   if (subscription != null &amp;&amp; !subscription.isUnsubscribed()) {</p>
+
+<pre><code>   subscription.unsubscribe();
+</code></pre>
+
+<p>   }
+   super.onDestroy();
+}
+```</p>
+
+<p>Using this approach, we solve the problem (of potential memory leaks caused by a running thread holding a reference to the outer context) by keeping a reference to the returned <code>Subscription</code> object. This <code>Subscription</code> object is then tied to the <code>Activity</code>/<code>Fragment</code> object’s <code>#onDestroy()</code> method to guarantee that the <code>Action1#call</code> operation does not execute when the <code>Activity</code>/<code>Fragment</code> needs to be destroyed.</p>
+
+<p>Also, notice that that the return type of <code>#getObservableUser(...)</code> (i.e. an <code>Observable&lt;User&gt;</code>) is chained with further calls to it. Through this fluid API, we’re able to solve the second issue of using an <code>AsyncTask</code> which is that it allows further network call/long operation chaining. Pretty neat, huh?</p>
+
+<p>Let’s dive deeper into some RxJava concepts.</p>
+
+<h3>Observable, Observer, and Operator &ndash; The 3 O’s of RxJava Core</h3>
+
+<p>In the RxJava world, everything can be modeled as streams. A stream emits item(s) over time, and each emission can be consumed/observed.</p>
+
+<p>If you think about it, a stream is not a new concept: click events can be a stream, location updates can be a stream, push notifications can be a stream, and so on.</p>
+
+<p><img class="<a" src="href="http://chrisarriola.me/images/rxjava_animation.gif">http://chrisarriola.me/images/rxjava_animation.gif</a>"></p>
+
+<p>The stream abstraction is implemented through 3 core constructs which I like to call “the 3 O’s”; namely: the <strong>O</strong>bservable, <strong>O</strong>bserver, and the <strong>O</strong>perator. The <strong>Observable</strong> emits items (the stream); and the <strong>Observer</strong> consumes those items. Emissions from Observable objects can further be modified, transformed, and manipulated by chaining <strong>Operator</strong> calls.</p>
+
+<h4>Observable</h4>
+
+<p>An Observable is the stream abstraction in RxJava. It is similar to an <strong>Iterator</strong> in that, given a sequence, it iterates through and produces those items in an orderly fashion. A consumer can then consume those items through the same interface, regardless of the underlying sequence.</p>
+
+<p>Say we wanted to emit the numbers 1, 2, 3, in that order. To do so, we can use the <code>Observable&lt;T&gt;#create(OnSubscribe&lt;T&gt;)</code> method.</p>
+
+<p>```
+Observable<Integer> observable = Observable.create(new Observable.OnSubscribe<Integer>() {
+   @Override public void call(Subscriber&lt;? super Integer> subscriber) {</p>
+
+<pre><code>   subscriber.onNext(1);
+   subscriber.onNext(2);
+   subscriber.onNext(3);
+   subscriber.onCompleted();
+</code></pre>
+
+<p>   }
+});
+```</p>
+
+<p>Invoking <code>subscriber.onNext(Integer)</code> emits an item in the stream and, when the stream is finished emitting, <code>subscriber.onCompleted()</code> is then invoked.</p>
+
+<p>This approach to creating an Observable is fairly verbose. For this reason, there are convenience methods for creating Observable instances which should be preferred in almost all cases.</p>
+
+<p>The simplest way to create an Observable is using <code>Observable#just(...)</code>. As the method name suggests, it just emits the item(s) that you pass into it as method arguments.</p>
+
+<p><code>
+Observable.just(1, 2, 3); // 1, 2, 3 will be emitted, respectively
+</code></p>
+
+<h4>Observer</h4>
+
+<p>The next component to the Observable stream is the Observer (or Observers) subscribed to it. Observers are notified whenever something “interesting” happens in the stream. Observers are notified via the following events:</p>
+
+<ul>
+<li><code>Observer#onNext(T)</code> &ndash; invoked when an item is emitted from the stream</li>
+<li><code>Observable#onError(Throwable)</code> &ndash; invoked when an error has occurred within the stream</li>
+<li><code>Observable#onCompleted()</code> &ndash; invoked when the stream is finished emitting items.</li>
+</ul>
+
+
+<p>To subscribe to a stream, simply call Observable<T>#subscribe(&hellip;) and pass in an Observer instance.</p>
+
+<p>```
+Observable<Integer> observable = Observable.just(1, 2, 3);
+observable.subscribe(new Observer<Integer>() {
+   @Override public void onCompleted() {</p>
+
+<pre><code>   Log.d("Test", "In onCompleted()");
+</code></pre>
+
+<p>   }</p>
+
+<p>   @Override public void onError(Throwable e) {</p>
+
+<pre><code>   Log.d("Test", "In onError()");
+</code></pre>
+
+<p>   }</p>
+
+<p>   @Override public void onNext(Integer integer) {</p>
+
+<pre><code>   Log.d("Test", "In onNext():" + integer);
+</code></pre>
+
+<p>   }
+});
+```</p>
+
+<p>The above code will emit the following in Logcat:</p>
+
+<p><code>
+In onNext(): 1
+In onNext(): 2
+In onNext(): 3
+In onNext(): 4
+In onCompleted()
+</code></p>
+
+<p>There may also be some instances where we are no longer interested in the emissions of an Observable. This is particularly relevant in Android when, for example, an <code>Activity</code>/<code>Fragment</code> needs to be reclaimed in memory.</p>
+
+<p>To stop observing items, we simply need to call <code>Subscription#unsubscribe()</code> on the returned Subscription object.</p>
+
+<p>```
+Subscription subscription = someInfiniteObservable.subscribe(new Observer<Integer>() {
+   @Override public void onCompleted() {</p>
+
+<pre><code>   // ...
+</code></pre>
+
+<p>   }</p>
+
+<p>   @Override public void onError(Throwable e) {</p>
+
+<pre><code>   // ...
+</code></pre>
+
+<p>   }</p>
+
+<p>   @Override public void onNext(Integer integer) {</p>
+
+<pre><code>   // ...
+</code></pre>
+
+<p>   }
+});</p>
+
+<p>// Call unsubscribe when appropriate
+subscription.unsubscribe();
+```</p>
+
+<p>As seen in the code snippet above, upon subscribing to an Observable, we hold the reference to the returned Subscription object and later invoke <code>subscription#unsubscribe()</code> when necessary. In Android, this is best invoked within <code>Activity#onDestroy()</code> or <code>Fragment#onDestroy()</code>.</p>
+
+<h4>Operator</h4>
+
+<p>Items emitted by an Observable can be transformed, modified, and filtered through Operators before notifying the subscribed Observer object(s). Some of the most common operations found in functional programming (such as map, filter, reduce, etc.) can also be applied to an Observable stream. Let’s look at map as an example:</p>
+
+<p>```
+Observable.just(1, 2, 3, 4, 5).map(new Func1&lt;Integer, Integer>() {
+   @Override public Integer call(Integer integer) {</p>
+
+<pre><code>   return integer * 2;
+</code></pre>
+
+<p>   }
+}).subscribe(new Observer<Integer>() {
+   @Override public void onCompleted() {</p>
+
+<pre><code>   // ...
+</code></pre>
+
+<p>   }</p>
+
+<p>   @Override public void onError(Throwable e) {</p>
+
+<pre><code>   // ...
+</code></pre>
+
+<p>   }</p>
+
+<p>   @Override public void onNext(Integer integer) {</p>
+
+<pre><code>   // ...
+</code></pre>
+
+<p>   }
+});
+```</p>
+
+<p>The code snippet above would take each emission from the Observable and multiply each by 2, producing the stream 2, 4, 6, 8, 10, respectively. Applying an Operator typically returns another Observable as a result, which is convenient as this allows us to chain multiple operations to obtain a desired result.</p>
+
+<p>Given the stream above, say we wanted to only receive even numbers. This can be achieved by chaining a <em>filter</em> operation.</p>
+
+<p>```
+Observable.just(1, 2, 3, 4, 5).map(new Func1&lt;Integer, Integer>() {
+   @Override public Integer call(Integer integer) {</p>
+
+<pre><code>   return integer * 2;
+</code></pre>
+
+<p>   }
+}).filter(new Func1&lt;Integer, Boolean>() {
+   @Override public Boolean call(Integer integer) {</p>
+
+<pre><code>   return integer % 2 == 0;
+</code></pre>
+
+<p>   }
+}).subscribe(new Observer<Integer>() {
+   @Override public void onCompleted() {</p>
+
+<pre><code>   // ...
+</code></pre>
+
+<p>   }</p>
+
+<p>   @Override public void onError(Throwable e) {</p>
+
+<pre><code>   // ...
+</code></pre>
+
+<p>   }</p>
+
+<p>   @Override public void onNext(Integer integer) {</p>
+
+<pre><code>   // ...
+</code></pre>
+
+<p>   }
+});
+```</p>
+
+<p>There are <a href="http://reactivex.io/documentation/operators.html#alphabetical">many operators built-in the RxJava</a> toolset that modify the Observable stream; if you can think of a way to modify the stream, chances are, there’s an Operator for it. Unlike most technical documentation, reading the RxJava/ReactiveX docs is fairly simple and to-the-point. Each operator in the documentation comes along with a visualization on how the Operator affects the stream. These visualizations are called “marble diagrams.”</p>
+
+<p>Here’s how a hypothetical Operator called flip might be modeled through a marble diagram:</p>
+
+<p><img class="<a" src="href="http://chrisarriola.me/images/rxjava_flip.png">http://chrisarriola.me/images/rxjava_flip.png</a>"></p>
+
+<h3>Multithreading with RxJava</h3>
+
+<p>Controlling the thread within which operations occur in the Observable chain is done by specifying the <a href="http://reactivex.io/documentation/scheduler.html">Scheduler</a> within which an operator should occur. Essentially, you can think of a Scheduler as a thread pool that, when specified, an operator will use and run on. By default, if no such Scheduler is provided, the Observable chain will operate on the same thread where <code>Observable#subscribe(...)</code> is called. Otherwise, a Scheduler can be specified via <code>Observable#subscribeOn(Scheduler)</code> and/or <code>Observable#observeOn(Scheduler)</code> wherein the scheduled operation will occur on a thread chosen by the Scheduler.</p>
+
+<p>The key difference between the two methods is that <code>Observable#subscribeOn(Scheduler)</code> instructs the source Observable which Scheduler it should run on. The chain will continue to run on the thread from the Scheduler specified in <code>Observable#subscribeOn(Scheduler)</code> until a call to <code>Observable#observeOn(Scheduler)</code> is made with a different Scheduler. When such a call is made, all observers from there on out (i.e., subsequent operations down the chain) will receive notifications in a thread taken from the observeOn Scheduler.</p>
+
+<p>Here’s a marble diagram that demonstrates how these methods affect where operations are run:</p>
+
+<p><img class="<a" src="href="http://chrisarriola.me/images/rxjava_schedulers.png">http://chrisarriola.me/images/rxjava_schedulers.png</a>"></p>
+
+<p>In the context of Android, if a UI operation needs to take place as a result of a long operation, we’d want that operation to take place on the UI thread. For this purpose, we can use <code>AndroidScheduler#mainThread()</code>, one of the Schedulers provided in the <a href="https://github.com/ReactiveX/RxAndroid">RxAndroid</a> library.</p>
+
+<h3>RxJava on Android</h3>
+
+<p>Now that we’ve got some of the basics under our belt, you might be wondering — what’s the best way to integrate RxJava in an <a href="https://www.toptal.com/android">Android</a> application? As you might imagine, there are many use cases for RxJava but, in this example, let’s take a look at one specific case: using Observable objects as part of the network stack.</p>
+
+<p>In this example, we will look at <a href="http://square.github.io/retrofit/">Retrofit</a>, an HTTP client open sourced by Square which has built-in bindings with RxJava to interact with GitHub’s API. Specifically, we’ll create a simple app that presents all the starred repositories for a user given a GitHub username. If you want to jump ahead, the source code is available <a href="https://github.com/arriolac/GitHubRxJava">here</a>.</p>
+
+<h4>Create a New Android Project</h4>
+
+<ul>
+<li>Start by creating a new Android project and naming it <strong>GitHubRxJava</strong>.</li>
+</ul>
+
+
+<p><img class="<a" src="href="http://chrisarriola.me/images/rxjava_setup1.png">http://chrisarriola.me/images/rxjava_setup1.png</a>"></p>
+
+<ul>
+<li>In the <strong>Target Android Devices</strong> screen, keep <strong>Phone and Tablet</strong> selected and set the minimum SDK level of 17. Feel free to set it to a lower/higher API level but, for this example, API level 17 will suffice.</li>
+</ul>
+
+
+<p><img class="<a" src="href="http://chrisarriola.me/images/rxjava_setup2.png">http://chrisarriola.me/images/rxjava_setup2.png</a>"></p>
+
+<ul>
+<li>Select <strong>Empty Activity</strong> in the next prompt.</li>
+</ul>
+
+
+<p><img class="<a" src="href="http://chrisarriola.me/images/rxjava_setup3.png">http://chrisarriola.me/images/rxjava_setup3.png</a>"></p>
+
+<ul>
+<li>In the last step, keep the Activity Name as <strong>MainActivity</strong> and generate a layout file <strong>activity_main</strong>.</li>
+</ul>
+
+
+<p><img class="<a" src="href="http://chrisarriola.me/images/rxjava_setup4.png">http://chrisarriola.me/images/rxjava_setup4.png</a>"></p>
+
+<h4>Project Set-Up</h4>
+
+<p>Include <a href="https://github.com/ReactiveX/RxJava">RxJava</a>, <a href="https://github.com/ReactiveX/RxAndroid">RxAndroid</a>, and the <a href="http://square.github.io/retrofit/">Retrofit</a> library in <code>app/build.gradle</code>. Note that including RxAndroid implicitly also includes RxJava. It is best practice, however, to always include those two libraries explicitly since RxAndroid does not always contain the most up-to-date version of RxJava. Explicitly including the latest version of RxJava guarantees use of the most up-to-date version.</p>
+
+<p>```
+dependencies {</p>
+
+<pre><code>compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+compile 'com.squareup.retrofit2:retrofit:2.1.0'
+compile 'io.reactivex:rxandroid:1.2.0'
+compile 'io.reactivex:rxjava:1.1.8'
+// ...other dependencies
+</code></pre>
+
+<p>}
+```</p>
+
+<h4>Create Data Object</h4>
+
+<p>Create the <code>GitHubRepo</code> data object class. This class encapsulates a repository in GitHub (the network response contains more data but we’re only interested in a subset of that).</p>
+
+<p>```
+public class GitHubRepo {</p>
+
+<pre><code>public final int id;
+public final String name;
+public final String htmlUrl;
+public final String description;
+public final String language;
+public final int stargazersCount;
+
+public GitHubRepo(int id, String name, String htmlUrl, String description, String language, int stargazersCount) {
+    this.id = id;
+    this.name = name;
+    this.htmlUrl = htmlUrl;
+    this.description = description;
+    this.language = language;
+    this.stargazersCount = stargazersCount;
+}
+</code></pre>
+
+<p>}
+```</p>
+
+<h4>Set-Up Retrofit</h4>
+
+<ul>
+<li>Create the <code>GitHubService</code> interface. We will pass this interface into Retrofit and Retrofit will create an implementation of <code>GitHubService</code>.</li>
+</ul>
+
+
+<p>```</p>
+
+<pre><code>public interface GitHubService {
+    @GET("users/{user}/starred") Observable&lt;List&lt;GitHubRepo&gt;&gt; getStarredRepositories(@Path("user") String userName);
+}
+</code></pre>
+
+<p>```</p>
+
+<ul>
+<li>Create the <code>GitHubClient</code> class. This will be the object we will interact with to make network calls from the UI level.
+
+<ul>
+<li> When constructing an implementation of <code>GitHubService</code> through Retrofit, we need to pass in an <code>RxJavaCallAdapterFactory</code> as the call adapter so that network calls can return Observable objects (passing a call adapter is needed for any network call that returns a result other than a <code>Call</code>).</li>
+<li>We also need to pass in a <code>GsonConverterFactory</code> so that we can use <a href="https://github.com/google/gson">Gson</a> as a way to marshal JSON objects to Java objects.</li>
+</ul>
+</li>
+</ul>
+
+
+<p>```</p>
+
+<pre><code>public class GitHubClient {
+
+    private static final String GITHUB_BASE_URL = "https://api.github.com/";
+
+    private static GitHubClient instance;
+    private GitHubService gitHubService;
+
+    private GitHubClient() {
+        final Gson gson =
+            new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
+        final Retrofit retrofit = new Retrofit.Builder().baseUrl(GITHUB_BASE_URL)
+                                                        .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                                                        .addConverterFactory(GsonConverterFactory.create(gson))
+                                                        .build();
+        gitHubService = retrofit.create(GitHubService.class);
+    }
+
+    public static GitHubClient getInstance() {
+        if (instance == null) {
+            instance = new GitHubClient();
+        }
+        return instance;
+    }
+
+    public Observable&lt;List&lt;GitHubRepo&gt;&gt; getStarredRepos(@NonNull String userName) {
+        return gitHubService.getStarredRepositories(userName);
+    }
+}
+</code></pre>
+
+<p>```</p>
+
+<h4>Set-Up Layouts</h4>
+
+<p>Next, create a simple UI that displays the retrieved repos given an input GitHub username. Create <code>activity_home.xml</code> &ndash; the layout for our activity &ndash; with something like the following:</p>
+
+<p>```
+&lt;?xml version=&ldquo;1.0&rdquo; encoding=&ldquo;utf-8&rdquo;?>
+&lt;LinearLayout</p>
+
+<pre><code>xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"&gt;
+
+&lt;ListView
+    android:id="@+id/list_view_repos"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"/&gt;
+
+&lt;LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"&gt;
+
+    &lt;EditText
+        android:id="@+id/edit_text_username"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:hint="@string/username"/&gt;
+
+    &lt;Button
+        android:id="@+id/button_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/search"/&gt;
+
+&lt;/LinearLayout&gt;
+</code></pre>
+
+<p></LinearLayout>
+```</p>
+
+<p>Create <code>item_github_repo.xml</code> &ndash; the <code>ListView</code> item layout for GitHub repository object &ndash; with something like the following:</p>
+
+<p>```
+&lt;?xml version=&ldquo;1.0&rdquo; encoding=&ldquo;utf-8&rdquo;?>
+&lt;RelativeLayout</p>
+
+<pre><code>xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:orientation="vertical"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:padding="6dp"&gt;
+
+&lt;TextView
+    android:id="@+id/text_repo_name"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textSize="24sp"
+    android:textStyle="bold"
+    tools:text="Cropper"/&gt;
+
+&lt;TextView
+    android:id="@+id/text_repo_description"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:lines="2"
+    android:ellipsize="end"
+    android:textSize="16sp"
+    android:layout_below="@+id/text_repo_name"
+    tools:text="Android widget for cropping and rotating an image."/&gt;
+
+&lt;TextView
+    android:id="@+id/text_language"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/text_repo_description"
+    android:layout_alignParentLeft="true"
+    android:textColor="?attr/colorPrimary"
+    android:textSize="14sp"
+    android:textStyle="bold"
+    tools:text="Language: Java"/&gt;
+
+&lt;TextView
+    android:id="@+id/text_stars"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/text_repo_description"
+    android:layout_alignParentRight="true"
+    android:textColor="?attr/colorAccent"
+    android:textSize="14sp"
+    android:textStyle="bold"
+    tools:text="Stars: 1953"/&gt;
+</code></pre>
+
+<p></RelativeLayout>
+```</p>
+
+<h4>Glue Everything Together</h4>
+
+<p>Create a <code>ListAdapter</code> that is in charge of binding <code>GitHubRepo</code> objects into <code>ListView</code> items. The process essentially involves inflating <code>item_github_repo.xml</code> into a <code>View</code> if no recycled <code>View</code> is provided; otherwise, a recycled <code>View</code> is reused to prevent overinflating too many <code>View</code> objects.</p>
+
+<p>```
+public class GitHubRepoAdapter extends BaseAdapter {</p>
+
+<pre><code>private List&lt;GitHubRepo&gt; gitHubRepos = new ArrayList&lt;&gt;();
+
+@Override public int getCount() {
+    return gitHubRepos.size();
+}
+
+@Override public GitHubRepo getItem(int position) {
+    if (position &lt; 0 || position &gt;= gitHubRepos.size()) {
+        return null;
+    } else {
+        return gitHubRepos.get(position);
+    }
+}
+
+@Override public long getItemId(int position) {
+    return position;
+}
+
+@Override public View getView(int position, View convertView, ViewGroup parent) {
+    final View view = (convertView != null ? convertView : createView(parent));
+    final GitHubRepoViewHolder viewHolder = (GitHubRepoViewHolder) view.getTag();
+    viewHolder.setGitHubRepo(getItem(position));
+    return view;
+}
+
+public void setGitHubRepos(@Nullable List&lt;GitHubRepo&gt; repos) {
+    if (repos == null) {
+        return;
+    }
+    gitHubRepos.clear();
+    gitHubRepos.addAll(repos);
+    notifyDataSetChanged();
+}
+
+private View createView(ViewGroup parent) {
+    final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+    final View view = inflater.inflate(R.layout.item_github_repo, parent, false);
+    final GitHubRepoViewHolder viewHolder = new GitHubRepoViewHolder(view);
+    view.setTag(viewHolder);
+    return view;
+}
+
+private static class GitHubRepoViewHolder {
+
+    private TextView textRepoName;
+    private TextView textRepoDescription;
+    private TextView textLanguage;
+    private TextView textStars;
+
+    public GitHubRepoViewHolder(View view) {
+        textRepoName = (TextView) view.findViewById(R.id.text_repo_name);
+        textRepoDescription = (TextView) view.findViewById(R.id.text_repo_description);
+        textLanguage = (TextView) view.findViewById(R.id.text_language);
+        textStars = (TextView) view.findViewById(R.id.text_stars);
+    }
+
+    public void setGitHubRepo(GitHubRepo gitHubRepo) {
+        textRepoName.setText(gitHubRepo.name);
+        textRepoDescription.setText(gitHubRepo.description);
+        textLanguage.setText("Language: " + gitHubRepo.language);
+        textStars.setText("Stars: " + gitHubRepo.stargazersCount);
+    }
+}
+</code></pre>
+
+<p>}
+```</p>
+
+<p>Glue everything together in <code>MainActivity</code>. This is essentially the <code>Activity</code> that gets displayed when we first launch the app. In here, we ask the user to enter their GitHub username, and finally, display all the starred repositories by that username.</p>
+
+<p>```
+public class MainActivity extends AppCompatActivity {</p>
+
+<pre><code>private static final String TAG = MainActivity.class.getSimpleName();
+private GitHubRepoAdapter adapter = new GitHubRepoAdapter();
+private Subscription subscription;
+
+@Override protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+
+    final ListView listView = (ListView) findViewById(R.id.list_view_repos);
+    listView.setAdapter(adapter);
+
+    final EditText editTextUsername = (EditText) findViewById(R.id.edit_text_username);
+    final Button buttonSearch = (Button) findViewById(R.id.button_search);
+    buttonSearch.setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+            final String username = editTextUsername.getText().toString();
+            if (!TextUtils.isEmpty(username)) {
+                getStarredRepos(username);
+            }
+        }
+    });
+}
+
+@Override protected void onDestroy() {
+    if (subscription != null &amp;&amp; !subscription.isUnsubscribed()) {
+        subscription.unsubscribe();
+    }
+    super.onDestroy();
+}
+
+private void getStarredRepos(String username) {
+    subscription = GitHubClient.getInstance()
+                               .getStarredRepos(username)
+                               .subscribeOn(Schedulers.io())
+                               .observeOn(AndroidSchedulers.mainThread())
+                               .subscribe(new Observer&lt;List&lt;GitHubRepo&gt;&gt;() {
+                                   @Override public void onCompleted() {
+                                       Log.d(TAG, "In onCompleted()");
+                                   }
+
+                                   @Override public void onError(Throwable e) {
+                                       e.printStackTrace();
+                                       Log.d(TAG, "In onError()");
+                                   }
+
+                                   @Override public void onNext(List&lt;GitHubRepo&gt; gitHubRepos) {
+                                       Log.d(TAG, "In onNext()");
+                                       adapter.setGitHubRepos(gitHubRepos);
+                                   }
+                               });
+}
+</code></pre>
+
+<p>}
+```</p>
+
+<h4>Run the App</h4>
+
+<p>Running the app should present a screen with an input box to enter a GitHub username. Searching should then present the list of all starred repos.</p>
+
+<p><img class="<a" src="href="http://chrisarriola.me/images/rxjava_screenshot.png">http://chrisarriola.me/images/rxjava_screenshot.png</a>"></p>
+
+<h4>Conclusion</h4>
+
+<p>I hope this serves as a useful introduction to RxJava and an overview of its basic capabilities. There are a ton of powerful concepts in RxJava and I urge you to explore them by digging more deeply into the well-documented <a href="https://github.com/ReactiveX/rxjava/wiki">RxJava wiki</a>.</p>
+
+<p>Feel free to leave any questions or comments in the comment box below. You can also follow me on Twitter at <a href="http://twitter.com/arriolachris">@arriolachris</a> where I tweet a lot about RxJava and all things Android.</p>
+]]></content>
+  </entry>
+  
+</feed>

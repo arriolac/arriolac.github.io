@@ -4,7 +4,7 @@
   <title><![CDATA[Chris Arriola]]></title>
   <link href="http://chrisarriola.me/atom.xml" rel="self"/>
   <link href="http://chrisarriola.me/"/>
-  <updated>2016-08-24T17:33:29-07:00</updated>
+  <updated>2016-09-04T17:38:04+08:00</updated>
   <id>http://chrisarriola.me/</id>
   <author>
     <name><![CDATA[Chris Arriola]]></name>
@@ -14,10 +14,1006 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Introduction to RxJava for Android]]></title>
+    <link href="http://chrisarriola.me/blog/2016/09/04/introduction-to-rxjava-for-android/"/>
+    <updated>2016-09-04T15:52:08+08:00</updated>
+    <id>http://chrisarriola.me/blog/2016/09/04/introduction-to-rxjava-for-android</id>
+    <content type="html"><![CDATA[<blockquote><p>This post was originally published on <a href="https://www.toptal.com/android/functional-reactive-android-rxjava">Toptal</a> under my Toptal <a href="https://www.toptal.com/resume/christopher-arriola">account</a>.</p></blockquote>
+
+<p>If you’re an Android developer, chances are you’ve heard of <a href="https://github.com/ReactiveX/RxJava">RxJava</a>. It’s one of the most discussed libraries for enabling Functional Reactive Programming (FRP) in Android development. It’s touted as the go-to framework for simplifying concurrency/asynchronous tasks inherent in mobile programming.</p>
+
+<p>But… what is RxJava and how does it “simplify” things?</p>
+
+<p><img src="http://chrisarriola.me/images/rxjava_ooo.jpg"></p>
+
+<p>While there are lots of resources already available online explaining what RxJava is, in this article my goal is to give you a basic introduction to RxJava and specifically how it fits into Android development. I’ll also give some concrete examples and suggestions on how you can integrate it in a new or existing project.</p>
+
+<h3>Why Consider RxJava</h3>
+
+<p>At its core, RxJava simplifies development because it <a href="http://reactivex.io/intro.html">raises the level of abstraction</a> around threading. That is, as a developer you don’t have to worry too much about the details of how to perform operations that should occur on different threads. This is particularly attractive since threading is challenging to get right and, if not correctly implemented, can cause some of the most difficult bugs to debug and fix.</p>
+
+<p>Granted, this doesn’t mean RxJava is bulletproof when it comes to threading and it is still important to understand what’s happening behind the scenes; however, RxJava can definitely make your life easier.</p>
+
+<p>Let’s look at an example.</p>
+
+<h4>Network Call &ndash; RxJava vs AsyncTask</h4>
+
+<p>Say we want to obtain data over the network and update the UI as a result. One way to do this is to (1) create an inner <code>AsyncTask</code> subclass in our <code>Activity</code>/<code>Fragment</code>, (2) perform the network operation in the background, and (3) take the result of that operation and update the UI in the main thread.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>public class NetworkRequestTask extends AsyncTask&lt;Void, Void, User&gt; {
+</span><span class='line'>
+</span><span class='line'>    private final int userId;
+</span><span class='line'>
+</span><span class='line'>    public NetworkRequestTask(int userId) {
+</span><span class='line'>        this.userId = userId;
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    @Override protected User doInBackground(Void... params) {
+</span><span class='line'>        return networkService.getUser(userId);
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    @Override protected void onPostExecute(User user) {
+</span><span class='line'>        nameTextView.setText(user.getName());
+</span><span class='line'>        // ...set other views
+</span><span class='line'>    }
+</span><span class='line'>}
+</span><span class='line'>   
+</span><span class='line'>private void onButtonClicked(Button button) {
+</span><span class='line'>   new NetworkRequestTask(123).execute()
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Harmless as this may seem, this approach has some issues and limitations. Namely, memory/context leaks are easily created since <code>NetworkRequestTask</code> is an inner class and thus holds an implicit reference to the outer class. Also, what if we want to chain another long operation after the network call? We’d have to nest two <code>AsyncTask</code>s which can significantly reduce readability.</p>
+
+<p>In contrast, an RxJava approach to performing a network call might look something like this:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>private Subscription subscription;
+</span><span class='line'>
+</span><span class='line'>private void onButtonClicked(Button button) {
+</span><span class='line'>   subscription = networkService.getObservableUser(123)
+</span><span class='line'>                 .subscribeOn(Schedulers.io())
+</span><span class='line'>                 .observeOn(AndroidSchedulers.mainThread())
+</span><span class='line'>                 .subscribe(new Action1&lt;User&gt;() {
+</span><span class='line'>                     @Override public void call(User user) {
+</span><span class='line'>                         nameTextView.setText(user.getName());
+</span><span class='line'>                         // ... set other views
+</span><span class='line'>                     }
+</span><span class='line'>                 });
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>@Override protected void onDestroy() {
+</span><span class='line'>   if (subscription != null && !subscription.isUnsubscribed()) {
+</span><span class='line'>       subscription.unsubscribe();
+</span><span class='line'>   }
+</span><span class='line'>   super.onDestroy();
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Using this approach, we solve the problem (of potential memory leaks caused by a running thread holding a reference to the outer context) by keeping a reference to the returned <code>Subscription</code> object. This <code>Subscription</code> object is then tied to the <code>Activity</code>/<code>Fragment</code> object’s <code>#onDestroy()</code> method to guarantee that the <code>Action1#call</code> operation does not execute when the <code>Activity</code>/<code>Fragment</code> needs to be destroyed.</p>
+
+<p>Also, notice that that the return type of <code>#getObservableUser(...)</code> (i.e. an <code>Observable&lt;User&gt;</code>) is chained with further calls to it. Through this fluid API, we’re able to solve the second issue of using an <code>AsyncTask</code> which is that it allows further network call/long operation chaining. Pretty neat, huh?</p>
+
+<p>Let’s dive deeper into some RxJava concepts.</p>
+
+<h3>Observable, Observer, and Operator &ndash; The 3 O’s of RxJava Core</h3>
+
+<p>In the RxJava world, everything can be modeled as streams. A stream emits item(s) over time, and each emission can be consumed/observed.</p>
+
+<p>If you think about it, a stream is not a new concept: click events can be a stream, location updates can be a stream, push notifications can be a stream, and so on.</p>
+
+<p><img src="http://chrisarriola.me/images/rxjava_animation.gif"></p>
+
+<p>The stream abstraction is implemented through 3 core constructs which I like to call “the 3 O’s”; namely: the <strong>O</strong>bservable, <strong>O</strong>bserver, and the <strong>O</strong>perator. The <strong>Observable</strong> emits items (the stream); and the <strong>Observer</strong> consumes those items. Emissions from Observable objects can further be modified, transformed, and manipulated by chaining <strong>Operator</strong> calls.</p>
+
+<h4>Observable</h4>
+
+<p>An Observable is the stream abstraction in RxJava. It is similar to an <strong>Iterator</strong> in that, given a sequence, it iterates through and produces those items in an orderly fashion. A consumer can then consume those items through the same interface, regardless of the underlying sequence.</p>
+
+<p>Say we wanted to emit the numbers 1, 2, 3, in that order. To do so, we can use the <code>Observable&lt;T&gt;#create(OnSubscribe&lt;T&gt;)</code> method.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Observable&lt;Integer&gt; observable = Observable.create(new Observable.OnSubscribe&lt;Integer&gt;() {
+</span><span class='line'>   @Override public void call(Subscriber&lt;? super Integer&gt; subscriber) {
+</span><span class='line'>       subscriber.onNext(1);
+</span><span class='line'>       subscriber.onNext(2);
+</span><span class='line'>       subscriber.onNext(3);
+</span><span class='line'>       subscriber.onCompleted();
+</span><span class='line'>   }
+</span><span class='line'>});</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Invoking <code>subscriber.onNext(Integer)</code> emits an item in the stream and, when the stream is finished emitting, <code>subscriber.onCompleted()</code> is then invoked.</p>
+
+<p>This approach to creating an Observable is fairly verbose. For this reason, there are convenience methods for creating Observable instances which should be preferred in almost all cases.</p>
+
+<p>The simplest way to create an Observable is using <code>Observable#just(...)</code>. As the method name suggests, it just emits the item(s) that you pass into it as method arguments.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Observable.just(1, 2, 3); // 1, 2, 3 will be emitted, respectively</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Observer</h4>
+
+<p>The next component to the Observable stream is the Observer (or Observers) subscribed to it. Observers are notified whenever something “interesting” happens in the stream. Observers are notified via the following events:</p>
+
+<ul>
+<li><code>Observer#onNext(T)</code> &ndash; invoked when an item is emitted from the stream</li>
+<li><code>Observable#onError(Throwable)</code> &ndash; invoked when an error has occurred within the stream</li>
+<li><code>Observable#onCompleted()</code> &ndash; invoked when the stream is finished emitting items.</li>
+</ul>
+
+
+<p>To subscribe to a stream, simply call Observable<T>#subscribe(&hellip;) and pass in an Observer instance.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Observable&lt;Integer&gt; observable = Observable.just(1, 2, 3);
+</span><span class='line'>observable.subscribe(new Observer&lt;Integer&gt;() {
+</span><span class='line'>   @Override public void onCompleted() {
+</span><span class='line'>       Log.d("Test", "In onCompleted()");
+</span><span class='line'>   }
+</span><span class='line'>
+</span><span class='line'>   @Override public void onError(Throwable e) {
+</span><span class='line'>       Log.d("Test", "In onError()");
+</span><span class='line'>   }
+</span><span class='line'>
+</span><span class='line'>   @Override public void onNext(Integer integer) {
+</span><span class='line'>       Log.d("Test", "In onNext():" + integer);
+</span><span class='line'>   }
+</span><span class='line'>});</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The above code will emit the following in Logcat:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>In onNext(): 1
+</span><span class='line'>In onNext(): 2
+</span><span class='line'>In onNext(): 3
+</span><span class='line'>In onNext(): 4
+</span><span class='line'>In onCompleted()</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There may also be some instances where we are no longer interested in the emissions of an Observable. This is particularly relevant in Android when, for example, an <code>Activity</code>/<code>Fragment</code> needs to be reclaimed in memory.</p>
+
+<p>To stop observing items, we simply need to call <code>Subscription#unsubscribe()</code> on the returned Subscription object.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Subscription subscription = someInfiniteObservable.subscribe(new Observer&lt;Integer&gt;() {
+</span><span class='line'>   @Override public void onCompleted() {
+</span><span class='line'>       // ...
+</span><span class='line'>   }
+</span><span class='line'>
+</span><span class='line'>   @Override public void onError(Throwable e) {
+</span><span class='line'>       // ...
+</span><span class='line'>   }
+</span><span class='line'>
+</span><span class='line'>   @Override public void onNext(Integer integer) {
+</span><span class='line'>       // ...
+</span><span class='line'>   }
+</span><span class='line'>});
+</span><span class='line'>
+</span><span class='line'>// Call unsubscribe when appropriate
+</span><span class='line'>subscription.unsubscribe();</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As seen in the code snippet above, upon subscribing to an Observable, we hold the reference to the returned Subscription object and later invoke <code>subscription#unsubscribe()</code> when necessary. In Android, this is best invoked within <code>Activity#onDestroy()</code> or <code>Fragment#onDestroy()</code>.</p>
+
+<h4>Operator</h4>
+
+<p>Items emitted by an Observable can be transformed, modified, and filtered through Operators before notifying the subscribed Observer object(s). Some of the most common operations found in functional programming (such as map, filter, reduce, etc.) can also be applied to an Observable stream. Let’s look at map as an example:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Observable.just(1, 2, 3, 4, 5).map(new Func1&lt;Integer, Integer&gt;() {
+</span><span class='line'>   @Override public Integer call(Integer integer) {
+</span><span class='line'>       return integer * 2;
+</span><span class='line'>   }
+</span><span class='line'>}).subscribe(new Observer&lt;Integer&gt;() {
+</span><span class='line'>   @Override public void onCompleted() {
+</span><span class='line'>       // ...
+</span><span class='line'>   }
+</span><span class='line'>
+</span><span class='line'>   @Override public void onError(Throwable e) {
+</span><span class='line'>       // ...
+</span><span class='line'>   }
+</span><span class='line'>
+</span><span class='line'>   @Override public void onNext(Integer integer) {
+</span><span class='line'>       // ...
+</span><span class='line'>   }
+</span><span class='line'>});</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The code snippet above would take each emission from the Observable and multiply each by 2, producing the stream 2, 4, 6, 8, 10, respectively. Applying an Operator typically returns another Observable as a result, which is convenient as this allows us to chain multiple operations to obtain a desired result.</p>
+
+<p>Given the stream above, say we wanted to only receive even numbers. This can be achieved by chaining a <em>filter</em> operation.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Observable.just(1, 2, 3, 4, 5).map(new Func1&lt;Integer, Integer&gt;() {
+</span><span class='line'>   @Override public Integer call(Integer integer) {
+</span><span class='line'>       return integer * 2;
+</span><span class='line'>   }
+</span><span class='line'>}).filter(new Func1&lt;Integer, Boolean&gt;() {
+</span><span class='line'>   @Override public Boolean call(Integer integer) {
+</span><span class='line'>       return integer % 2 == 0;
+</span><span class='line'>   }
+</span><span class='line'>}).subscribe(new Observer&lt;Integer&gt;() {
+</span><span class='line'>   @Override public void onCompleted() {
+</span><span class='line'>       // ...
+</span><span class='line'>   }
+</span><span class='line'>
+</span><span class='line'>   @Override public void onError(Throwable e) {
+</span><span class='line'>       // ...
+</span><span class='line'>   }
+</span><span class='line'>
+</span><span class='line'>   @Override public void onNext(Integer integer) {
+</span><span class='line'>       // ...
+</span><span class='line'>   }
+</span><span class='line'>});</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There are <a href="http://reactivex.io/documentation/operators.html#alphabetical">many operators built-in the RxJava</a> toolset that modify the Observable stream; if you can think of a way to modify the stream, chances are, there’s an Operator for it. Unlike most technical documentation, reading the RxJava/ReactiveX docs is fairly simple and to-the-point. Each operator in the documentation comes along with a visualization on how the Operator affects the stream. These visualizations are called “marble diagrams.”</p>
+
+<p>Here’s how a hypothetical Operator called flip might be modeled through a marble diagram:</p>
+
+<p><img src="http://chrisarriola.me/images/rxjava_flip.png"></p>
+
+<h3>Multithreading with RxJava</h3>
+
+<p>Controlling the thread within which operations occur in the Observable chain is done by specifying the <a href="http://reactivex.io/documentation/scheduler.html">Scheduler</a> within which an operator should occur. Essentially, you can think of a Scheduler as a thread pool that, when specified, an operator will use and run on. By default, if no such Scheduler is provided, the Observable chain will operate on the same thread where <code>Observable#subscribe(...)</code> is called. Otherwise, a Scheduler can be specified via <code>Observable#subscribeOn(Scheduler)</code> and/or <code>Observable#observeOn(Scheduler)</code> wherein the scheduled operation will occur on a thread chosen by the Scheduler.</p>
+
+<p>The key difference between the two methods is that <code>Observable#subscribeOn(Scheduler)</code> instructs the source Observable which Scheduler it should run on. The chain will continue to run on the thread from the Scheduler specified in <code>Observable#subscribeOn(Scheduler)</code> until a call to <code>Observable#observeOn(Scheduler)</code> is made with a different Scheduler. When such a call is made, all observers from there on out (i.e., subsequent operations down the chain) will receive notifications in a thread taken from the observeOn Scheduler.</p>
+
+<p>Here’s a marble diagram that demonstrates how these methods affect where operations are run:</p>
+
+<p><img src="http://chrisarriola.me/images/rxjava_schedulers.png"></p>
+
+<p>In the context of Android, if a UI operation needs to take place as a result of a long operation, we’d want that operation to take place on the UI thread. For this purpose, we can use <code>AndroidScheduler#mainThread()</code>, one of the Schedulers provided in the <a href="https://github.com/ReactiveX/RxAndroid">RxAndroid</a> library.</p>
+
+<h3>RxJava on Android</h3>
+
+<p>Now that we’ve got some of the basics under our belt, you might be wondering — what’s the best way to integrate RxJava in an <a href="https://www.toptal.com/android">Android</a> application? As you might imagine, there are many use cases for RxJava but, in this example, let’s take a look at one specific case: using Observable objects as part of the network stack.</p>
+
+<p>In this example, we will look at <a href="http://square.github.io/retrofit/">Retrofit</a>, an HTTP client open sourced by Square which has built-in bindings with RxJava to interact with GitHub’s API. Specifically, we’ll create a simple app that presents all the starred repositories for a user given a GitHub username. If you want to jump ahead, the source code is available <a href="https://github.com/arriolac/GitHubRxJava">here</a>.</p>
+
+<h4>Create a New Android Project</h4>
+
+<ul>
+<li>Start by creating a new Android project and naming it <strong>GitHubRxJava</strong>.</li>
+</ul>
+
+
+<p><img src="http://chrisarriola.me/images/rxjava_setup1.png"></p>
+
+<ul>
+<li>In the <strong>Target Android Devices</strong> screen, keep <strong>Phone and Tablet</strong> selected and set the minimum SDK level of 17. Feel free to set it to a lower/higher API level but, for this example, API level 17 will suffice.</li>
+</ul>
+
+
+<p><img src="http://chrisarriola.me/images/rxjava_setup2.png"></p>
+
+<ul>
+<li>Select <strong>Empty Activity</strong> in the next prompt.</li>
+</ul>
+
+
+<p><img src="http://chrisarriola.me/images/rxjava_setup3.png"></p>
+
+<ul>
+<li>In the last step, keep the Activity Name as <strong>MainActivity</strong> and generate a layout file <strong>activity_main</strong>.</li>
+</ul>
+
+
+<p><img src="http://chrisarriola.me/images/rxjava_setup4.png"></p>
+
+<h4>Project Set-Up</h4>
+
+<p>Include <a href="https://github.com/ReactiveX/RxJava">RxJava</a>, <a href="https://github.com/ReactiveX/RxAndroid">RxAndroid</a>, and the <a href="http://square.github.io/retrofit/">Retrofit</a> library in <code>app/build.gradle</code>. Note that including RxAndroid implicitly also includes RxJava. It is best practice, however, to always include those two libraries explicitly since RxAndroid does not always contain the most up-to-date version of RxJava. Explicitly including the latest version of RxJava guarantees use of the most up-to-date version.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>dependencies {
+</span><span class='line'>    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+</span><span class='line'>    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+</span><span class='line'>    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+</span><span class='line'>    compile 'io.reactivex:rxandroid:1.2.0'
+</span><span class='line'>    compile 'io.reactivex:rxjava:1.1.8'
+</span><span class='line'>    // ...other dependencies
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Create Data Object</h4>
+
+<p>Create the <code>GitHubRepo</code> data object class. This class encapsulates a repository in GitHub (the network response contains more data but we’re only interested in a subset of that).</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>public class GitHubRepo {
+</span><span class='line'>
+</span><span class='line'>    public final int id;
+</span><span class='line'>    public final String name;
+</span><span class='line'>    public final String htmlUrl;
+</span><span class='line'>    public final String description;
+</span><span class='line'>    public final String language;
+</span><span class='line'>    public final int stargazersCount;
+</span><span class='line'>
+</span><span class='line'>    public GitHubRepo(int id, String name, String htmlUrl, String description, String language, int stargazersCount) {
+</span><span class='line'>        this.id = id;
+</span><span class='line'>        this.name = name;
+</span><span class='line'>        this.htmlUrl = htmlUrl;
+</span><span class='line'>        this.description = description;
+</span><span class='line'>        this.language = language;
+</span><span class='line'>        this.stargazersCount = stargazersCount;
+</span><span class='line'>    }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Set-Up Retrofit</h4>
+
+<ul>
+<li>Create the <code>GitHubService</code> interface. We will pass this interface into Retrofit and Retrofit will create an implementation of <code>GitHubService</code>.</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>public interface GitHubService {
+</span><span class='line'>    @GET("users/{user}/starred") Observable&lt;List&lt;GitHubRepo&gt;&gt; getStarredRepositories(@Path("user") String userName);
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Create the <code>GitHubClient</code> class. This will be the object we will interact with to make network calls from the UI level.
+
+<ul>
+<li> When constructing an implementation of <code>GitHubService</code> through Retrofit, we need to pass in an <code>RxJavaCallAdapterFactory</code> as the call adapter so that network calls can return Observable objects (passing a call adapter is needed for any network call that returns a result other than a <code>Call</code>).</li>
+<li>We also need to pass in a <code>GsonConverterFactory</code> so that we can use <a href="https://github.com/google/gson">Gson</a> as a way to marshal JSON objects to Java objects.</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>public class GitHubClient {
+</span><span class='line'>
+</span><span class='line'>    private static final String GITHUB_BASE_URL = "https://api.github.com/";
+</span><span class='line'>
+</span><span class='line'>    private static GitHubClient instance;
+</span><span class='line'>    private GitHubService gitHubService;
+</span><span class='line'>
+</span><span class='line'>    private GitHubClient() {
+</span><span class='line'>        final Gson gson =
+</span><span class='line'>            new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
+</span><span class='line'>        final Retrofit retrofit = new Retrofit.Builder().baseUrl(GITHUB_BASE_URL)
+</span><span class='line'>                                                        .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+</span><span class='line'>                                                        .addConverterFactory(GsonConverterFactory.create(gson))
+</span><span class='line'>                                                        .build();
+</span><span class='line'>        gitHubService = retrofit.create(GitHubService.class);
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    public static GitHubClient getInstance() {
+</span><span class='line'>        if (instance == null) {
+</span><span class='line'>            instance = new GitHubClient();
+</span><span class='line'>        }
+</span><span class='line'>        return instance;
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    public Observable&lt;List&lt;GitHubRepo&gt;&gt; getStarredRepos(@NonNull String userName) {
+</span><span class='line'>        return gitHubService.getStarredRepositories(userName);
+</span><span class='line'>    }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Set-Up Layouts</h4>
+
+<p>Next, create a simple UI that displays the retrieved repos given an input GitHub username. Create <code>activity_home.xml</code> &ndash; the layout for our activity &ndash; with something like the following:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+</span><span class='line'>&lt;LinearLayout
+</span><span class='line'>    xmlns:android="http://schemas.android.com/apk/res/android"
+</span><span class='line'>    android:layout_width="match_parent"
+</span><span class='line'>    android:layout_height="match_parent"
+</span><span class='line'>    android:orientation="vertical"&gt;
+</span><span class='line'>
+</span><span class='line'>    &lt;ListView
+</span><span class='line'>        android:id="@+id/list_view_repos"
+</span><span class='line'>        android:layout_width="match_parent"
+</span><span class='line'>        android:layout_height="0dp"
+</span><span class='line'>        android:layout_weight="1"/&gt;
+</span><span class='line'>
+</span><span class='line'>    &lt;LinearLayout
+</span><span class='line'>        android:layout_width="match_parent"
+</span><span class='line'>        android:layout_height="wrap_content"
+</span><span class='line'>        android:orientation="horizontal"&gt;
+</span><span class='line'>
+</span><span class='line'>        &lt;EditText
+</span><span class='line'>            android:id="@+id/edit_text_username"
+</span><span class='line'>            android:layout_width="0dp"
+</span><span class='line'>            android:layout_height="wrap_content"
+</span><span class='line'>            android:layout_weight="1"
+</span><span class='line'>            android:hint="@string/username"/&gt;
+</span><span class='line'>
+</span><span class='line'>        &lt;Button
+</span><span class='line'>            android:id="@+id/button_search"
+</span><span class='line'>            android:layout_width="wrap_content"
+</span><span class='line'>            android:layout_height="wrap_content"
+</span><span class='line'>            android:text="@string/search"/&gt;
+</span><span class='line'>
+</span><span class='line'>    &lt;/LinearLayout&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;/LinearLayout&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Create <code>item_github_repo.xml</code> &ndash; the <code>ListView</code> item layout for GitHub repository object &ndash; with something like the following:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+</span><span class='line'>&lt;RelativeLayout
+</span><span class='line'>    xmlns:android="http://schemas.android.com/apk/res/android"
+</span><span class='line'>    xmlns:tools="http://schemas.android.com/tools"
+</span><span class='line'>    android:orientation="vertical"
+</span><span class='line'>    android:layout_width="match_parent"
+</span><span class='line'>    android:layout_height="match_parent"
+</span><span class='line'>    android:padding="6dp"&gt;
+</span><span class='line'>
+</span><span class='line'>    &lt;TextView
+</span><span class='line'>        android:id="@+id/text_repo_name"
+</span><span class='line'>        android:layout_width="match_parent"
+</span><span class='line'>        android:layout_height="wrap_content"
+</span><span class='line'>        android:textSize="24sp"
+</span><span class='line'>        android:textStyle="bold"
+</span><span class='line'>        tools:text="Cropper"/&gt;
+</span><span class='line'>
+</span><span class='line'>    &lt;TextView
+</span><span class='line'>        android:id="@+id/text_repo_description"
+</span><span class='line'>        android:layout_width="match_parent"
+</span><span class='line'>        android:layout_height="wrap_content"
+</span><span class='line'>        android:lines="2"
+</span><span class='line'>        android:ellipsize="end"
+</span><span class='line'>        android:textSize="16sp"
+</span><span class='line'>        android:layout_below="@+id/text_repo_name"
+</span><span class='line'>        tools:text="Android widget for cropping and rotating an image."/&gt;
+</span><span class='line'>
+</span><span class='line'>    &lt;TextView
+</span><span class='line'>        android:id="@+id/text_language"
+</span><span class='line'>        android:layout_width="wrap_content"
+</span><span class='line'>        android:layout_height="wrap_content"
+</span><span class='line'>        android:layout_below="@+id/text_repo_description"
+</span><span class='line'>        android:layout_alignParentLeft="true"
+</span><span class='line'>        android:textColor="?attr/colorPrimary"
+</span><span class='line'>        android:textSize="14sp"
+</span><span class='line'>        android:textStyle="bold"
+</span><span class='line'>        tools:text="Language: Java"/&gt;
+</span><span class='line'>
+</span><span class='line'>    &lt;TextView
+</span><span class='line'>        android:id="@+id/text_stars"
+</span><span class='line'>        android:layout_width="wrap_content"
+</span><span class='line'>        android:layout_height="wrap_content"
+</span><span class='line'>        android:layout_below="@+id/text_repo_description"
+</span><span class='line'>        android:layout_alignParentRight="true"
+</span><span class='line'>        android:textColor="?attr/colorAccent"
+</span><span class='line'>        android:textSize="14sp"
+</span><span class='line'>        android:textStyle="bold"
+</span><span class='line'>        tools:text="Stars: 1953"/&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;/RelativeLayout&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Glue Everything Together</h4>
+
+<p>Create a <code>ListAdapter</code> that is in charge of binding <code>GitHubRepo</code> objects into <code>ListView</code> items. The process essentially involves inflating <code>item_github_repo.xml</code> into a <code>View</code> if no recycled <code>View</code> is provided; otherwise, a recycled <code>View</code> is reused to prevent overinflating too many <code>View</code> objects.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>public class GitHubRepoAdapter extends BaseAdapter {
+</span><span class='line'>
+</span><span class='line'>    private List&lt;GitHubRepo&gt; gitHubRepos = new ArrayList&lt;&gt;();
+</span><span class='line'>
+</span><span class='line'>    @Override public int getCount() {
+</span><span class='line'>        return gitHubRepos.size();
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    @Override public GitHubRepo getItem(int position) {
+</span><span class='line'>        if (position &lt; 0 || position &gt;= gitHubRepos.size()) {
+</span><span class='line'>            return null;
+</span><span class='line'>        } else {
+</span><span class='line'>            return gitHubRepos.get(position);
+</span><span class='line'>        }
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    @Override public long getItemId(int position) {
+</span><span class='line'>        return position;
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    @Override public View getView(int position, View convertView, ViewGroup parent) {
+</span><span class='line'>        final View view = (convertView != null ? convertView : createView(parent));
+</span><span class='line'>        final GitHubRepoViewHolder viewHolder = (GitHubRepoViewHolder) view.getTag();
+</span><span class='line'>        viewHolder.setGitHubRepo(getItem(position));
+</span><span class='line'>        return view;
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    public void setGitHubRepos(@Nullable List&lt;GitHubRepo&gt; repos) {
+</span><span class='line'>        if (repos == null) {
+</span><span class='line'>            return;
+</span><span class='line'>        }
+</span><span class='line'>        gitHubRepos.clear();
+</span><span class='line'>        gitHubRepos.addAll(repos);
+</span><span class='line'>        notifyDataSetChanged();
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    private View createView(ViewGroup parent) {
+</span><span class='line'>        final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+</span><span class='line'>        final View view = inflater.inflate(R.layout.item_github_repo, parent, false);
+</span><span class='line'>        final GitHubRepoViewHolder viewHolder = new GitHubRepoViewHolder(view);
+</span><span class='line'>        view.setTag(viewHolder);
+</span><span class='line'>        return view;
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    private static class GitHubRepoViewHolder {
+</span><span class='line'>
+</span><span class='line'>        private TextView textRepoName;
+</span><span class='line'>        private TextView textRepoDescription;
+</span><span class='line'>        private TextView textLanguage;
+</span><span class='line'>        private TextView textStars;
+</span><span class='line'>
+</span><span class='line'>        public GitHubRepoViewHolder(View view) {
+</span><span class='line'>            textRepoName = (TextView) view.findViewById(R.id.text_repo_name);
+</span><span class='line'>            textRepoDescription = (TextView) view.findViewById(R.id.text_repo_description);
+</span><span class='line'>            textLanguage = (TextView) view.findViewById(R.id.text_language);
+</span><span class='line'>            textStars = (TextView) view.findViewById(R.id.text_stars);
+</span><span class='line'>        }
+</span><span class='line'>
+</span><span class='line'>        public void setGitHubRepo(GitHubRepo gitHubRepo) {
+</span><span class='line'>            textRepoName.setText(gitHubRepo.name);
+</span><span class='line'>            textRepoDescription.setText(gitHubRepo.description);
+</span><span class='line'>            textLanguage.setText("Language: " + gitHubRepo.language);
+</span><span class='line'>            textStars.setText("Stars: " + gitHubRepo.stargazersCount);
+</span><span class='line'>        }
+</span><span class='line'>    }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Glue everything together in <code>MainActivity</code>. This is essentially the <code>Activity</code> that gets displayed when we first launch the app. In here, we ask the user to enter their GitHub username, and finally, display all the starred repositories by that username.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>public class MainActivity extends AppCompatActivity {
+</span><span class='line'>
+</span><span class='line'>    private static final String TAG = MainActivity.class.getSimpleName();
+</span><span class='line'>    private GitHubRepoAdapter adapter = new GitHubRepoAdapter();
+</span><span class='line'>    private Subscription subscription;
+</span><span class='line'>
+</span><span class='line'>    @Override protected void onCreate(Bundle savedInstanceState) {
+</span><span class='line'>        super.onCreate(savedInstanceState);
+</span><span class='line'>        setContentView(R.layout.activity_main);
+</span><span class='line'>
+</span><span class='line'>        final ListView listView = (ListView) findViewById(R.id.list_view_repos);
+</span><span class='line'>        listView.setAdapter(adapter);
+</span><span class='line'>
+</span><span class='line'>        final EditText editTextUsername = (EditText) findViewById(R.id.edit_text_username);
+</span><span class='line'>        final Button buttonSearch = (Button) findViewById(R.id.button_search);
+</span><span class='line'>        buttonSearch.setOnClickListener(new View.OnClickListener() {
+</span><span class='line'>            @Override public void onClick(View v) {
+</span><span class='line'>                final String username = editTextUsername.getText().toString();
+</span><span class='line'>                if (!TextUtils.isEmpty(username)) {
+</span><span class='line'>                    getStarredRepos(username);
+</span><span class='line'>                }
+</span><span class='line'>            }
+</span><span class='line'>        });
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    @Override protected void onDestroy() {
+</span><span class='line'>        if (subscription != null && !subscription.isUnsubscribed()) {
+</span><span class='line'>            subscription.unsubscribe();
+</span><span class='line'>        }
+</span><span class='line'>        super.onDestroy();
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    private void getStarredRepos(String username) {
+</span><span class='line'>        subscription = GitHubClient.getInstance()
+</span><span class='line'>                                   .getStarredRepos(username)
+</span><span class='line'>                                   .subscribeOn(Schedulers.io())
+</span><span class='line'>                                   .observeOn(AndroidSchedulers.mainThread())
+</span><span class='line'>                                   .subscribe(new Observer&lt;List&lt;GitHubRepo&gt;&gt;() {
+</span><span class='line'>                                       @Override public void onCompleted() {
+</span><span class='line'>                                           Log.d(TAG, "In onCompleted()");
+</span><span class='line'>                                       }
+</span><span class='line'>
+</span><span class='line'>                                       @Override public void onError(Throwable e) {
+</span><span class='line'>                                           e.printStackTrace();
+</span><span class='line'>                                           Log.d(TAG, "In onError()");
+</span><span class='line'>                                       }
+</span><span class='line'>
+</span><span class='line'>                                       @Override public void onNext(List&lt;GitHubRepo&gt; gitHubRepos) {
+</span><span class='line'>                                           Log.d(TAG, "In onNext()");
+</span><span class='line'>                                           adapter.setGitHubRepos(gitHubRepos);
+</span><span class='line'>                                       }
+</span><span class='line'>                                   });
+</span><span class='line'>    }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Run the App</h4>
+
+<p>Running the app should present a screen with an input box to enter a GitHub username. Searching should then present the list of all starred repos.</p>
+
+<p><img src="http://chrisarriola.me/images/rxjava_screenshot.png"></p>
+
+<h4>Conclusion</h4>
+
+<p>I hope this serves as a useful introduction to RxJava and an overview of its basic capabilities. There are a ton of powerful concepts in RxJava and I urge you to explore them by digging more deeply into the well-documented <a href="https://github.com/ReactiveX/rxjava/wiki">RxJava wiki</a>.</p>
+
+<p>Feel free to leave any questions or comments in the comment box below. You can also follow me on Twitter at <a href="http://twitter.com/arriolachris">@arriolachris</a> where I tweet a lot about RxJava and all things Android.</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Getting Attached To Your State]]></title>
-    <link href="http://chrisarriola.me/blog/2015/12/29/getting-attached-to-your-state/"/>
-    <updated>2015-12-29T15:38:18-08:00</updated>
-    <id>http://chrisarriola.me/blog/2015/12/29/getting-attached-to-your-state</id>
+    <link href="http://chrisarriola.me/blog/2015/12/30/getting-attached-to-your-state/"/>
+    <updated>2015-12-30T07:38:18+08:00</updated>
+    <id>http://chrisarriola.me/blog/2015/12/30/getting-attached-to-your-state</id>
     <content type="html"><![CDATA[<p><a href="http://developer.android.com/guide/topics/resources/runtime-changes.html#HandlingTheChange">Configuration changes</a> occur in runtime and are caused by various events such as: when keyboard visibility changes, when language changes, or when orientation changes. This in turn causes any <em>visible Activity</em> to be reconstructed once the change finishes. For state to be recovered, it needs to be explicitly tied to Android’s parcelling mechanism via Bundle.</p>
 
 <h3>Saving State, The Wrong Way</h3>
@@ -249,9 +1245,9 @@
   
   <entry>
     <title type="html"><![CDATA[Code Like a Goldfish]]></title>
-    <link href="http://chrisarriola.me/blog/2015/10/18/code-like-a-goldfish/"/>
-    <updated>2015-10-18T16:46:47-07:00</updated>
-    <id>http://chrisarriola.me/blog/2015/10/18/code-like-a-goldfish</id>
+    <link href="http://chrisarriola.me/blog/2015/10/19/code-like-a-goldfish/"/>
+    <updated>2015-10-19T07:46:47+08:00</updated>
+    <id>http://chrisarriola.me/blog/2015/10/19/code-like-a-goldfish</id>
     <content type="html"><![CDATA[<p>There is an underlying hidden requirement in creating software products. It doesn&rsquo;t just have to &ldquo;work&rdquo;; it needs to be molded in such a way that it can be changed, maintained, and scaled easily.</p>
 
 <p>Last month, I gave a talk addressing this topic to the 1st cohort at <a href="http://www.telegraphacademy.com/">Telegraph Academy</a>—an  immersive program that teaches underrepresented groups in tech on how to code. They were nearing their last week of the program so I thought it would be relevant to share some industry lessons.</p>
@@ -280,9 +1276,9 @@
   
   <entry>
     <title type="html"><![CDATA[Android Wear App: reMIND]]></title>
-    <link href="http://chrisarriola.me/blog/2014/08/24/remind/"/>
-    <updated>2014-08-24T13:29:55-07:00</updated>
-    <id>http://chrisarriola.me/blog/2014/08/24/remind</id>
+    <link href="http://chrisarriola.me/blog/2014/08/25/remind/"/>
+    <updated>2014-08-25T04:29:55+08:00</updated>
+    <id>http://chrisarriola.me/blog/2014/08/25/remind</id>
     <content type="html"><![CDATA[<h2>Pay attention.</h2>
 
 <p><img class="right" src="http://chrisarriola.me/images/procrastination.jpg" width="457" height="320"></p>
@@ -306,9 +1302,9 @@
   
   <entry>
     <title type="html"><![CDATA[Deep Work]]></title>
-    <link href="http://chrisarriola.me/blog/2014/01/17/deep-work/"/>
-    <updated>2014-01-17T20:19:00-08:00</updated>
-    <id>http://chrisarriola.me/blog/2014/01/17/deep-work</id>
+    <link href="http://chrisarriola.me/blog/2014/01/18/deep-work/"/>
+    <updated>2014-01-18T12:19:00+08:00</updated>
+    <id>http://chrisarriola.me/blog/2014/01/18/deep-work</id>
     <content type="html"><![CDATA[<br/>
 
 
@@ -353,9 +1349,9 @@
   
   <entry>
     <title type="html"><![CDATA[Blog Migration]]></title>
-    <link href="http://chrisarriola.me/blog/2014/01/11/blog-migration/"/>
-    <updated>2014-01-11T11:06:18-08:00</updated>
-    <id>http://chrisarriola.me/blog/2014/01/11/blog-migration</id>
+    <link href="http://chrisarriola.me/blog/2014/01/12/blog-migration/"/>
+    <updated>2014-01-12T03:06:18+08:00</updated>
+    <id>http://chrisarriola.me/blog/2014/01/12/blog-migration</id>
     <content type="html"><![CDATA[<p>Just moved my blog from a <a href="http://chrisarriola.wordpress.com">wordpress.com site</a> to Octopress hosted on GitHub. Surprisingly, the set-up was really quick including migrating all of my posts and tweaking some colors from the theme I chose. Not everything went smoothly though; I lost all of my comments and images on posts had some formatting issues. Aside from that, it only took a few hours.</p>
 
 <p>Feel free to leave a comment for any suggestions!</p>
@@ -365,7 +1361,7 @@
   <entry>
     <title type="html"><![CDATA[The Power of Now by Eckhart Tolle]]></title>
     <link href="http://chrisarriola.me/blog/2013/11/21/480/"/>
-    <updated>2013-11-21T00:00:00-08:00</updated>
+    <updated>2013-11-21T00:00:00+08:00</updated>
     <id>http://chrisarriola.me/blog/2013/11/21/480</id>
     <content type="html"><![CDATA[<a style="float:left;padding-right:20px;" href="https://www.goodreads.com/book/show/6708.The_Power_of_Now"><img alt="The Power of Now: A Guide to Spiritual Enlightenment" src="https://d202m5krfqbpi5.cloudfront.net/books/1328746059m/6708.jpg" border="0" /></a><a href="https://www.goodreads.com/book/show/6708.The_Power_of_Now">The Power of Now: A Guide to Spiritual Enlightenment</a> by <a href="https://www.goodreads.com/author/show/4493.Eckhart_Tolle">Eckhart Tolle</a>
 
@@ -380,7 +1376,7 @@ Added more context to my understanding of why the present is what&#8217;s most i
   <entry>
     <title type="html"><![CDATA[Preparing for a Hackathon (A Mobile Perspective)]]></title>
     <link href="http://chrisarriola.me/blog/2013/07/23/preparing-for-a-hackathon-a-mobile-perspective/"/>
-    <updated>2013-07-23T00:00:00-07:00</updated>
+    <updated>2013-07-23T00:00:00+08:00</updated>
     <id>http://chrisarriola.me/blog/2013/07/23/preparing-for-a-hackathon-a-mobile-perspective</id>
     <content type="html"><![CDATA[<a href="http://chrisarriola.files.wordpress.com/2013/07/536444_10150917662022200_1083819652_a.jpg"><img class="size-full wp-image  " id="i-461" alt="Image" align="middle" src="http://chrisarriola.files.wordpress.com/2013/07/536444_10150917662022200_1083819652_a.jpg?w=170" width="170" height="261" /></a>
 <p dir="ltr">The time-pressure imposed at hackathons make it essential for teams to prepare ahead of time so that they can focus on the most critical tasks (building the actual product) the day of the event. Typically though, hackers come in without a team or idea. Whether you fall under this category or not, <em>preparation is still important</em>. Given that a full-blown business and a polished working product is unlikely to be built overnight, the point of a hackathon should be to learn as much as you can as well as form long-lasting relationships with people in your team—<strong>the burning desire for building and creating new things does not stop after a weekend</strong>!</p>
@@ -401,7 +1397,7 @@ Added more context to my understanding of why the present is what&#8217;s most i
   <entry>
     <title type="html"><![CDATA[Android Security Part 1 - Reverse Engineering Android Apps]]></title>
     <link href="http://chrisarriola.me/blog/2012/08/31/android-security-part-1-reverse-engineering-android-apps/"/>
-    <updated>2012-08-31T00:00:00-07:00</updated>
+    <updated>2012-08-31T00:00:00+08:00</updated>
     <id>http://chrisarriola.me/blog/2012/08/31/android-security-part-1-reverse-engineering-android-apps</id>
     <content type="html"><![CDATA[<p>
 Google introduced automatic support for <strong>ProGuard</strong>, a code obfuscation tool, in ADT as early as December 2010 in version 8.0.0. It is integrated into the build system to make code obfuscation a pretty &#8220;straightforward&#8221; process. Since then, Google has encouraged—albeit not proactively—developers to enable ProGuard to prevent hackers from reverse engineering and hacking applications. Despite enabling ProGuard, however, a very persistent hacker may still be able to reverse engineer a ProGuard-ed application but the task becomes exponentially harder. There are other good practices developers should abide by to ensure a secure app, but code obfuscation should always be the first line of defense (more information on code obfuscation on Android <a title="ProGuard" href="http://android-developers.blogspot.com/2010/09/proguard-android-and-licensing-server.html">here</a> and <a title="ProGuard 2" href="http://android-developers.blogspot.com/2010/09/securing-android-lvl-applications.html">here</a>).
@@ -466,7 +1462,7 @@ Any tips on how to create a secure Android app? Leave a comment below!
   <entry>
     <title type="html"><![CDATA[Android: Capture and Crop an Image]]></title>
     <link href="http://chrisarriola.me/blog/2012/07/18/android-capture-and-crop-an-image/"/>
-    <updated>2012-07-18T00:00:00-07:00</updated>
+    <updated>2012-07-18T00:00:00+08:00</updated>
     <id>http://chrisarriola.me/blog/2012/07/18/android-capture-and-crop-an-image</id>
     <content type="html"><![CDATA[One line: Intent cropIntent = <span style="color:#3366ff;"><strong>new</strong></span> Intent(<span style="color:#0000ff;">&#8220;com.android.camera.action.CROP&#8221;</span>);
 
@@ -477,7 +1473,7 @@ Great tutorial from mobile tuts+: <a href="http://mobile.tutsplus.com/tutorials
   <entry>
     <title type="html"><![CDATA[Dynamic Data with ListView + Loading Footer]]></title>
     <link href="http://chrisarriola.me/blog/2012/06/15/dynamic-data-with-listview-loading-footer/"/>
-    <updated>2012-06-15T00:00:00-07:00</updated>
+    <updated>2012-06-15T00:00:00+08:00</updated>
     <id>http://chrisarriola.me/blog/2012/06/15/dynamic-data-with-listview-loading-footer</id>
     <content type="html"><![CDATA[<p>
 A pretty common UI design pattern for  ListViews on Android is displaying a loading footer for the dynamic loading of a list. It&#8217;s a pattern used by several well known apps - Twitter, Gmail and Instagram to mention a few - to display data without having to click a button to paginate through information. Essentially, as a user scrolls down to the end of a list, which indicates the end of the current page, a loading indicator is displayed at the footer of the list to notify the user that the list is in the process of populating more data.</p>
@@ -621,7 +1617,7 @@ I&#8217;ll share more Android quirks as they come up, I hope this helped.
   <entry>
     <title type="html"><![CDATA[Too Many to One - Implementing mHealth]]></title>
     <link href="http://chrisarriola.me/blog/2012/06/06/too-many-to-one/"/>
-    <updated>2012-06-06T00:00:00-07:00</updated>
+    <updated>2012-06-06T00:00:00+08:00</updated>
     <id>http://chrisarriola.me/blog/2012/06/06/too-many-to-one</id>
     <content type="html"><![CDATA[For about a year and a half now, I&#8217;ve been volunteering with <a title="Global HEED" href="http://globalheed.org/">Global HEED</a>—a non-profit organization focused on supporting health, education, and economic development globally. Global HEED was started in 2008 by founders Sonny Bandyopadhyay and Zain Ahmed while both pursuing their degrees at the University of Emory. Over the course of 5 years, Global HEED has made a tremendous impact in communities around the world, most notably, in a small village in Guatemala called Calhuitz. Medical students enroll to become a summer fellow wherein they will be responsible for any of the following: developing &amp; teaching public health topics, assessing the communities needs, shadowing/assisting a doctor or nurse, etc. Some of the projects in the past involved building a pharmacy, a community health worker training center, and even first community health clinic in Calhuitz.
 
@@ -644,7 +1640,7 @@ If you&#8217;re a developer and would like to contribute to the project, please 
   <entry>
     <title type="html"><![CDATA[Incremental Goals]]></title>
     <link href="http://chrisarriola.me/blog/2012/05/30/incremental-goals/"/>
-    <updated>2012-05-30T00:00:00-07:00</updated>
+    <updated>2012-05-30T00:00:00+08:00</updated>
     <id>http://chrisarriola.me/blog/2012/05/30/incremental-goals</id>
     <content type="html"><![CDATA[Check my post on the JOCC blog about setting <a href="http://wp.me/p1YHaV-3e">Incremental Goals</a>.
 ]]></content>
@@ -653,7 +1649,7 @@ If you&#8217;re a developer and would like to contribute to the project, please 
   <entry>
     <title type="html"><![CDATA[Optimizing Android Layouts]]></title>
     <link href="http://chrisarriola.me/blog/2012/05/23/optimizing-android-layouts/"/>
-    <updated>2012-05-23T00:00:00-07:00</updated>
+    <updated>2012-05-23T00:00:00+08:00</updated>
     <id>http://chrisarriola.me/blog/2012/05/23/optimizing-android-layouts</id>
     <content type="html"><![CDATA[I recently used the <strong>hierarchyviewer</strong> &amp; <strong>lint </strong>tool in the Android SDK and was pretty surprised with the results I saw. Many of the views I had were heavily nested and some views did not necessarily have to be inflated off the bat (progress indicators and refresh icons to name a few). As a result, my activity took a performance hit because of a badly designed layout.
 
@@ -688,7 +1684,7 @@ For my specific case, it took about half the time to inflate the entire layout t
   <entry>
     <title type="html"><![CDATA[How To Avoid Getting a Ticket When Running a Red Light]]></title>
     <link href="http://chrisarriola.me/blog/2012/05/14/how-to-avoid-getting-a-ticket-when-running-a-red-light/"/>
-    <updated>2012-05-14T00:00:00-07:00</updated>
+    <updated>2012-05-14T00:00:00+08:00</updated>
     <id>http://chrisarriola.me/blog/2012/05/14/how-to-avoid-getting-a-ticket-when-running-a-red-light</id>
     <content type="html"><![CDATA[[caption id=&#8221;attachment_331&#8221; align=&#8221;aligncenter&#8221; width=&#8221;510&#8221;]<a href="http://chrisarriola.files.wordpress.com/2012/05/xlarge_8ca4aa827c1151851324895f5ffb778b.jpg"><img class="size-full wp-image-331" title="SQL Injection" src="http://chrisarriola.files.wordpress.com/2012/05/xlarge_8ca4aa827c1151851324895f5ffb778b.jpg" alt="" width="510" height="286" /></a> http://gizmodo.com/5498412/sql-injection-license-plate-hopes-to-foil-euro-traffic-cameras[/caption]
 
@@ -699,7 +1695,7 @@ For my specific case, it took about half the time to inflate the entire layout t
   <entry>
     <title type="html"><![CDATA[How to create popups in Android]]></title>
     <link href="http://chrisarriola.me/blog/2012/05/10/how-to-create-popups-in-android/"/>
-    <updated>2012-05-10T00:00:00-07:00</updated>
+    <updated>2012-05-10T00:00:00+08:00</updated>
     <id>http://chrisarriola.me/blog/2012/05/10/how-to-create-popups-in-android</id>
     <content type="html"><![CDATA[Great tutorial!
 
@@ -710,7 +1706,7 @@ For my specific case, it took about half the time to inflate the entire layout t
   <entry>
     <title type="html"><![CDATA[Self-Learning Resources]]></title>
     <link href="http://chrisarriola.me/blog/2012/05/01/self-learning-resources/"/>
-    <updated>2012-05-01T00:00:00-07:00</updated>
+    <updated>2012-05-01T00:00:00+08:00</updated>
     <id>http://chrisarriola.me/blog/2012/05/01/self-learning-resources</id>
     <content type="html"><![CDATA[One of the many pleasures in life involves learning something new. Whether it be learning a new culture, learning how to paint, learning how to write creatively, or learning how to fly a kite; the act of &#8220;knowing&#8221; something is nothing less than exciting. With that said, I&#8217;m a firm believer in the active pursuit of self-learning and self-education—who said learning should stop in school? Perhaps graduating school is the end of formal learning, but if it were the end of learning in itself, life would be very, very, boring.
 
@@ -737,7 +1733,7 @@ I hope you find these priceless &#8220;jewels&#8221; as invaluable as I found th
   <entry>
     <title type="html"><![CDATA[Countdown Timer on Android]]></title>
     <link href="http://chrisarriola.me/blog/2012/05/01/countdown-timer-on-android/"/>
-    <updated>2012-05-01T00:00:00-07:00</updated>
+    <updated>2012-05-01T00:00:00+08:00</updated>
     <id>http://chrisarriola.me/blog/2012/05/01/countdown-timer-on-android</id>
     <content type="html"><![CDATA[An <a href="http://chrisarriola.wordpress.com/2012/03/12/first-android-application-napp/">exercise</a> I did to practice threading on Android is to implement a simple countdown timer. To do this, I used a <em>Handler</em> and added a <em>Runnable</em> Object—which performs the countdown—to it&#8217;s message queue.
 
@@ -775,7 +1771,7 @@ Another approach that could&#8217;ve also been used is through the use of an <em
   <entry>
     <title type="html"><![CDATA[Android FTW]]></title>
     <link href="http://chrisarriola.me/blog/2012/04/12/android-ftw/"/>
-    <updated>2012-04-12T00:00:00-07:00</updated>
+    <updated>2012-04-12T00:00:00+08:00</updated>
     <id>http://chrisarriola.me/blog/2012/04/12/android-ftw</id>
     <content type="html"><![CDATA[At last, the most anticipated app for Android came out a few days ago: Instagram for Android. For the first 12 hours, they hit an amazing 1 million Android app downloads! Now they&#8217;re at the ~6 million mark and they just got bought out by Facebook for $1 billion. I thought to myself: &#8220;great, now everyone is happy.&#8221;
 
@@ -812,22 +1808,11 @@ Android Intents essentially enable applications to &#8220;talk&#8221; to each ot
   <entry>
     <title type="html"><![CDATA[First Android Application: Napp]]></title>
     <link href="http://chrisarriola.me/blog/2012/03/12/first-android-application-napp/"/>
-    <updated>2012-03-12T00:00:00-07:00</updated>
+    <updated>2012-03-12T00:00:00+08:00</updated>
     <id>http://chrisarriola.me/blog/2012/03/12/first-android-application-napp</id>
     <content type="html"><![CDATA[<a href="http://chrisarriola.files.wordpress.com/2012/03/launcher.png"><img class="aligncenter" src="http://chrisarriola.files.wordpress.com/2012/03/launcher.png?w=86" alt="Image" /></a>
 
 Just published my first Android application: Napp. Check it out on Google Play!
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Writing It Down]]></title>
-    <link href="http://chrisarriola.me/blog/2012/02/25/writing-it-down/"/>
-    <updated>2012-02-25T00:00:00-08:00</updated>
-    <id>http://chrisarriola.me/blog/2012/02/25/writing-it-down</id>
-    <content type="html"><![CDATA[<blockquote><strong>&#8220;Most slow hunches never last long enough to turn into something useful, because they pass in and out of our memory too quickly, precisely because they possess a certain murkiness. You get a feeling that there&#8217;s an interesting avenue to explore, a problem that might someday lead you to a solution, but then you get distracted by more pressing matters and the hunch disappears. So part of the secret of hunch cultivation is simple: write everything down.&#8221; </strong>
-<p style="text-align:right;"><strong></strong><em>—</em> <em>Steven Johnson</em></p>
-</blockquote>
 ]]></content>
   </entry>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: DesignPatterns, | Chris Arriola]]></title>
   <link href="http://chrisarriola.me/blog/categories/designpatterns/atom.xml" rel="self"/>
   <link href="http://chrisarriola.me/"/>
-  <updated>2016-08-24T17:33:29-07:00</updated>
+  <updated>2016-09-04T17:38:04+08:00</updated>
   <id>http://chrisarriola.me/</id>
   <author>
     <name><![CDATA[Chris Arriola]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Code Like a Goldfish]]></title>
-    <link href="http://chrisarriola.me/blog/2015/10/18/code-like-a-goldfish/"/>
-    <updated>2015-10-18T16:46:47-07:00</updated>
-    <id>http://chrisarriola.me/blog/2015/10/18/code-like-a-goldfish</id>
+    <link href="http://chrisarriola.me/blog/2015/10/19/code-like-a-goldfish/"/>
+    <updated>2015-10-19T07:46:47+08:00</updated>
+    <id>http://chrisarriola.me/blog/2015/10/19/code-like-a-goldfish</id>
     <content type="html"><![CDATA[<p>There is an underlying hidden requirement in creating software products. It doesn&rsquo;t just have to &ldquo;work&rdquo;; it needs to be molded in such a way that it can be changed, maintained, and scaled easily.</p>
 
 <p>Last month, I gave a talk addressing this topic to the 1st cohort at <a href="http://www.telegraphacademy.com/">Telegraph Academy</a>—an  immersive program that teaches underrepresented groups in tech on how to code. They were nearing their last week of the program so I thought it would be relevant to share some industry lessons.</p>
