@@ -16,7 +16,7 @@ But… what is RxJava and how does it “simplify” things?
 
 While there are lots of resources already available online explaining what RxJava is, in this article my goal is to give you a basic introduction to RxJava and specifically how it fits into Android development. I’ll also give some concrete examples and suggestions on how you can integrate it in a new or existing project.
 
-### Why Consider RxJava
+# Why Consider RxJava
 
 At its core, RxJava simplifies development because it [raises the level of abstraction](http://reactivex.io/intro.html) around threading. That is, as a developer you don’t have to worry too much about the details of how to perform operations that should occur on different threads. This is particularly attractive since threading is challenging to get right and, if not correctly implemented, can cause some of the most difficult bugs to debug and fix.
 
@@ -24,7 +24,7 @@ Granted, this doesn’t mean RxJava is bulletproof when it comes to threading an
 
 Let’s look at an example.
 
-#### Network Call - RxJava vs AsyncTask
+## Network Call - RxJava vs AsyncTask
 
 Say we want to obtain data over the network and update the UI as a result. One way to do this is to (1) create an inner `AsyncTask` subclass in our `Activity`/`Fragment`, (2) perform the network operation in the background, and (3) take the result of that operation and update the UI in the main thread.
 
@@ -85,17 +85,17 @@ Also, notice that that the return type of `#getObservableUser(...)` (i.e. an `Ob
 
 Let’s dive deeper into some RxJava concepts.
 
-### Observable, Observer, and Operator - The 3 O’s of RxJava Core
+# Observable, Observer, and Operator - The 3 O’s of RxJava Core
 
 In the RxJava world, everything can be modeled as streams. A stream emits item(s) over time, and each emission can be consumed/observed.
 
 If you think about it, a stream is not a new concept: click events can be a stream, location updates can be a stream, push notifications can be a stream, and so on.
 
-{% img http://chrisarriola.me/images/rxjava_animation.gif %}
+{% img center http://chrisarriola.me/images/rxjava_animation.gif %}
 
 The stream abstraction is implemented through 3 core constructs which I like to call “the 3 O’s”; namely: the **O**bservable, **O**bserver, and the **O**perator. The **Observable** emits items (the stream); and the **Observer** consumes those items. Emissions from Observable objects can further be modified, transformed, and manipulated by chaining **Operator** calls.
 
-#### Observable
+## Observable
 
 An Observable is the stream abstraction in RxJava. It is similar to an **Iterator** in that, given a sequence, it iterates through and produces those items in an orderly fashion. A consumer can then consume those items through the same interface, regardless of the underlying sequence.
 
@@ -122,7 +122,7 @@ The simplest way to create an Observable is using `Observable#just(...)`. As the
 Observable.just(1, 2, 3); // 1, 2, 3 will be emitted, respectively
 ```
 
-#### Observer
+## Observer
 
 The next component to the Observable stream is the Observer (or Observers) subscribed to it. Observers are notified whenever something “interesting” happens in the stream. Observers are notified via the following events:
 
@@ -184,7 +184,7 @@ subscription.unsubscribe();
 
 As seen in the code snippet above, upon subscribing to an Observable, we hold the reference to the returned Subscription object and later invoke `subscription#unsubscribe()` when necessary. In Android, this is best invoked within `Activity#onDestroy()` or `Fragment#onDestroy()`.
 
-#### Operator
+## Operator
 
 Items emitted by an Observable can be transformed, modified, and filtered through Operators before notifying the subscribed Observer object(s). Some of the most common operations found in functional programming (such as map, filter, reduce, etc.) can also be applied to an Observable stream. Let’s look at map as an example:
 
@@ -242,7 +242,7 @@ Here’s how a hypothetical Operator called flip might be modeled through a marb
 
 {% img http://chrisarriola.me/images/rxjava_flip.png %}
 
-### Multithreading with RxJava
+# Multithreading with RxJava
 
 Controlling the thread within which operations occur in the Observable chain is done by specifying the [Scheduler](http://reactivex.io/documentation/scheduler.html) within which an operator should occur. Essentially, you can think of a Scheduler as a thread pool that, when specified, an operator will use and run on. By default, if no such Scheduler is provided, the Observable chain will operate on the same thread where `Observable#subscribe(...)` is called. Otherwise, a Scheduler can be specified via `Observable#subscribeOn(Scheduler)` and/or `Observable#observeOn(Scheduler)` wherein the scheduled operation will occur on a thread chosen by the Scheduler.
 
@@ -254,13 +254,13 @@ Here’s a marble diagram that demonstrates how these methods affect where opera
 
 In the context of Android, if a UI operation needs to take place as a result of a long operation, we’d want that operation to take place on the UI thread. For this purpose, we can use `AndroidScheduler#mainThread()`, one of the Schedulers provided in the [RxAndroid](https://github.com/ReactiveX/RxAndroid) library.
 
-### RxJava on Android
+# RxJava on Android
 
 Now that we’ve got some of the basics under our belt, you might be wondering — what’s the best way to integrate RxJava in an [Android](https://www.toptal.com/android) application? As you might imagine, there are many use cases for RxJava but, in this example, let’s take a look at one specific case: using Observable objects as part of the network stack.
 
 In this example, we will look at [Retrofit](http://square.github.io/retrofit/), an HTTP client open sourced by Square which has built-in bindings with RxJava to interact with GitHub’s API. Specifically, we’ll create a simple app that presents all the starred repositories for a user given a GitHub username. If you want to jump ahead, the source code is available [here](https://github.com/arriolac/GitHubRxJava).
 
-#### Create a New Android Project
+## Create a New Android Project
 
 * Start by creating a new Android project and naming it **GitHubRxJava**.
 
@@ -278,7 +278,7 @@ In this example, we will look at [Retrofit](http://square.github.io/retrofit/), 
 
 {% img http://chrisarriola.me/images/rxjava_setup4.png %}
 
-#### Project Set-Up
+## Project Set-Up
 
 Include [RxJava](https://github.com/ReactiveX/RxJava), [RxAndroid](https://github.com/ReactiveX/RxAndroid), and the [Retrofit](http://square.github.io/retrofit/) library in `app/build.gradle`. Note that including RxAndroid implicitly also includes RxJava. It is best practice, however, to always include those two libraries explicitly since RxAndroid does not always contain the most up-to-date version of RxJava. Explicitly including the latest version of RxJava guarantees use of the most up-to-date version.
 
@@ -293,7 +293,7 @@ dependencies {
 }
 ```
 
-#### Create Data Object
+## Create Data Object
 
 Create the `GitHubRepo` data object class. This class encapsulates a repository in GitHub (the network response contains more data but we’re only interested in a subset of that).
 
@@ -318,7 +318,7 @@ public class GitHubRepo {
 }
 ```
 
-#### Set-Up Retrofit
+## Set-Up Retrofit
 
 * Create the `GitHubService` interface. We will pass this interface into Retrofit and Retrofit will create an implementation of `GitHubService`.
 
@@ -363,7 +363,7 @@ public class GitHubRepo {
     }
 ```
 
-#### Set-Up Layouts
+## Set-Up Layouts
 
 Next, create a simple UI that displays the retrieved repos given an input GitHub username. Create `activity_home.xml` - the layout for our activity - with something like the following:
 
@@ -459,7 +459,7 @@ Create `item_github_repo.xml` - the `ListView` item layout for GitHub repository
 </RelativeLayout>
 ```
 
-#### Glue Everything Together
+## Glue Everything Together
 
 Create a `ListAdapter` that is in charge of binding `GitHubRepo` objects into `ListView` items. The process essentially involves inflating `item_github_repo.xml` into a `View` if no recycled `View` is provided; otherwise, a recycled `View` is reused to prevent overinflating too many `View` objects.
 
@@ -591,13 +591,13 @@ public class MainActivity extends AppCompatActivity {
 }
 ```
 
-#### Run the App
+## Run the App
 
 Running the app should present a screen with an input box to enter a GitHub username. Searching should then present the list of all starred repos.
 
-{% img http://chrisarriola.me/images/rxjava_screenshot.png %}
+{% img center http://chrisarriola.me/images/rxjava_screenshot.png %}
 
-#### Conclusion
+# Conclusion
 
 I hope this serves as a useful introduction to RxJava and an overview of its basic capabilities. There are a ton of powerful concepts in RxJava and I urge you to explore them by digging more deeply into the well-documented [RxJava wiki](https://github.com/ReactiveX/rxjava/wiki	).
 
