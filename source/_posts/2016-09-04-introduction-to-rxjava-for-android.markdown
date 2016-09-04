@@ -6,13 +6,13 @@ comments: true
 categories: Android, RxJava
 ---
 
-> This post was originally published on [Toptal](https://www.toptal.com/android/functional-reactive-android-rxjava) under my Toptal [account](https://www.toptal.com/resume/christopher-arriola).
+_This post was originally published on [Toptal](https://www.toptal.com/android/functional-reactive-android-rxjava) under my Toptal [account](https://www.toptal.com/resume/christopher-arriola)._
 
 If you’re an Android developer, chances are you’ve heard of [RxJava](https://github.com/ReactiveX/RxJava). It’s one of the most discussed libraries for enabling Functional Reactive Programming (FRP) in Android development. It’s touted as the go-to framework for simplifying concurrency/asynchronous tasks inherent in mobile programming.
 
 But… what is RxJava and how does it “simplify” things?
 
-{% img http://chrisarriola.me/images/rxjava_ooo.jpg %}
+{% img center http://chrisarriola.me/images/rxjava_ooo.jpg %}
 
 While there are lots of resources already available online explaining what RxJava is, in this article my goal is to give you a basic introduction to RxJava and specifically how it fits into Android development. I’ll also give some concrete examples and suggestions on how you can integrate it in a new or existing project.
 
