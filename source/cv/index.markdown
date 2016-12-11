@@ -7,7 +7,15 @@ footer: true
 ---
 
 ##Work Experience
-__Software Engineer__, *[Operator](https://operator.com) (Jan. 2015 - Present)*
+__Founder and Software Engineer__, *[Mynah Software](https://mynahsoftware.com) (Nov. 2016 - Present)*
+
+Developing highly polished Android and iOS applications.
+
+__Toptal__, *[Toptal](https://www.toptal.com/resume/christopher-arriola) (May 2016 - Present)*
+
+Freelancing and publishing educational software engineering content.
+
+__Software Engineer__, *[Operator](https://operator.com) (Jan. 2015 - Oct. 2016)*
 
 Currently doing fullstack mobile development (iOS, Python & Javascript).
 
