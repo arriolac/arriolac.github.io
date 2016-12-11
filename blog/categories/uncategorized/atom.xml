@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Uncategorized | Chris Arriola]]></title>
   <link href="http://chrisarriola.me/blog/categories/uncategorized/atom.xml" rel="self"/>
   <link href="http://chrisarriola.me/"/>
-  <updated>2016-09-04T17:43:44+08:00</updated>
+  <updated>2016-12-11T06:49:29+01:00</updated>
   <id>http://chrisarriola.me/</id>
   <author>
     <name><![CDATA[Chris Arriola]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Blog Migration]]></title>
-    <link href="http://chrisarriola.me/blog/2014/01/12/blog-migration/"/>
-    <updated>2014-01-12T03:06:18+08:00</updated>
-    <id>http://chrisarriola.me/blog/2014/01/12/blog-migration</id>
+    <link href="http://chrisarriola.me/blog/2014/01/11/blog-migration/"/>
+    <updated>2014-01-11T20:06:18+01:00</updated>
+    <id>http://chrisarriola.me/blog/2014/01/11/blog-migration</id>
     <content type="html"><![CDATA[<p>Just moved my blog from a <a href="http://chrisarriola.wordpress.com">wordpress.com site</a> to Octopress hosted on GitHub. Surprisingly, the set-up was really quick including migrating all of my posts and tweaking some colors from the theme I chose. Not everything went smoothly though; I lost all of my comments and images on posts had some formatting issues. Aside from that, it only took a few hours.</p>
 
 <p>Feel free to leave a comment for any suggestions!</p>

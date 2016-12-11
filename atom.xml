@@ -4,7 +4,7 @@
   <title><![CDATA[Chris Arriola]]></title>
   <link href="http://chrisarriola.me/atom.xml" rel="self"/>
   <link href="http://chrisarriola.me/"/>
-  <updated>2016-09-04T17:43:44+08:00</updated>
+  <updated>2016-12-11T06:49:29+01:00</updated>
   <id>http://chrisarriola.me/</id>
   <author>
     <name><![CDATA[Chris Arriola]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Introduction to RxJava for Android]]></title>
     <link href="http://chrisarriola.me/blog/2016/09/04/introduction-to-rxjava-for-android/"/>
-    <updated>2016-09-04T15:52:08+08:00</updated>
+    <updated>2016-09-04T09:52:08+02:00</updated>
     <id>http://chrisarriola.me/blog/2016/09/04/introduction-to-rxjava-for-android</id>
     <content type="html"><![CDATA[<p><em>This post was originally published on <a href="https://www.toptal.com/android/functional-reactive-android-rxjava">Toptal</a> under my Toptal <a href="https://www.toptal.com/resume/christopher-arriola">account</a>.</em></p>
 
@@ -1012,7 +1012,7 @@
   <entry>
     <title type="html"><![CDATA[Getting Attached To Your State]]></title>
     <link href="http://chrisarriola.me/blog/2015/12/30/getting-attached-to-your-state/"/>
-    <updated>2015-12-30T07:38:18+08:00</updated>
+    <updated>2015-12-30T00:38:18+01:00</updated>
     <id>http://chrisarriola.me/blog/2015/12/30/getting-attached-to-your-state</id>
     <content type="html"><![CDATA[<p><a href="http://developer.android.com/guide/topics/resources/runtime-changes.html#HandlingTheChange">Configuration changes</a> occur in runtime and are caused by various events such as: when keyboard visibility changes, when language changes, or when orientation changes. This in turn causes any <em>visible Activity</em> to be reconstructed once the change finishes. For state to be recovered, it needs to be explicitly tied to Android’s parcelling mechanism via Bundle.</p>
 
@@ -1246,7 +1246,7 @@
   <entry>
     <title type="html"><![CDATA[Code Like a Goldfish]]></title>
     <link href="http://chrisarriola.me/blog/2015/10/19/code-like-a-goldfish/"/>
-    <updated>2015-10-19T07:46:47+08:00</updated>
+    <updated>2015-10-19T01:46:47+02:00</updated>
     <id>http://chrisarriola.me/blog/2015/10/19/code-like-a-goldfish</id>
     <content type="html"><![CDATA[<p>There is an underlying hidden requirement in creating software products. It doesn&rsquo;t just have to &ldquo;work&rdquo;; it needs to be molded in such a way that it can be changed, maintained, and scaled easily.</p>
 
@@ -1276,9 +1276,9 @@
   
   <entry>
     <title type="html"><![CDATA[Android Wear App: reMIND]]></title>
-    <link href="http://chrisarriola.me/blog/2014/08/25/remind/"/>
-    <updated>2014-08-25T04:29:55+08:00</updated>
-    <id>http://chrisarriola.me/blog/2014/08/25/remind</id>
+    <link href="http://chrisarriola.me/blog/2014/08/24/remind/"/>
+    <updated>2014-08-24T22:29:55+02:00</updated>
+    <id>http://chrisarriola.me/blog/2014/08/24/remind</id>
     <content type="html"><![CDATA[<h2>Pay attention.</h2>
 
 <p><img class="right" src="http://chrisarriola.me/images/procrastination.jpg" width="457" height="320"></p>
@@ -1303,7 +1303,7 @@
   <entry>
     <title type="html"><![CDATA[Deep Work]]></title>
     <link href="http://chrisarriola.me/blog/2014/01/18/deep-work/"/>
-    <updated>2014-01-18T12:19:00+08:00</updated>
+    <updated>2014-01-18T05:19:00+01:00</updated>
     <id>http://chrisarriola.me/blog/2014/01/18/deep-work</id>
     <content type="html"><![CDATA[<br/>
 
@@ -1349,9 +1349,9 @@
   
   <entry>
     <title type="html"><![CDATA[Blog Migration]]></title>
-    <link href="http://chrisarriola.me/blog/2014/01/12/blog-migration/"/>
-    <updated>2014-01-12T03:06:18+08:00</updated>
-    <id>http://chrisarriola.me/blog/2014/01/12/blog-migration</id>
+    <link href="http://chrisarriola.me/blog/2014/01/11/blog-migration/"/>
+    <updated>2014-01-11T20:06:18+01:00</updated>
+    <id>http://chrisarriola.me/blog/2014/01/11/blog-migration</id>
     <content type="html"><![CDATA[<p>Just moved my blog from a <a href="http://chrisarriola.wordpress.com">wordpress.com site</a> to Octopress hosted on GitHub. Surprisingly, the set-up was really quick including migrating all of my posts and tweaking some colors from the theme I chose. Not everything went smoothly though; I lost all of my comments and images on posts had some formatting issues. Aside from that, it only took a few hours.</p>
 
 <p>Feel free to leave a comment for any suggestions!</p>
@@ -1361,7 +1361,7 @@
   <entry>
     <title type="html"><![CDATA[The Power of Now by Eckhart Tolle]]></title>
     <link href="http://chrisarriola.me/blog/2013/11/21/480/"/>
-    <updated>2013-11-21T00:00:00+08:00</updated>
+    <updated>2013-11-21T00:00:00+01:00</updated>
     <id>http://chrisarriola.me/blog/2013/11/21/480</id>
     <content type="html"><![CDATA[<a style="float:left;padding-right:20px;" href="https://www.goodreads.com/book/show/6708.The_Power_of_Now"><img alt="The Power of Now: A Guide to Spiritual Enlightenment" src="https://d202m5krfqbpi5.cloudfront.net/books/1328746059m/6708.jpg" border="0" /></a><a href="https://www.goodreads.com/book/show/6708.The_Power_of_Now">The Power of Now: A Guide to Spiritual Enlightenment</a> by <a href="https://www.goodreads.com/author/show/4493.Eckhart_Tolle">Eckhart Tolle</a>
 
@@ -1376,7 +1376,7 @@ Added more context to my understanding of why the present is what&#8217;s most i
   <entry>
     <title type="html"><![CDATA[Preparing for a Hackathon (A Mobile Perspective)]]></title>
     <link href="http://chrisarriola.me/blog/2013/07/23/preparing-for-a-hackathon-a-mobile-perspective/"/>
-    <updated>2013-07-23T00:00:00+08:00</updated>
+    <updated>2013-07-23T00:00:00+02:00</updated>
     <id>http://chrisarriola.me/blog/2013/07/23/preparing-for-a-hackathon-a-mobile-perspective</id>
     <content type="html"><![CDATA[<a href="http://chrisarriola.files.wordpress.com/2013/07/536444_10150917662022200_1083819652_a.jpg"><img class="size-full wp-image  " id="i-461" alt="Image" align="middle" src="http://chrisarriola.files.wordpress.com/2013/07/536444_10150917662022200_1083819652_a.jpg?w=170" width="170" height="261" /></a>
 <p dir="ltr">The time-pressure imposed at hackathons make it essential for teams to prepare ahead of time so that they can focus on the most critical tasks (building the actual product) the day of the event. Typically though, hackers come in without a team or idea. Whether you fall under this category or not, <em>preparation is still important</em>. Given that a full-blown business and a polished working product is unlikely to be built overnight, the point of a hackathon should be to learn as much as you can as well as form long-lasting relationships with people in your team—<strong>the burning desire for building and creating new things does not stop after a weekend</strong>!</p>
@@ -1397,7 +1397,7 @@ Added more context to my understanding of why the present is what&#8217;s most i
   <entry>
     <title type="html"><![CDATA[Android Security Part 1 - Reverse Engineering Android Apps]]></title>
     <link href="http://chrisarriola.me/blog/2012/08/31/android-security-part-1-reverse-engineering-android-apps/"/>
-    <updated>2012-08-31T00:00:00+08:00</updated>
+    <updated>2012-08-31T00:00:00+02:00</updated>
     <id>http://chrisarriola.me/blog/2012/08/31/android-security-part-1-reverse-engineering-android-apps</id>
     <content type="html"><![CDATA[<p>
 Google introduced automatic support for <strong>ProGuard</strong>, a code obfuscation tool, in ADT as early as December 2010 in version 8.0.0. It is integrated into the build system to make code obfuscation a pretty &#8220;straightforward&#8221; process. Since then, Google has encouraged—albeit not proactively—developers to enable ProGuard to prevent hackers from reverse engineering and hacking applications. Despite enabling ProGuard, however, a very persistent hacker may still be able to reverse engineer a ProGuard-ed application but the task becomes exponentially harder. There are other good practices developers should abide by to ensure a secure app, but code obfuscation should always be the first line of defense (more information on code obfuscation on Android <a title="ProGuard" href="http://android-developers.blogspot.com/2010/09/proguard-android-and-licensing-server.html">here</a> and <a title="ProGuard 2" href="http://android-developers.blogspot.com/2010/09/securing-android-lvl-applications.html">here</a>).
@@ -1462,7 +1462,7 @@ Any tips on how to create a secure Android app? Leave a comment below!
   <entry>
     <title type="html"><![CDATA[Android: Capture and Crop an Image]]></title>
     <link href="http://chrisarriola.me/blog/2012/07/18/android-capture-and-crop-an-image/"/>
-    <updated>2012-07-18T00:00:00+08:00</updated>
+    <updated>2012-07-18T00:00:00+02:00</updated>
     <id>http://chrisarriola.me/blog/2012/07/18/android-capture-and-crop-an-image</id>
     <content type="html"><![CDATA[One line: Intent cropIntent = <span style="color:#3366ff;"><strong>new</strong></span> Intent(<span style="color:#0000ff;">&#8220;com.android.camera.action.CROP&#8221;</span>);
 
@@ -1473,7 +1473,7 @@ Great tutorial from mobile tuts+: <a href="http://mobile.tutsplus.com/tutorials
   <entry>
     <title type="html"><![CDATA[Dynamic Data with ListView + Loading Footer]]></title>
     <link href="http://chrisarriola.me/blog/2012/06/15/dynamic-data-with-listview-loading-footer/"/>
-    <updated>2012-06-15T00:00:00+08:00</updated>
+    <updated>2012-06-15T00:00:00+02:00</updated>
     <id>http://chrisarriola.me/blog/2012/06/15/dynamic-data-with-listview-loading-footer</id>
     <content type="html"><![CDATA[<p>
 A pretty common UI design pattern for  ListViews on Android is displaying a loading footer for the dynamic loading of a list. It&#8217;s a pattern used by several well known apps - Twitter, Gmail and Instagram to mention a few - to display data without having to click a button to paginate through information. Essentially, as a user scrolls down to the end of a list, which indicates the end of the current page, a loading indicator is displayed at the footer of the list to notify the user that the list is in the process of populating more data.</p>
@@ -1617,7 +1617,7 @@ I&#8217;ll share more Android quirks as they come up, I hope this helped.
   <entry>
     <title type="html"><![CDATA[Too Many to One - Implementing mHealth]]></title>
     <link href="http://chrisarriola.me/blog/2012/06/06/too-many-to-one/"/>
-    <updated>2012-06-06T00:00:00+08:00</updated>
+    <updated>2012-06-06T00:00:00+02:00</updated>
     <id>http://chrisarriola.me/blog/2012/06/06/too-many-to-one</id>
     <content type="html"><![CDATA[For about a year and a half now, I&#8217;ve been volunteering with <a title="Global HEED" href="http://globalheed.org/">Global HEED</a>—a non-profit organization focused on supporting health, education, and economic development globally. Global HEED was started in 2008 by founders Sonny Bandyopadhyay and Zain Ahmed while both pursuing their degrees at the University of Emory. Over the course of 5 years, Global HEED has made a tremendous impact in communities around the world, most notably, in a small village in Guatemala called Calhuitz. Medical students enroll to become a summer fellow wherein they will be responsible for any of the following: developing &amp; teaching public health topics, assessing the communities needs, shadowing/assisting a doctor or nurse, etc. Some of the projects in the past involved building a pharmacy, a community health worker training center, and even first community health clinic in Calhuitz.
 
@@ -1640,7 +1640,7 @@ If you&#8217;re a developer and would like to contribute to the project, please 
   <entry>
     <title type="html"><![CDATA[Incremental Goals]]></title>
     <link href="http://chrisarriola.me/blog/2012/05/30/incremental-goals/"/>
-    <updated>2012-05-30T00:00:00+08:00</updated>
+    <updated>2012-05-30T00:00:00+02:00</updated>
     <id>http://chrisarriola.me/blog/2012/05/30/incremental-goals</id>
     <content type="html"><![CDATA[Check my post on the JOCC blog about setting <a href="http://wp.me/p1YHaV-3e">Incremental Goals</a>.
 ]]></content>
@@ -1649,7 +1649,7 @@ If you&#8217;re a developer and would like to contribute to the project, please 
   <entry>
     <title type="html"><![CDATA[Optimizing Android Layouts]]></title>
     <link href="http://chrisarriola.me/blog/2012/05/23/optimizing-android-layouts/"/>
-    <updated>2012-05-23T00:00:00+08:00</updated>
+    <updated>2012-05-23T00:00:00+02:00</updated>
     <id>http://chrisarriola.me/blog/2012/05/23/optimizing-android-layouts</id>
     <content type="html"><![CDATA[I recently used the <strong>hierarchyviewer</strong> &amp; <strong>lint </strong>tool in the Android SDK and was pretty surprised with the results I saw. Many of the views I had were heavily nested and some views did not necessarily have to be inflated off the bat (progress indicators and refresh icons to name a few). As a result, my activity took a performance hit because of a badly designed layout.
 
@@ -1684,7 +1684,7 @@ For my specific case, it took about half the time to inflate the entire layout t
   <entry>
     <title type="html"><![CDATA[How To Avoid Getting a Ticket When Running a Red Light]]></title>
     <link href="http://chrisarriola.me/blog/2012/05/14/how-to-avoid-getting-a-ticket-when-running-a-red-light/"/>
-    <updated>2012-05-14T00:00:00+08:00</updated>
+    <updated>2012-05-14T00:00:00+02:00</updated>
     <id>http://chrisarriola.me/blog/2012/05/14/how-to-avoid-getting-a-ticket-when-running-a-red-light</id>
     <content type="html"><![CDATA[[caption id=&#8221;attachment_331&#8221; align=&#8221;aligncenter&#8221; width=&#8221;510&#8221;]<a href="http://chrisarriola.files.wordpress.com/2012/05/xlarge_8ca4aa827c1151851324895f5ffb778b.jpg"><img class="size-full wp-image-331" title="SQL Injection" src="http://chrisarriola.files.wordpress.com/2012/05/xlarge_8ca4aa827c1151851324895f5ffb778b.jpg" alt="" width="510" height="286" /></a> http://gizmodo.com/5498412/sql-injection-license-plate-hopes-to-foil-euro-traffic-cameras[/caption]
 
@@ -1695,7 +1695,7 @@ For my specific case, it took about half the time to inflate the entire layout t
   <entry>
     <title type="html"><![CDATA[How to create popups in Android]]></title>
     <link href="http://chrisarriola.me/blog/2012/05/10/how-to-create-popups-in-android/"/>
-    <updated>2012-05-10T00:00:00+08:00</updated>
+    <updated>2012-05-10T00:00:00+02:00</updated>
     <id>http://chrisarriola.me/blog/2012/05/10/how-to-create-popups-in-android</id>
     <content type="html"><![CDATA[Great tutorial!
 
@@ -1706,7 +1706,7 @@ For my specific case, it took about half the time to inflate the entire layout t
   <entry>
     <title type="html"><![CDATA[Self-Learning Resources]]></title>
     <link href="http://chrisarriola.me/blog/2012/05/01/self-learning-resources/"/>
-    <updated>2012-05-01T00:00:00+08:00</updated>
+    <updated>2012-05-01T00:00:00+02:00</updated>
     <id>http://chrisarriola.me/blog/2012/05/01/self-learning-resources</id>
     <content type="html"><![CDATA[One of the many pleasures in life involves learning something new. Whether it be learning a new culture, learning how to paint, learning how to write creatively, or learning how to fly a kite; the act of &#8220;knowing&#8221; something is nothing less than exciting. With that said, I&#8217;m a firm believer in the active pursuit of self-learning and self-education—who said learning should stop in school? Perhaps graduating school is the end of formal learning, but if it were the end of learning in itself, life would be very, very, boring.
 
@@ -1733,7 +1733,7 @@ I hope you find these priceless &#8220;jewels&#8221; as invaluable as I found th
   <entry>
     <title type="html"><![CDATA[Countdown Timer on Android]]></title>
     <link href="http://chrisarriola.me/blog/2012/05/01/countdown-timer-on-android/"/>
-    <updated>2012-05-01T00:00:00+08:00</updated>
+    <updated>2012-05-01T00:00:00+02:00</updated>
     <id>http://chrisarriola.me/blog/2012/05/01/countdown-timer-on-android</id>
     <content type="html"><![CDATA[An <a href="http://chrisarriola.wordpress.com/2012/03/12/first-android-application-napp/">exercise</a> I did to practice threading on Android is to implement a simple countdown timer. To do this, I used a <em>Handler</em> and added a <em>Runnable</em> Object—which performs the countdown—to it&#8217;s message queue.
 
@@ -1771,7 +1771,7 @@ Another approach that could&#8217;ve also been used is through the use of an <em
   <entry>
     <title type="html"><![CDATA[Android FTW]]></title>
     <link href="http://chrisarriola.me/blog/2012/04/12/android-ftw/"/>
-    <updated>2012-04-12T00:00:00+08:00</updated>
+    <updated>2012-04-12T00:00:00+02:00</updated>
     <id>http://chrisarriola.me/blog/2012/04/12/android-ftw</id>
     <content type="html"><![CDATA[At last, the most anticipated app for Android came out a few days ago: Instagram for Android. For the first 12 hours, they hit an amazing 1 million Android app downloads! Now they&#8217;re at the ~6 million mark and they just got bought out by Facebook for $1 billion. I thought to myself: &#8220;great, now everyone is happy.&#8221;
 
@@ -1808,7 +1808,7 @@ Android Intents essentially enable applications to &#8220;talk&#8221; to each ot
   <entry>
     <title type="html"><![CDATA[First Android Application: Napp]]></title>
     <link href="http://chrisarriola.me/blog/2012/03/12/first-android-application-napp/"/>
-    <updated>2012-03-12T00:00:00+08:00</updated>
+    <updated>2012-03-12T00:00:00+01:00</updated>
     <id>http://chrisarriola.me/blog/2012/03/12/first-android-application-napp</id>
     <content type="html"><![CDATA[<a href="http://chrisarriola.files.wordpress.com/2012/03/launcher.png"><img class="aligncenter" src="http://chrisarriola.files.wordpress.com/2012/03/launcher.png?w=86" alt="Image" /></a>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Android, | Chris Arriola]]></title>
   <link href="http://chrisarriola.me/blog/categories/android/atom.xml" rel="self"/>
   <link href="http://chrisarriola.me/"/>
-  <updated>2016-09-04T17:43:44+08:00</updated>
+  <updated>2016-12-11T06:49:29+01:00</updated>
   <id>http://chrisarriola.me/</id>
   <author>
     <name><![CDATA[Chris Arriola]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Introduction to RxJava for Android]]></title>
     <link href="http://chrisarriola.me/blog/2016/09/04/introduction-to-rxjava-for-android/"/>
-    <updated>2016-09-04T15:52:08+08:00</updated>
+    <updated>2016-09-04T09:52:08+02:00</updated>
     <id>http://chrisarriola.me/blog/2016/09/04/introduction-to-rxjava-for-android</id>
     <content type="html"><![CDATA[<p><em>This post was originally published on <a href="https://www.toptal.com/android/functional-reactive-android-rxjava">Toptal</a> under my Toptal <a href="https://www.toptal.com/resume/christopher-arriola">account</a>.</em></p>
 
