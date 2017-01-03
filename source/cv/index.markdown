@@ -11,9 +11,9 @@ __Founder and Software Engineer__, *[Mynah Software](https://mynahsoftware.com) 
 
 Developing highly polished Android and iOS applications.
 
-__Toptal__, *[Toptal](https://www.toptal.com/resume/christopher-arriola) (May 2016 - Present)*
+__Author and Freelance Software Engineer__, *[Toptal](https://www.toptal.com/resume/christopher-arriola) (May 2016 - Present)*
 
-Freelancing and publishing educational software engineering content.
+Mobile software engineering freelance and writing engineering-related educational content for Toptal.
 
 __Software Engineer__, *[Operator](https://operator.com) (Jan. 2015 - Oct. 2016)*
 
