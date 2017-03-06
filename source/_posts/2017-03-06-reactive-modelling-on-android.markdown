@@ -326,3 +326,5 @@ We’ve looked at a number of mechanisms and techniques:
 Hopefully, the examples provided in this article inspired some ideas regarding different areas in your app that can be converted to be reactive. We’ve covered a lot and if you have any questions, suggestions, or if anything is not clear, feel free to leave a comment below!
 
 If you are interested in learning more about RxJava, I am working on an in-depth book that explains how to view problems the reactive way using Android examples. If you’d like to receive updates on it, please subscribe [here](https://leanpub.com/reactiveandroid).
+
+{% img center http://chrisarriola.me/images/rxjava_my_book.jpg %}
