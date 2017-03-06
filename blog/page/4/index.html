@@ -129,6 +129,112 @@
   
 
 
+<i class="icon-calendar-empty"></i> <time datetime="2012-08-31T00:00:00+02:00" pubdate data-updated="true"></time></h5>
+          <div class="row-fluid">
+          
+          <a href="http://chrisarriola.me/blog/2012/08/31/android-security-part-1-reverse-engineering-android-apps/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/android/"><span class="badge">Android</span></a>
+          
+          <a href="/blog/categories/programming-tutorials/"><span class="badge">Programming Tutorials</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10 post-container">
+      <h1 class="link"><a href="/blog/2012/08/31/android-security-part-1-reverse-engineering-android-apps/">Android Security Part 1 - Reverse Engineering Android Apps</a></h1>
+      <p>
+Google introduced automatic support for <strong>ProGuard</strong>, a code obfuscation tool, in ADT as early as December 2010 in version 8.0.0. It is integrated into the build system to make code obfuscation a pretty &#8220;straightforward&#8221; process. Since then, Google has encouraged—albeit not proactively—developers to enable ProGuard to prevent hackers from reverse engineering and hacking applications. Despite enabling ProGuard, however, a very persistent hacker may still be able to reverse engineer a ProGuard-ed application but the task becomes exponentially harder. There are other good practices developers should abide by to ensure a secure app, but code obfuscation should always be the first line of defense (more information on code obfuscation on Android <a title="ProGuard" href="http://android-developers.blogspot.com/2010/09/proguard-android-and-licensing-server.html">here</a> and <a title="ProGuard 2" href="http://android-developers.blogspot.com/2010/09/securing-android-lvl-applications.html">here</a>).
+
+Out of curiosity, I went ahead and did some reverse engineering on some popular apps (all have more than 1 million downloads on Google Play) that may contain user sensitive information and un/surprisingly, 10 out of 12 weren&#8217;t doing some sort of code obfuscation. I&#8217;m sharing in this post what and how I did that to point out 2 things: (1) how easy it is to reverse engineer an app, and (2) to increase awareness of the importance of security specifically code obfuscation.
+</p>
+
+<br />
+<h3>Methodology</h3>
+<br />
+
+
+My methodology was simple, in fact, a quick Google Search on &#8221;<em>Android Hacking</em>&#8221; should give anyone the tools to do this. Below are the steps: <br /><br />
+<ol>
+	<li>Obtain the .apk files of the applications of interest by using <em>Astro File Manager</em>. Simply navigate to &#8220;tools&#8221; in the options menu, &#8220;Application Backup&#8221;, and then select all the apps you&#8217;re interested in. Once backup is perform, an image is obtained of the apps and the corresponding .apk files will be stored under your SD card&#8217;s <em>backups/</em> directory.</li>
+	<li>Unpack .apk file using <em>unzip</em>.</li>
+	<li>Disassemble compiled <em>classes.dex</em> file using <a title="smali/baksmali" href="http://code.google.com/p/smali/">baksmali</a>. This will generate tons of .smali files.</li>
+	<li>Perform static analysis on .smali files.</li>
+</ol>
+<br>
+For step 4, if an application does not have code obfuscation, then all static constant declarations can be read in plain text (<span style="color:#ff0000;">red flag</span>!). You can still take things a step further, for instance, by writing smali code and retracing your steps to create your own custom hacked-out app.
+
+<br /><br />
+<h3>Results</h3>
+
+Understanding <em>smali</em> code is pretty straightforward event without prior knowledge of the language especially when it comes to finding static member fields. Declared String values are human-readable.
+
+Here are a few screen-shots of what I&#8217;ve found:
+
+<br />
+<a href="http://chrisarriola.files.wordpress.com/2012/08/secret.png"><img class="size-full wp-image-435" title="Key 1" src="http://chrisarriola.files.wordpress.com/2012/08/secret.png" alt="" width="510" height="22" /></a> Fig. 1
+<a href="http://chrisarriola.files.wordpress.com/2012/08/secret2.png"><img class="size-full wp-image-434" title="Key 2" src="http://chrisarriola.files.wordpress.com/2012/08/secret2.png" alt="" width="510" height="37" /></a> Fig. 2
+<a href="http://chrisarriola.files.wordpress.com/2012/08/secret3.png"><img class="size-full wp-image-433" title="Key 3" src="http://chrisarriola.files.wordpress.com/2012/08/secret3.png" alt="" width="510" height="26" /></a> Fig. 3
+<a href="http://chrisarriola.files.wordpress.com/2012/08/secret4.png"><img class="size-full wp-image-432" title="secret4" src="http://chrisarriola.files.wordpress.com/2012/08/secret4.png" alt="" width="510" height="16" /></a> Fig. 4
+
+<br /> <br />
+<h3>Conclusion</h3>
+
+
+ProGuard creates drastic improvements in security. Here&#8217;s an example of how smali code would look like with ProGuard on vs. with ProGuard off.
+
+Say your <em>Activity </em>has a static member field <em>HACK_THIS</em>:<br />
+
+<a href="http://chrisarriola.files.wordpress.com/2012/08/java-code1.png"><img class="size-full wp-image-444" title="java-code" src="http://chrisarriola.files.wordpress.com/2012/08/java-code1.png" alt="" width="510" height="320" /></a> Fig. 5<br /><br />
+
+When we disassemble the resulting .dex file without ProGuard enabled, we get this:<br /><br />
+
+<a href="http://chrisarriola.files.wordpress.com/2012/08/proguarded.png"><img class="size-full wp-image-442" title="ProGuarded" src="http://chrisarriola.files.wordpress.com/2012/08/proguarded.png" alt="" width="510" height="484" /></a> Fig. 6<br /><br />
+
+Whereas code obfuscation using ProGuard results in: <br /><br />
+
+<a href="http://chrisarriola.files.wordpress.com/2012/08/proguarded1.png"><img class="aligncenter size-full wp-image-449" title="proguarded" src="http://chrisarriola.files.wordpress.com/2012/08/proguarded1.png" alt="" width="510" height="485" /></a><br /><br />
+
+From this comparison, you can observe the following: enabling ProGuard in this situation removes the human-readable static member field whereas disabling it leaves it in plain-text in smali assembly code. Although the content of the String gets copied wherever it is used in code as seen on line 39 in Figure 7, the context of what that String represents is virtually unknown. Again, a persistent hacker may deduce what that means through brute-force, but ProGuard increases the complexity of the task.
+
+#####
+
+Any tips on how to create a secure Android app? Leave a comment below!
+
+      
+      
+    </div>
+  </div>
+
+
+
+    </article>
+    
+    <hr>
+    
+  
+  
+    <article>
+      
+
+  <div class="row-fluid">
+    <div class="span2 post-meta">
+	  <h5 class="date-time">
+
+
+
+
+
+
+
+
+  
+
+
 <i class="icon-calendar-empty"></i> <time datetime="2012-07-18T00:00:00+02:00" pubdate data-updated="true"></time></h5>
           <div class="row-fluid">
           
@@ -335,70 +441,6 @@ list.setOnScrollListener(new OnScrollListener() {
     }
 });</pre>
 I&#8217;ll share more Android quirks as they come up, I hope this helped.
-
-      
-      
-    </div>
-  </div>
-
-
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
-
-
-
-
-
-
-
-
-  
-
-
-<i class="icon-calendar-empty"></i> <time datetime="2012-06-06T00:00:00+02:00" pubdate data-updated="true"></time></h5>
-          <div class="row-fluid">
-          
-          <a href="http://chrisarriola.me/blog/2012/06/06/too-many-to-one/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/social-entrepreneurship/"><span class="badge">Social Entrepreneurship</span></a>
-          
-          <a href="/blog/categories/technology/"><span class="badge">Technology</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2012/06/06/too-many-to-one/">Too Many to One - Implementing mHealth</a></h1>
-      For about a year and a half now, I&#8217;ve been volunteering with <a title="Global HEED" href="http://globalheed.org/">Global HEED</a>—a non-profit organization focused on supporting health, education, and economic development globally. Global HEED was started in 2008 by founders Sonny Bandyopadhyay and Zain Ahmed while both pursuing their degrees at the University of Emory. Over the course of 5 years, Global HEED has made a tremendous impact in communities around the world, most notably, in a small village in Guatemala called Calhuitz. Medical students enroll to become a summer fellow wherein they will be responsible for any of the following: developing &amp; teaching public health topics, assessing the communities needs, shadowing/assisting a doctor or nurse, etc. Some of the projects in the past involved building a pharmacy, a community health worker training center, and even first community health clinic in Calhuitz.
-
-The newest project within Global HEED is the mHealth initiative—a telemedicine project whose goal is to improve the quality of healthcare in under-served communities. Specifically, we&#8217;re collaborating with <a title="Partners for Care" href="http://www.partnersforcare.org/">Partners for Care</a>, an NGO based in Kenya, to implement mHealth in the slums of Nairobi by utilizing <a title="Sana Mobile" href="http://sana.mit.edu/">Sana Mobile</a>.
-<h4>Problem</h4>
-The underlying problem is this: there are too many people in need of healthcare but there aren&#8217;t enough physicians that can support that need. As a result, not everyone gets treated; in addition, taking into account waiting and travel time, visiting a clinic or hospital can be very time consuming. In some instances, patients have to travel ~10 km by foot to pay a visit to the nearest clinic. It&#8217;s a very brutal experience as you might imagine.
-<h4>Proposed Solution</h4>
-To alleviate this, we implemented Sana as essentially a triaging tool to improve  the delivery and efficiency of healthcare. It works as follows: a community health worker visits a patient and enters the necessary information through the mobile device (patient information, symptoms, photos, etc.), the information is then sent to an electronic medical record system, <a title="OpenMRS" href="http://openmrs.org/">OpenMRS</a>, wherein a remote doctor can send a diagnosis back to the community health worker who would then perform the necessary action (more on this <a title="Case Study - Kenya" href="http://sana.mit.edu/2012/06/02/case-study-kenyan-mhealth-project/">here</a>). Although the entire process seems simple, there&#8217;s still a couple of BIG obstacles to go through before we can comfortably expand into other regions. To name a few, we need to verify uploading information to the EMR works 99% of the time, that patient data is consistent with what&#8217;s recorded, that the community generally accepts the technology, that the project can be evaluated in a metric and quantifiable way&#8230; thinking about all this is giving me a headache.
-<h4>Conclusion</h4>
-Despite all these obstacles, seeing the passion within the organization itself, that is Global HEED, gives me the confidence that these &#8220;minor&#8221; obstacles can be eventually surpassed. For instance, even though members of Global HEED are from all over the nation—Atlanta, San Francisco, and New York City to name a few—we somehow still manage to consistently collaborate and work towards the same goal thanks to the very passionate leaders within the organization. Not to mention, our use of technology for communication, which enables us to connect, should be a testament to the potential of technology for improving the lives of those around us; not just for those a few houses away, but also for those on the opposite side of the globe.
-<blockquote>We who work in technology have nurtured an especially rare gift: the opportunity to effect change at an unprecedented scale and rate. Technology, community, and capitalism combine to make Silicon Valley the potential epicenter of vast positive change. We can tackle the world’s biggest problems and take on bold missions like fixing education, re-imagining energy distribution, connecting people, or even democratizing democracy. And with increasingly severe threats to our survival — rapid climate change, an unstable international economy, and unsustainable energy consumption — it is more important than ever that we use these gifts to change the world, foster happiness and alleviate suffering, for us and our fellow beings.
-
-by <em>Justin Rosentein</em></blockquote>
-#####
-
-If you&#8217;re a developer and would like to contribute to the project, please feel free to reach out! You can also just jump and start pushing code into the Sana <a title="Sana Source Code" href="http://sana.mit.edu/wiki/index.php?title=Main_Page">source code</a> repository, it&#8217;s open source.
 
       
       
