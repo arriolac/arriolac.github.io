@@ -4,7 +4,7 @@
   <title><![CDATA[Chris Arriola]]></title>
   <link href="http://chrisarriola.me/atom.xml" rel="self"/>
   <link href="http://chrisarriola.me/"/>
-  <updated>2017-03-06T13:19:08+01:00</updated>
+  <updated>2017-03-06T13:24:36+01:00</updated>
   <id>http://chrisarriola.me/</id>
   <author>
     <name><![CDATA[Chris Arriola]]></name>
@@ -493,6 +493,8 @@
 <p>Hopefully, the examples provided in this article inspired some ideas regarding different areas in your app that can be converted to be reactive. We’ve covered a lot and if you have any questions, suggestions, or if anything is not clear, feel free to leave a comment below!</p>
 
 <p>If you are interested in learning more about RxJava, I am working on an in-depth book that explains how to view problems the reactive way using Android examples. If you’d like to receive updates on it, please subscribe <a href="https://leanpub.com/reactiveandroid">here</a>.</p>
+
+<p><img class="center" src="http://chrisarriola.me/images/rxjava_my_book.jpg"></p>
 ]]></content>
   </entry>
   
