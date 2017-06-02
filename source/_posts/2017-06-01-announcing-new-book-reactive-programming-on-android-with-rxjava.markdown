@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Announcing New Book: Reactive Programming on Android with RxJava"
-date: 2017-06-01 18:44:00 -0500
+date: 2017-06-12 18:44:00 -0500
 comments: true
 categories: Android, RxJava
 ---
