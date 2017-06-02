@@ -6,9 +6,9 @@ comments: true
 categories: Android, RxJava
 ---
 
-I'm very pleased to announce that a book that [Angus Huang](#TODO link here) and I started writing a few months back, "Reactive Programming on Android", is now published and available on LeanPub!
+I'm very pleased to announce that a book that [Angus Huang](https://www.linkedin.com/in/ahuang13/) and I started writing a few months back, ["Reactive Programming on Android"](https://leanpub.com/reactiveandroid), is now published and available on LeanPub!
 
-(#TODO insert image here)
+{% img center http://chrisarriola.me/images/rxjava_my_book_with_angus.jpg %}
 
 ## What is RxJava?
 
@@ -18,7 +18,7 @@ The promise of reactive programming was that it would allow their teams to seaml
 
 Indeed, RxJava has fulfilled its promise at Netflix and is now [the backbone of many of their back-end services](https://medium.com/netflix-techblog/reactive-programming-in-the-netflix-api-with-rxjava-7811c3a1496a). Additionally, RxJava has grown to be very popular in the Java community and is now the most starred Java repository on GitHub.
 
-(#TODO image of RxJava here)
+{% img center http://chrisarriola.me/images/github_rxjava_stars.png %}
 
 Given RxJava's success at Netflix--the driver for [more than a third](http://time.com/3901378/netflix-internet-traffic/) of all internet traffic--it is no wonder that many companies are also adopting RxJava as part of their software stack. When it comes to Android app development, it has become the go-to library for enabling reactive programming.
 
