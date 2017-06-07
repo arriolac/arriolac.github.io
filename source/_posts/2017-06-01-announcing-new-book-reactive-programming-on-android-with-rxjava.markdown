@@ -12,22 +12,24 @@ I'm very pleased to announce that a book that [Angus Huang](https://www.linkedin
 
 ## What is RxJava?
 
-RxJava, the Java implementation of ReactiveX, was open sourced and introduced to the developer community by Netflix back in 2013. At Netflix, RxJava had arisen as a need to solve scaling issues created by their previous [one-size-fits-all API](https://medium.com/netflix-techblog/embracing-the-differences-inside-the-netflix-api-redesign-15fd8b3dc49d). 
+RxJava—the Java implementation of ReactiveX—was open sourced and introduced to the developer community by Netflix back in 2013. At Netflix, RxJava had arisen as a need to solve scaling issues created by their previous [one-size-fits-all API](https://medium.com/netflix-techblog/embracing-the-differences-inside-the-netflix-api-redesign-15fd8b3dc49d). 
 
-The promise of reactive programming was that it would allow their teams to seamlessly compose complex asynchronous behavior into an easy-to-use API. Using these APIs, their client teams can then create custom end-points to optimize for the growing number of devices that Netflix supported. 
+The promise of reactive programming was that it would allow their teams to seamlessly compose complex asynchronous behavior into an easy-to-use API. Using these APIs, their client teams can then create custom end-points to optimize for the growing number of devices that Netflix supported without having to deal with the intricacies of server-side concurrent programming. 
 
-Indeed, RxJava has fulfilled its promise at Netflix and is now [the backbone of many of their back-end services](https://medium.com/netflix-techblog/reactive-programming-in-the-netflix-api-with-rxjava-7811c3a1496a). Additionally, RxJava has grown to be very popular in the Java community and is now the most starred Java repository on GitHub.
+In a word, RxJava was supposed to **simplify writing concurrent code**.
 
-{% img center http://chrisarriola.me/images/github_rxjava_stars.png %}
+Turns out, RxJava did fulfill its promise and is now [the backbone of many Netflix back-end services](https://medium.com/netflix-techblog/reactive-programming-in-the-netflix-api-with-rxjava-7811c3a1496a). 
 
-Given RxJava's success at Netflix--the driver for [more than a third](http://time.com/3901378/netflix-internet-traffic/) of all internet traffic--it is no wonder that many companies are also adopting RxJava as part of their software stack. When it comes to Android app development, it has become the go-to library for enabling reactive programming.
+Outside of Netflix, RxJava has been adopted in the Android community as developing mobile apps also has many concurrency needs. As of today, RxJava is the go-to library for enabling reactive programming on Android. Certainly, the number of stars it has on Github should be a strong signal.
 
-## Why Write a Book?
+{% img center http://chrisarriola.me/images/github_rxjava_stars.png RxJava is the most starred Java repository on Github as of June 2017 %}
 
-We believe that reactive programing is shaping the way Android apps are being built. This is even evident in the direction Google is going with its new reactive-inspired [Android Architecture Components](https://developer.android.com/topic/libraries/architecture/index.html) announced recently at Google IO '17. 
+## Why Write this Book?
 
-On a personal note, I've been writing reactive apps since 2014 and have found it to increase my productivity and allowed me to write apps that are resilient and responsive. 
+We believe that reactive programing is shaping the way Android apps are being built. This is even evident in the direction Google is going with its new reactive-inspired [Android Architecture Components](https://developer.android.com/topic/libraries/architecture/index.html) announced recently at Google IO '17. With that said, we think it's important for Android developers to familiarize themselves with the reactive programming model.
 
-By writing this book, we are hoping to contribute in the Android community by educating fellow developers about what RxJava is and how they can benefit from it.
+This book is a collection of our knowledge on the subject taken from different sources around the web (i.e. blog posts, books, wikis, etc.). Our hope is that this book services as a solid foundation for Android developers who are new to RxJava and want to start integrating it into their apps.
 
-Interested in reading more? You can purchase or download a sample of the book [here](https://leanpub.com/reactiveandroid).
+If you are interested in learning more, you can purchase or download a sample of the book [here](https://leanpub.com/reactiveandroid). 
+
+Got any questions? Leave a comment below!
