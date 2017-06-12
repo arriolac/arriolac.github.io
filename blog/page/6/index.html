@@ -129,7 +129,83 @@
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2012-05-14T00:00:00+02:00" pubdate data-updated="true"></time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2012-05-23T00:00:00-05:00" pubdate data-updated="true"></time></h5>
+          <div class="row-fluid">
+          
+          <a href="http://chrisarriola.me/blog/2012/05/23/optimizing-android-layouts/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/android/"><span class="badge">Android</span></a>
+          
+          <a href="/blog/categories/technology/"><span class="badge">Technology</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10 post-container">
+      <h1 class="link"><a href="/blog/2012/05/23/optimizing-android-layouts/">Optimizing Android Layouts</a></h1>
+      I recently used the <strong>hierarchyviewer</strong> &amp; <strong>lint </strong>tool in the Android SDK and was pretty surprised with the results I saw. Many of the views I had were heavily nested and some views did not necessarily have to be inflated off the bat (progress indicators and refresh icons to name a few). As a result, my activity took a performance hit because of a badly designed layout.
+
+Here&#8217;s a technique I used that I picked up at AnDevCon III to flatten my layouts and in general make them more performant.
+<h3><strong>ViewStub</strong></h3>
+Essentially, ViewStub is a lightweight and cheap to inflate widget that you can include in a layout. Its purpose is basically to serve as a stub or placeholder for views that don&#8217;t necessarily need to be inflated on creation. For example, let&#8217;s say your app displays notifications on a SlidingDrawer; however, when there are no notifications, that SlidingDrawer should be hidden. What you can do then is create a ViewStub that points to your SlidingDrawer layout implementation and when notifications are present, you can simply inflate the ViewStub. Here&#8217;s an example taken from <a href="http://developer.android.com/resources/articles/layout-tricks-stubs.html">Android Developers</a> that displays the flattening of the view hierarchy using ViewStubs.
+
+Layout without ViewStub:
+
+[caption id=&#8221;attachment_341&#8221; align=&#8221;aligncenter&#8221; width=&#8221;510&#8221;]<a href="http://chrisarriola.files.wordpress.com/2012/05/viewstub41.png"><img class="size-full wp-image-341 " title="Layout Without ViewStub" src="http://chrisarriola.files.wordpress.com/2012/05/viewstub41.png" alt="" width="510" height="431" /></a> Layout Without ViewStub[/caption]
+
+Layout using ViewStub:
+
+[caption id=&#8221;attachment_342&#8221; align=&#8221;aligncenter&#8221; width=&#8221;468&#8221;]<a href="http://chrisarriola.files.wordpress.com/2012/05/viewstub3.png"><img class="size-full wp-image-342 " title="Layout With ViewStub" src="http://chrisarriola.files.wordpress.com/2012/05/viewstub3.png" alt="" width="468" height="476" /></a> Layout With ViewStub[/caption]
+
+The code for your layout:
+<blockquote>
+<pre><span style="color:#0000ff;">&lt;ViewStub</span>
+<span style="color:#ff00ff;">android:id</span>=<span style="color:#339966;">"@+id/stub_slidingdrawer"</span>
+<span style="color:#ff00ff;">android:layout</span>=<span style="color:#339966;">"@layout/slidingdrawer"</span>
+<span style="color:#ff00ff;">android:layout_width</span>=<span style="color:#339966;">"fill_parent"</span>
+<span style="color:#ff00ff;">android:layout_height</span>=<span style="color:#339966;">"wrap_content"</span>
+<span style="color:#0000ff;">/&gt;</span></pre>
+</blockquote>
+<span style="color:#0000ff;"><span style="color:#000000;">The code to inflate the ViewStub:</span></span>
+<blockquote><span style="color:#0000ff;"><span style="color:#000000;">ViewStub stub = (ViewStub) findViewById(R.id.<span style="color:#0000ff;"><em>stub_slidingdrawer</em></span>);</span>
+<span style="color:#000000;">View v = stub.inflate();</span> </span></blockquote>
+For my specific case, it took about half the time to inflate the entire layout tree by using a ViewStub for infrequently used child layouts. Pretty sweet.
+
+      
+      
+    </div>
+  </div>
+
+
+
+    </article>
+    
+    <hr>
+    
+  
+  
+    <article>
+      
+
+  <div class="row-fluid">
+    <div class="span2 post-meta">
+	  <h5 class="date-time">
+
+
+
+
+
+
+
+
+  
+
+
+<i class="icon-calendar-empty"></i> <time datetime="2012-05-14T00:00:00-05:00" pubdate data-updated="true"></time></h5>
           <div class="row-fluid">
           
           <a href="http://chrisarriola.me/blog/2012/05/14/how-to-avoid-getting-a-ticket-when-running-a-red-light/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
@@ -179,7 +255,7 @@
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2012-05-10T00:00:00+02:00" pubdate data-updated="true"></time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2012-05-10T00:00:00-05:00" pubdate data-updated="true"></time></h5>
           <div class="row-fluid">
           
           <a href="http://chrisarriola.me/blog/2012/05/10/how-to-create-popups-in-android/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
@@ -200,74 +276,6 @@
       Great tutorial!
 
 <a href="http://wp.me/p26YYL-8n">How to create popups in Android</a>.
-
-      
-      
-    </div>
-  </div>
-
-
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
-
-
-
-
-
-
-
-
-  
-
-
-<i class="icon-calendar-empty"></i> <time datetime="2012-05-01T00:00:00+02:00" pubdate data-updated="true"></time></h5>
-          <div class="row-fluid">
-          
-          <a href="http://chrisarriola.me/blog/2012/05/01/self-learning-resources/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/education/"><span class="badge">Education</span></a>
-          
-          <a href="/blog/categories/personal-development/"><span class="badge">Personal Development</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2012/05/01/self-learning-resources/">Self-Learning Resources</a></h1>
-      One of the many pleasures in life involves learning something new. Whether it be learning a new culture, learning how to paint, learning how to write creatively, or learning how to fly a kite; the act of &#8220;knowing&#8221; something is nothing less than exciting. With that said, I&#8217;m a firm believer in the active pursuit of self-learning and self-education—who said learning should stop in school? Perhaps graduating school is the end of formal learning, but if it were the end of learning in itself, life would be very, very, boring.
-
-Below are some resources I&#8217;ve used in the past for taking free online classes. As my Calc 2 professor would say, these resources are &#8220;jewels in a priceless treasure chest&#8221;.
-
-<strong>Coursera: </strong><a href="https://www.coursera.org/">https://www.coursera.org/</a>
-
-<strong>Academic Earth: </strong><a href="http://www.academicearth.org/">http://www.academicearth.org/</a>
-
-<strong>Khan Academy: </strong><a href="http://www.khanacademy.org/">http://www.khanacademy.org/</a>
-
-<strong></strong><strong>MIT Open Courseware: </strong><a href="http://ocw.mit.edu/">http://ocw.mit.edu/</a>
-
-<strong></strong><strong>Engineer Guy: </strong><a href="http://www.engineerguy.com/">http://www.engineerguy.com/</a>
-
-<strong>Google Code University: </strong><a href="http://code.google.com/edu/">http://code.google.com/edu/</a>
-
-<strong></strong>&#8230;and of course it goes without saying that another great resource for self-learning is&#8230; a book! I&#8217;m currently using <a href="www.goodreads.com">www.goodreads.com</a> to find good recommendations based on books I&#8217;ve read on the past, and it&#8217;s also a good social website to view what your friends are currently reading and what they&#8217;ve read in the past.
-
-I hope you find these priceless &#8220;jewels&#8221; as invaluable as I found them. Enjoy!
 
       
       

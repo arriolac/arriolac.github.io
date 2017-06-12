@@ -129,10 +129,283 @@
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2015-10-19T01:46:47+02:00" pubdate data-updated="true">Oct 19<span>th</span>, 2015</time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2015-12-29T17:38:18-06:00" pubdate data-updated="true">Dec 29<span>th</span>, 2015</time></h5>
           <div class="row-fluid">
           
-          <a href="http://chrisarriola.me/blog/2015/10/19/code-like-a-goldfish/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
+          <a href="http://chrisarriola.me/blog/2015/12/29/getting-attached-to-your-state/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/android/"><span class="badge">Android</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10 post-container">
+      <h1 class="link"><a href="/blog/2015/12/29/getting-attached-to-your-state/">Getting Attached To Your State</a></h1>
+      <p><a href="http://developer.android.com/guide/topics/resources/runtime-changes.html#HandlingTheChange">Configuration changes</a> occur in runtime and are caused by various events such as: when keyboard visibility changes, when language changes, or when orientation changes. This in turn causes any <em>visible Activity</em> to be reconstructed once the change finishes. For state to be recovered, it needs to be explicitly tied to Android’s parcelling mechanism via Bundle.</p>
+
+<h3>Saving State, The Wrong Way</h3>
+
+<p>Upon encountering state loss caused by a configuration change, say on an orientation change, 2 poor solutions are:</p>
+
+<h4>1. Locking the orientation mode</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;activity 
+</span><span class='line'>    android:name="com.app.app.MainActivity"
+</span><span class='line'>    android:screenOrientation="portrait" /&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is an anti-solution and simply prevents the configuration change from occurring. This will not guard against <a href="http://developer.android.com/guide/topics/manifest/activity-element.html#config">the other 13 configuration changes</a> as of API level 23.</p>
+
+<blockquote><p>Orientation should only be locked as a result of a UI/UX decision, and not for retaining state.</p></blockquote>
+
+<h4>2. Handling configuration changes manually</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;activity 
+</span><span class='line'>    android:name="com.app.app.MainActivity"
+</span><span class='line'>    android:configChanges="orientation" /&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Again, this is a band-aid and not a proper solution. What if new configuration changes are introduced? Also this might cause some unintended consequences. Say for example you want to declare a landscape/portrait-specific resource, that resource will not be loaded automatically anymore and you need to explicitly load and apply it in <strong>Activity#onConfigurationChanged()</strong> instead. Not knowing this consequence may be a pain to debug.</p>
+
+<p>Quoting <a href="http://www.curious-creature.com/">Roman Guy</a>:</p>
+
+<blockquote><p>“&hellip;it is sometimes confusing for new Android developers who wonder why their activity is destroyed and recreated. Facing this “issue,” some developers choose to handle configuration changes themselves which is, in my opinion, a short-term solution that will complicate their life when other devices come out or when the application becomes more complex. The automatic resource handling is a very efficient and easy way to adapt your application’s user interface to various devices and devices configurations.”</p></blockquote>
+
+<p>Indeed, it is good practice to allow the system to do what it was designed to do as it allows your application to behave correctly on varying devices especially as your application gets more complex.</p>
+
+<blockquote><p>Manually handling configuration changes should only be done sparingly and as a result of some constraint (e.g. performance reasons).</p></blockquote>
+
+<h3>Saving State, The Right Way</h3>
+
+<p>Luckily, framework Views will automatically be saved and recovered for you—<em>assuming all your Views have unique IDs</em>. In other instances you need to explicitly retain state.</p>
+
+<h4>Retaining State In An Activity</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>@Override
+</span><span class='line'>public void onSaveInstanceState(Bundle savedInstanceState) {
+</span><span class='line'>    // This is called by the system so that any instance that can be recovered
+</span><span class='line'>    // when the Activity is recreated.
+</span><span class='line'>    savedInstanceState.putInt(SOME_VALUE, someIntValue);
+</span><span class='line'>    super.onSaveInstanceState(savedInstanceState);
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>public void onRestoreInstanceState(Bundle savedInstanceState) {
+</span><span class='line'>    // This is called by the system when the Activity is reconstructed.
+</span><span class='line'>    super.onRestoreInstanceState(savedInstanceState);
+</span><span class='line'>    someIntValue = savedInstanceState.getInt(SOME_VALUE);
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There are other lifecycle events where state can be restored such as in <strong>Activity#onCreate()</strong>. Retaining state in a Fragment can be done in a similar way via <strong>Fragment#onSaveInstanceState()</strong>. Here’s <a href="https://guides.codepath.com/android/Handling-Configuration-Changes">a good resource by CodePath</a> for learning more about how this works.</p>
+
+<h4>Retaining State in A Custom View</h4>
+
+<p>Retaining state in a custom View is a bit more involved but nonetheless also fairly straightforward.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>package com.operator.android;
+</span><span class='line'>
+</span><span class='line'>import android.content.Context;
+</span><span class='line'>import android.os.Parcel;
+</span><span class='line'>import android.os.Parcelable;
+</span><span class='line'>import android.view.View;
+</span><span class='line'>
+</span><span class='line'>/**
+</span><span class='line'> * A custom {@link View} that demonstrates how to save/restore instance state.
+</span><span class='line'> */
+</span><span class='line'>public class CustomView extends View {
+</span><span class='line'>
+</span><span class='line'>    private boolean someState;
+</span><span class='line'>
+</span><span class='line'>    public CustomView(Context context) {
+</span><span class='line'>        super(context);
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    public boolean isSomeState() {
+</span><span class='line'>        return someState;
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    public void setSomeState(boolean someState) {
+</span><span class='line'>        this.someState = someState;
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    @Override protected Parcelable onSaveInstanceState() {
+</span><span class='line'>        final Parcelable superState = super.onSaveInstanceState();
+</span><span class='line'>        final CustomViewSavedState customViewSavedState = new CustomViewSavedState(superState);
+</span><span class='line'>        customViewSavedState.someState = this.someState;
+</span><span class='line'>        return customViewSavedState;
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    @Override protected void onRestoreInstanceState(Parcelable state) {
+</span><span class='line'>        final CustomViewSavedState customViewSavedState = (CustomViewSavedState) state;
+</span><span class='line'>        setSomeState(customViewSavedState.someState);
+</span><span class='line'>        super.onRestoreInstanceState(customViewSavedState.getSuperState());
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    private static class CustomViewSavedState extends BaseSavedState {
+</span><span class='line'>
+</span><span class='line'>        boolean someState;
+</span><span class='line'>
+</span><span class='line'>        public static final Parcelable.Creator&lt;CustomViewSavedState&gt; CREATOR = new Creator&lt;CustomViewSavedState&gt;() {
+</span><span class='line'>            @Override public CustomViewSavedState createFromParcel(Parcel source) {
+</span><span class='line'>                return new CustomViewSavedState(source);
+</span><span class='line'>            }
+</span><span class='line'>
+</span><span class='line'>            @Override public CustomViewSavedState[] newArray(int size) {
+</span><span class='line'>                return new CustomViewSavedState[size];
+</span><span class='line'>            }
+</span><span class='line'>        };
+</span><span class='line'>
+</span><span class='line'>        public CustomViewSavedState(Parcelable superState) {
+</span><span class='line'>            super(superState);
+</span><span class='line'>        }
+</span><span class='line'>
+</span><span class='line'>        private CustomViewSavedState(Parcel source) {
+</span><span class='line'>            super(source);
+</span><span class='line'>            someState = source.readInt() == 1;
+</span><span class='line'>        }
+</span><span class='line'>
+</span><span class='line'>        @Override public void writeToParcel(Parcel out, int flags) {
+</span><span class='line'>            super.writeToParcel(out, flags);
+</span><span class='line'>            out.writeInt(someState ? 1 : 0);
+</span><span class='line'>        }
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>TL;DR</h3>
+
+<ul>
+<li>Don’t save your state the wrong way 😅 Save your state the right way 😁</li>
+</ul>
+
+
+      
+      
+    </div>
+  </div>
+
+
+
+    </article>
+    
+    <hr>
+    
+  
+  
+    <article>
+      
+
+  <div class="row-fluid">
+    <div class="span2 post-meta">
+	  <h5 class="date-time">
+
+
+
+
+
+
+
+
+  
+
+
+<i class="icon-calendar-empty"></i> <time datetime="2015-10-18T18:46:47-05:00" pubdate data-updated="true">Oct 18<span>th</span>, 2015</time></h5>
+          <div class="row-fluid">
+          
+          <a href="http://chrisarriola.me/blog/2015/10/18/code-like-a-goldfish/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
           
           </div>
           
@@ -148,7 +421,7 @@
           
     </div>
     <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2015/10/19/code-like-a-goldfish/">Code Like a Goldfish</a></h1>
+      <h1 class="link"><a href="/blog/2015/10/18/code-like-a-goldfish/">Code Like a Goldfish</a></h1>
       <p>There is an underlying hidden requirement in creating software products. It doesn&rsquo;t just have to &ldquo;work&rdquo;; it needs to be molded in such a way that it can be changed, maintained, and scaled easily.</p>
 
 <p>Last month, I gave a talk addressing this topic to the 1st cohort at <a href="http://www.telegraphacademy.com/">Telegraph Academy</a>—an  immersive program that teaches underrepresented groups in tech on how to code. They were nearing their last week of the program so I thought it would be relevant to share some industry lessons.</p>
@@ -203,7 +476,7 @@
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2014-08-24T22:29:55+02:00" pubdate data-updated="true">Aug 24<span>th</span>, 2014</time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2014-08-24T15:29:55-05:00" pubdate data-updated="true">Aug 24<span>th</span>, 2014</time></h5>
           <div class="row-fluid">
           
           <a href="http://chrisarriola.me/blog/2014/08/24/remind/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
@@ -239,92 +512,6 @@
 
 <br />
 
-
-      
-      
-    </div>
-  </div>
-
-
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
-
-
-
-
-
-
-
-
-  
-
-
-<i class="icon-calendar-empty"></i> <time datetime="2014-01-18T05:19:00+01:00" pubdate data-updated="true">Jan 18<span>th</span>, 2014</time></h5>
-          <div class="row-fluid">
-          
-          <a href="http://chrisarriola.me/blog/2014/01/18/deep-work/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/productivity/"><span class="badge">productivity</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2014/01/18/deep-work/">Deep Work</a></h1>
-      <br/>
-
-
-<h3>&ldquo;What should I do next to get better at X?&rdquo;</h3>
-
-<br/>
-
-
-<p><em>Practice&hellip; right?</em></p>
-
-<br/>
-
-
-<p>When I was in college, I followed a blog by Cal Newport called &ldquo;Study Hacks&rdquo;. If you haven&rsquo;t heard of it yet, I <strong>highly</strong> encourage you to check it out. It changed a lot of my perspectives and some of the lessons I learned I still practice today. Check it out <a href="http://calnewport.com/blog/">here</a>.</p>
-
-<p>As I was thinking about the question above, I thought of a topic discussed on <em>Study Hacks</em> called <a href="http://calnewport.com/blog/2012/11/21/knowledge-workers-are-bad-at-working-and-heres-what-to-do-about-it/">Deep Work</a>.</p>
-
-<p><em>Deep work</em>, according to Cal, is the type of work that causes our abilities to continually improve. It is a source of deeper satisfaction; that is, a feeling of passion towards whatever it is we&rsquo;re pursuing. In contrast, so called <em>shallow work</em> are the types of tasks that require minimal amount of effort. These are the tasks that through repetition and training we&rsquo;re able to do with our eyes closed.</p>
-
-<p>Figuratively, of course.</p>
-
-<p>The answer to the question I posed to myself requires some amount of deep work. With that said, here&rsquo;s how I go about preparing myself for some deep work:</p>
-
-<ol>
-<li><p><strong>Quiet time</strong></p>
-
-<p> The simple act of turning off all my devices and &ldquo;unplugging&rdquo; myself unleashes tons of creative juices. Distractions from tweets, likes, +1s, e-mails, etc. make it hard to get into any sort of rhythm. Once unplugged, I find that I don&rsquo;t really need to think of anything at all &ndash; ideas just start flowing.</p>
-
-<p> Ironically, some of my most creative moments are in the plane when I&rsquo;m bored out of my mind. Who said boredom was a bad thing??</p></li>
-<li><p><strong>Plan for tomorrow</strong></p>
-
-<p> I have trouble maintaining a very rigid routine/schedule. However, it&rsquo;s incredibly easy to plan for the next day. I find that if I just jot down a few reasonable and achievable tasks for myself to do the next day, my mind has time to prepare for what&rsquo;s ahead. Surprisingly, this motivates me to wake up early the following day too.</p></li>
-<li><p><strong>Be in the now.</strong></p>
-
-<p> The most important part about execution of deep work is to be in the moment. You just need to pay attention to what you&rsquo;re doing. To &ldquo;pay attention&rdquo; is such a great sentiment in this context as it reminds us that attention costs something&hellip; energy.</p></li>
-</ol>
-
-
-<p>How do you prepare yourself for <em>deep work</em>?</p>
 
       
       

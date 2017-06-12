@@ -129,7 +129,192 @@
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2012-06-06T00:00:00+02:00" pubdate data-updated="true"></time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2012-06-15T00:00:00-05:00" pubdate data-updated="true"></time></h5>
+          <div class="row-fluid">
+          
+          <a href="http://chrisarriola.me/blog/2012/06/15/dynamic-data-with-listview-loading-footer/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/android/"><span class="badge">Android</span></a>
+          
+          <a href="/blog/categories/programming-tutorials/"><span class="badge">Programming Tutorials</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10 post-container">
+      <h1 class="link"><a href="/blog/2012/06/15/dynamic-data-with-listview-loading-footer/">Dynamic Data with ListView + Loading Footer</a></h1>
+      <p>
+A pretty common UI design pattern for  ListViews on Android is displaying a loading footer for the dynamic loading of a list. It&#8217;s a pattern used by several well known apps - Twitter, Gmail and Instagram to mention a few - to display data without having to click a button to paginate through information. Essentially, as a user scrolls down to the end of a list, which indicates the end of the current page, a loading indicator is displayed at the footer of the list to notify the user that the list is in the process of populating more data.</p>
+
+<div style="text-align:center;">
+    <a href="http://chrisarriola.files.wordpress.com/2012/06/dynamiclist.png"><img class="size-full wp-image-389" title="Dynamic List" src="http://chrisarriola.files.wordpress.com/2012/06/dynamiclist.png" alt="" width="510" height="340" /></a> 
+</div>
+
+<div style="text-align:center;">
+    <a href="http://www.androidpatterns.com/uap_pattern/dynamic-loading-of-a-list">Dynamic Loading of a List</a>
+</div><br>
+
+<p>
+While playing around with this pattern, I was quite surprise how not-so-straightforward it was to implement this (then again, that&#8217;s programming for you). With that said, I&#8217;d like to share my implementation with you in case you&#8217;re trying to use this pattern in your application.
+</p>
+
+<h3>Trial 1</h3>
+The intuitive way to go about this is to (1) simply attach an Adapter with the first page of items to a ListView, (2) attach an OnScrollListener to detect if the bottom of the list has been reached, if so, (3) add a loading footer view to the list while retrieving more data, and when the retrieval process is done, remove the loading footer and (4) update the adapter with the recently pulled data.
+
+Sounds pretty straightforward right? Turns out, it&#8217;s not.
+
+Here&#8217;s some code snippets of the above approach.
+
+(1) &amp; (2)
+<pre>ListView list = (ListView) findViewById(R.id.listview);
+MyAdapter adapter = new MyAdapter(context, items);
+list.setAdapter(adapter);
+
+list.setOnScrollListener(new OnScrollListener() {
+    @Override
+    public void onScrollStateChanged(AbsListView view, 
+            int scrollState) {
+         <span style="color:#339966;">// Do nothing</span>
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, 
+            int visibleItemCount, int totalItemCount) {
+
+        <span style="color:#339966;">// threshold being indicator if bottom of list is hit</span>
+        if (firstVisibleItem = threshold) {
+            pullMoreData();
+        }
+    }
+});</pre>
+(3) &amp; (4)
+<pre>private void pullMoreData() {
+    doNetworkRequest(page); <span style="color:#339966;">// Perform request for next page</span>
+    list.addFooterView(loadingFooter);
+}
+
+@Override
+public void onNetworkRequestComplete(Request request) {
+    list.removeFooterView(loadingFooter);
+    adapter.addAll(request.getData());
+    adapter.notifyDataSetChanged();
+}</pre>
+This implementation, however, does not result in the intended action - the footer never gets displayed. A work-around I did for this leads me to&#8230;
+<h3>Trial 2</h3>
+With my second trial, I did this: (1) attached the footer first before the adapter, and when the bottom of the list has been reached and new data has been retrieved, (2) reattach the footer and create a new adapter with the old+new data which is then reattached to the list. Finally, to bring the user back to the scroll position, I (3) keep track of the first visible item on the scroll view and set the list selection to be this item.
+
+Immediately, a few things must be popping up in your head such as: that must be slow! it&#8217;s a hack! there has to be a cleaner way! etc. I can&#8217;t agree with you more.
+
+(1), (2) &amp; (3)
+<pre>ListView list = (ListView) findViewById(R.id.listview);
+list.addFooterView(loadingFooter);
+
+MyAdapter adapter = new MyAdapter(context, items);
+list.setAdapter(adapter);
+
+list.setOnScrollListener(new OnScrollListener() {
+    @Override
+    public void onScrollStateChanged(AbsListView view, 
+            int scrollState) {
+         <span style="color:#339966;">// Do nothing</span>
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, 
+            int visibleItemCount, int totalItemCount) {
+
+<span style="color:#339966;"> // member variable for restoring selection</span>
+        mSelection = firstVisibleItem;
+
+<span style="color:#339966;"> // threshold being indicator if bottom of list is hit</span>
+        if (firstVisibleItem = threshold) {
+            pullMoreData();
+        }
+    }
+});
+
+@Override
+public void onNetworkRequestComplete(Request request) {
+    list.removeFooterView(loadingFooter);
+    list.addFooterView(loadingFooter);
+
+    MyAdapter newAdapter = new MyAdapter(this);
+    newAdapter.addOldData(adapter);
+    newAdapter.addAll(request.getData());
+
+    list.setAdapter(newAdapter);
+    adapter = newAdapter;
+
+<span style="color:#339966;"> // Set table to last selection</span>
+    list.setSelection(mSelection)
+}</pre>
+Albeit some performance issues and jerkiness because of (3), this implementation actually works.
+
+Can we do better than this?
+<h3>Trial 3</h3>
+The trick, it turns out, is to <strong>attach the footer view before setting the adapter</strong>, this way, any combination of adding and removing of the footer view/s just works. <strong>Why does it have to be in order</strong>!? If you have the answer, please leave a comment. I&#8217;d love to know
+<pre>ListView list = (ListView) findViewById(R.id.listview);
+list.addFooterView(loadingFooter);
+
+MyAdapter adapter = new MyAdapter(context, items);
+list.setAdapter(adapter);
+
+<span style="color:#339966;">// this step is important to not display the footer view // right of the bat.</span>
+list.removeFooterView(loadingFooter);
+
+list.setOnScrollListener(new OnScrollListener() {
+    @Override
+    public void onScrollStateChanged(AbsListView view, 
+            int scrollState) {
+<span style="color:#339966;"> // Do nothing</span>
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, 
+            int visibleItemCount, int totalItemCount) {
+<span style="color:#339966;"> // threshold being indicator if bottom of list is hit</span>
+        if (firstVisibleItem = threshold) {
+            pullMoreData();
+        }
+    }
+});</pre>
+I&#8217;ll share more Android quirks as they come up, I hope this helped.
+
+      
+      
+    </div>
+  </div>
+
+
+
+    </article>
+    
+    <hr>
+    
+  
+  
+    <article>
+      
+
+  <div class="row-fluid">
+    <div class="span2 post-meta">
+	  <h5 class="date-time">
+
+
+
+
+
+
+
+
+  
+
+
+<i class="icon-calendar-empty"></i> <time datetime="2012-06-06T00:00:00-05:00" pubdate data-updated="true"></time></h5>
           <div class="row-fluid">
           
           <a href="http://chrisarriola.me/blog/2012/06/06/too-many-to-one/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
@@ -193,7 +378,7 @@ If you&#8217;re a developer and would like to contribute to the project, please 
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2012-05-30T00:00:00+02:00" pubdate data-updated="true"></time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2012-05-30T00:00:00-05:00" pubdate data-updated="true"></time></h5>
           <div class="row-fluid">
           
           <a href="http://chrisarriola.me/blog/2012/05/30/incremental-goals/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
@@ -208,82 +393,6 @@ If you&#8217;re a developer and would like to contribute to the project, please 
     <div class="span10 post-container">
       <h1 class="link"><a href="/blog/2012/05/30/incremental-goals/">Incremental Goals</a></h1>
       Check my post on the JOCC blog about setting <a href="http://wp.me/p1YHaV-3e">Incremental Goals</a>.
-
-      
-      
-    </div>
-  </div>
-
-
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
-
-
-
-
-
-
-
-
-  
-
-
-<i class="icon-calendar-empty"></i> <time datetime="2012-05-23T00:00:00+02:00" pubdate data-updated="true"></time></h5>
-          <div class="row-fluid">
-          
-          <a href="http://chrisarriola.me/blog/2012/05/23/optimizing-android-layouts/#disqus_thread">Comments </a> <span class="fui-bubble-16"></span>
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/android/"><span class="badge">Android</span></a>
-          
-          <a href="/blog/categories/technology/"><span class="badge">Technology</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2012/05/23/optimizing-android-layouts/">Optimizing Android Layouts</a></h1>
-      I recently used the <strong>hierarchyviewer</strong> &amp; <strong>lint </strong>tool in the Android SDK and was pretty surprised with the results I saw. Many of the views I had were heavily nested and some views did not necessarily have to be inflated off the bat (progress indicators and refresh icons to name a few). As a result, my activity took a performance hit because of a badly designed layout.
-
-Here&#8217;s a technique I used that I picked up at AnDevCon III to flatten my layouts and in general make them more performant.
-<h3><strong>ViewStub</strong></h3>
-Essentially, ViewStub is a lightweight and cheap to inflate widget that you can include in a layout. Its purpose is basically to serve as a stub or placeholder for views that don&#8217;t necessarily need to be inflated on creation. For example, let&#8217;s say your app displays notifications on a SlidingDrawer; however, when there are no notifications, that SlidingDrawer should be hidden. What you can do then is create a ViewStub that points to your SlidingDrawer layout implementation and when notifications are present, you can simply inflate the ViewStub. Here&#8217;s an example taken from <a href="http://developer.android.com/resources/articles/layout-tricks-stubs.html">Android Developers</a> that displays the flattening of the view hierarchy using ViewStubs.
-
-Layout without ViewStub:
-
-[caption id=&#8221;attachment_341&#8221; align=&#8221;aligncenter&#8221; width=&#8221;510&#8221;]<a href="http://chrisarriola.files.wordpress.com/2012/05/viewstub41.png"><img class="size-full wp-image-341 " title="Layout Without ViewStub" src="http://chrisarriola.files.wordpress.com/2012/05/viewstub41.png" alt="" width="510" height="431" /></a> Layout Without ViewStub[/caption]
-
-Layout using ViewStub:
-
-[caption id=&#8221;attachment_342&#8221; align=&#8221;aligncenter&#8221; width=&#8221;468&#8221;]<a href="http://chrisarriola.files.wordpress.com/2012/05/viewstub3.png"><img class="size-full wp-image-342 " title="Layout With ViewStub" src="http://chrisarriola.files.wordpress.com/2012/05/viewstub3.png" alt="" width="468" height="476" /></a> Layout With ViewStub[/caption]
-
-The code for your layout:
-<blockquote>
-<pre><span style="color:#0000ff;">&lt;ViewStub</span>
-<span style="color:#ff00ff;">android:id</span>=<span style="color:#339966;">"@+id/stub_slidingdrawer"</span>
-<span style="color:#ff00ff;">android:layout</span>=<span style="color:#339966;">"@layout/slidingdrawer"</span>
-<span style="color:#ff00ff;">android:layout_width</span>=<span style="color:#339966;">"fill_parent"</span>
-<span style="color:#ff00ff;">android:layout_height</span>=<span style="color:#339966;">"wrap_content"</span>
-<span style="color:#0000ff;">/&gt;</span></pre>
-</blockquote>
-<span style="color:#0000ff;"><span style="color:#000000;">The code to inflate the ViewStub:</span></span>
-<blockquote><span style="color:#0000ff;"><span style="color:#000000;">ViewStub stub = (ViewStub) findViewById(R.id.<span style="color:#0000ff;"><em>stub_slidingdrawer</em></span>);</span>
-<span style="color:#000000;">View v = stub.inflate();</span> </span></blockquote>
-For my specific case, it took about half the time to inflate the entire layout tree by using a ViewStub for infrequently used child layouts. Pretty sweet.
 
       
       

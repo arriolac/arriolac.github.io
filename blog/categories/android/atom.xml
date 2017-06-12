@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Android, | Chris Arriola]]></title>
   <link href="http://chrisarriola.me/blog/categories/android/atom.xml" rel="self"/>
   <link href="http://chrisarriola.me/"/>
-  <updated>2017-03-06T13:24:36+01:00</updated>
+  <updated>2017-06-12T17:39:58-05:00</updated>
   <id>http://chrisarriola.me/</id>
   <author>
     <name><![CDATA[Chris Arriola]]></name>
@@ -14,9 +14,48 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Announcing New Book: Reactive Programming on Android with RxJava]]></title>
+    <link href="http://chrisarriola.me/blog/2017/06/12/announcing-new-book-reactive-programming-on-android-with-rxjava/"/>
+    <updated>2017-06-12T14:44:00-05:00</updated>
+    <id>http://chrisarriola.me/blog/2017/06/12/announcing-new-book-reactive-programming-on-android-with-rxjava</id>
+    <content type="html"><![CDATA[<p>I&rsquo;m very pleased to announce that a book that <a href="https://www.linkedin.com/in/ahuang13/">Angus Huang</a> and I started writing a few months back, <a href="https://leanpub.com/reactiveandroid">&ldquo;Reactive Programming on Android with Android&rdquo;</a>, is now published and available on LeanPub! 🎉</p>
+
+<p><img class="center <a" src="href="http://chrisarriola.me/images/rxjava_my_book_with_angus.jpg">http://chrisarriola.me/images/rxjava_my_book_with_angus.jpg</a>"></p>
+
+<h2>What is RxJava?</h2>
+
+<p>RxJava—the Java implementation of ReactiveX—was open sourced and introduced to the developer community by Netflix back in 2013. At Netflix, RxJava had arisen as a need to solve scaling issues created by their previous <a href="https://medium.com/netflix-techblog/embracing-the-differences-inside-the-netflix-api-redesign-15fd8b3dc49d">one-size-fits-all API</a>.</p>
+
+<p>The promise of reactive programming was that it would allow their teams to seamlessly compose complex asynchronous behavior into an easy-to-use API. Using these APIs, their client teams can then create custom end-points to optimize for the growing number of devices that Netflix supported without having to deal with the intricacies of server-side concurrent programming.</p>
+
+<p>In a word, RxJava was supposed to <strong>simplify writing concurrent code</strong>.</p>
+
+<p>Turns out, RxJava did fulfill its promise and is now <a href="https://medium.com/netflix-techblog/reactive-programming-in-the-netflix-api-with-rxjava-7811c3a1496a">the backbone of many Netflix back-end services</a>.</p>
+
+<p>Outside of Netflix, RxJava has been adopted in other communities, including the Android community, as reactive programming can also help with developing mobile apps. As of today, RxJava is the go-to library for enabling reactive programming on Android. Surely, the number of stars it has on Github should be a strong signal.</p>
+
+<p><img class="center <a" src="href="http://chrisarriola.me/images/github_rxjava_stars.png">http://chrisarriola.me/images/github_rxjava_stars.png</a>" title="RxJava is the most starred Java repository on Github as of June 2017" ></p>
+
+<h2>Why Write a Book?</h2>
+
+<p>We believe that reactive programing is shaping the way Android apps are being built. This is even evident in the direction Google is going with its new reactive-inspired <a href="https://developer.android.com/topic/libraries/architecture/index.html">Android Architecture Components</a> announced recently at Google IO &lsquo;17. With that said, we think it&rsquo;s important for Android developers to familiarize themselves with the reactive programming model.</p>
+
+<p>This book is a collection of our knowledge on the subject taken from different sources around the web (i.e. blog posts, books, wikis, etc.). Our hope is that this book serves as a solid foundation for Android developers who are new to RxJava and want to start integrating it into their apps.</p>
+
+<p>If you are interested in learning more, you can purchase or download a sample of the book <a href="https://leanpub.com/reactiveandroid">here</a>.</p>
+
+<hr />
+
+<p>Got any questions? Leave us a comment below.</p>
+
+<p>Writing apps in Kotlin? Stay tuned for our <a href="https://leanpub.com/reactiveandroidrxkotlin">next book</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Reactive Modelling on Android]]></title>
     <link href="http://chrisarriola.me/blog/2017/03/06/reactive-modelling-on-android/"/>
-    <updated>2017-03-06T13:14:25+01:00</updated>
+    <updated>2017-03-06T06:14:25-06:00</updated>
     <id>http://chrisarriola.me/blog/2017/03/06/reactive-modelling-on-android</id>
     <content type="html"><![CDATA[<p><em>This post was originally published on <a href="https://www.toptal.com/android/simplify-concurrency-reactive-modelling-android?utm_source=Android+Weekly&amp;utm_campaign=258130a563-android-weekly-247&amp;utm_medium=email&amp;utm_term=0_4eb677ad19-258130a563-337833853">Toptal</a>.</em></p>
 
@@ -396,7 +435,7 @@ public class LocationManager {</p>
   <entry>
     <title type="html"><![CDATA[Introduction to RxJava for Android]]></title>
     <link href="http://chrisarriola.me/blog/2016/09/04/introduction-to-rxjava-for-android/"/>
-    <updated>2016-09-04T09:52:08+02:00</updated>
+    <updated>2016-09-04T02:52:08-05:00</updated>
     <id>http://chrisarriola.me/blog/2016/09/04/introduction-to-rxjava-for-android</id>
     <content type="html"><![CDATA[<p><em>This post was originally published on <a href="https://www.toptal.com/android/functional-reactive-android-rxjava">Toptal</a> under my Toptal <a href="https://www.toptal.com/resume/christopher-arriola">account</a>.</em></p>
 
