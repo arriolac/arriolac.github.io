@@ -24,7 +24,7 @@ Outside of Netflix, RxJava has been adopted in other communities, including the 
 
 {% img center http://chrisarriola.me/images/github_rxjava_stars.png RxJava is the most starred Java repository on Github as of June 2017 %}
 
-## Why Write this Book?
+## Why Write a Book?
 
 We believe that reactive programing is shaping the way Android apps are being built. This is even evident in the direction Google is going with its new reactive-inspired [Android Architecture Components](https://developer.android.com/topic/libraries/architecture/index.html) announced recently at Google IO '17. With that said, we think it's important for Android developers to familiarize themselves with the reactive programming model.
 
@@ -33,6 +33,6 @@ This book is a collection of our knowledge on the subject taken from different s
 If you are interested in learning more, you can purchase or download a sample of the book [here](https://leanpub.com/reactiveandroid). 
 
 ------
-Got any questions? Leave a comment below!
+Got any questions? Leave us a comment below.
 
 Writing apps in Kotlin? Stay tuned for our [next book](https://leanpub.com/reactiveandroidrxkotlin).
