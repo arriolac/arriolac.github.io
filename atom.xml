@@ -4,7 +4,7 @@
   <title><![CDATA[Chris Arriola]]></title>
   <link href="http://chrisarriola.me/atom.xml" rel="self"/>
   <link href="http://chrisarriola.me/"/>
-  <updated>2017-06-12T17:39:58-05:00</updated>
+  <updated>2017-06-13T07:55:26-05:00</updated>
   <id>http://chrisarriola.me/</id>
   <author>
     <name><![CDATA[Chris Arriola]]></name>
@@ -18,7 +18,7 @@
     <link href="http://chrisarriola.me/blog/2017/06/12/announcing-new-book-reactive-programming-on-android-with-rxjava/"/>
     <updated>2017-06-12T14:44:00-05:00</updated>
     <id>http://chrisarriola.me/blog/2017/06/12/announcing-new-book-reactive-programming-on-android-with-rxjava</id>
-    <content type="html"><![CDATA[<p>I&rsquo;m very pleased to announce that a book that <a href="https://www.linkedin.com/in/ahuang13/">Angus Huang</a> and I started writing a few months back, <a href="https://leanpub.com/reactiveandroid">&ldquo;Reactive Programming on Android with Android&rdquo;</a>, is now published and available on LeanPub! 🎉</p>
+    <content type="html"><![CDATA[<p>I&rsquo;m very pleased to announce that a book that <a href="https://www.linkedin.com/in/ahuang13/">Angus Huang</a> and I started writing a few months back, <a href="https://leanpub.com/reactiveandroid">&ldquo;Reactive Programming on Android with RxJava&rdquo;</a>, is now published and available on LeanPub! 🎉</p>
 
 <p><img class="center" src="http://chrisarriola.me/images/rxjava_my_book_with_angus.jpg"></p>
 
