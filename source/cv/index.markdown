@@ -9,15 +9,15 @@ footer: true
 ##Work Experience
 __Founder and Software Engineer__, *[Mynah Software](https://mynahsoftware.com) (Nov. 2016 - Present)*
 
-Developing highly polished Android and iOS applications.
+Developing Android and iOS applications.
 
-__Author and Freelance Software Engineer__, *[Toptal](https://www.toptal.com/resume/christopher-arriola) (May 2016 - Present)*
+__Writer and Freelance Software Engineer__, *[Toptal](https://www.toptal.com/resume/christopher-arriola) (May 2016 - Present)*
 
-Mobile software engineering freelance and writing engineering-related educational content for Toptal.
+Building mobile apps for Toptal clients & writing engineering-related educational content on Toptal's blog.
 
 __Software Engineer__, *[Operator](https://operator.com) (Jan. 2015 - Oct. 2016)*
 
-Currently doing fullstack mobile development (iOS, Python & Javascript).
+Fullstack mobile development (iOS, Android, Python & Javascript).
 
 Built Operator's early Android specialist app in ~1 month.
 
@@ -47,6 +47,12 @@ __Tutor__, *Rutgers Learning Center (Oct. 2006 - Sept. 2007)*
 
 Tutored algebra, pre-calculus, basic caculus, honors calculus I, caculus I, II, III and physics. I was also assigned as the designated tutor for a pre-calculus class wherein I held office hours and posted homework solutions.
 <br />
+
+##Books
+__[Reactive Programming on Android with RxJava](leanpub.com/reactiveandroid)__ (June 2017)
+
+A guide for experienced Android developers looking to learn about reactive programming using RxJava, the Java implementation of ReactiveX. It is written in a clear and concise way with many Android-specific examples.
+
 ##Professional Activities
 __Director of mHealth Strategy__, *Global HEED - mHealth Team (Nov. 2010 - Present)*
 
@@ -82,10 +88,6 @@ __[reMIND](https://play.google.com/store/apps/details?id=chrisarriola.me.remind)
 
 An app that reminds you to be present.
 
-__[Napp](https://play.google.com/store/apps/details?id=com.napp.napp), Android Application__ *(Feb. 2011 - March 2011)*
-
-Simple and convenient application for taking naps.
-<br />
 ##Education
 __M.C.I.T. in Computer and Information Technology__ *(2010)
 University of Pennsylvania, Philadelphia, PA*
