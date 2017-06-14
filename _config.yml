@@ -106,6 +106,8 @@ linkedin_user: chrisarriola
 navigation:
 - text: Home
   url: /index.html
+- text: Book
+  url: /book
 - text: CV
   url: /cv
 - text: About Me
