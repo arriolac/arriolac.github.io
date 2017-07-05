@@ -168,10 +168,15 @@ friendDao.getAllFriends()
 There’s quite a lot going on here so let’s look at it step-by-step:
 
 * First, we retrieve all friends by calling the .getAllFriends() method on a FriendDao object. As mentioned earlier, this Observable will first emit the list of friends as well as any changes to the user’s friends (i.e. a list of friends will be emitted as new friends are added, or as existing friends are removed/updated)
+
 * Next, we apply a .switchMap() operator which maps the stream from a list of Friend objects to a list of DashboardFriendViewModel objects, the type we are ultimately interested in. We are using .switchMap() here, instead of .flatMap() or .concatMap(), so that only the most recent Observable emission from .switchMap() is observed and all other previous emissions will be considered stale. You can read about the difference between the operators on the ReactiveX wiki.
+
 * Within the .switchMap() operator, we then convert friends into a list of Observable<DashboardFriendViewModel> by iterating through each friend and getting the most recent message with them followed by mapping that to a DashboardFriendViewModel.
+
 * We then combine the emissions of the list of Observable<DashboardFriendViewModel> using the .combineLatest() operator, the result of which is then combined into a list of DashboardFriendViewModel objects which is propagated down to the observer. This operator allows downstream operators and observers to receive updates whenever there is a new message from a friend.
+
 * After the .switchMap() operator, we then chain an .observeOn() operator and make sure that the observer receives events on Android’s main thread.
+
 * Finally, we subscribe to the Observable after applying .switchMap() and set the DashboardAdapter’s friendViewModels to the received emissions. Here, we are replacing the backing data set for the DashboardAdapter, which in turn invokes notifyDataSetChanged(). This can also be optimized by finding the items with changes and selectively applying notifiyItemChanged() or notifyItemRangeChanged().
 
 ## Summary
