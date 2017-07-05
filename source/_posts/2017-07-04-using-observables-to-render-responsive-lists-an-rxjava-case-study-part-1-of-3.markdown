@@ -24,14 +24,14 @@ Friend with unread message:
 Friend with no unread message:
 {% img center http://chrisarriola.me/images/pre_dashboard_read.png %}
 
-Both the `Friend` and `Message` models are persisted in a local SQLite database. To prevent jankiness while scrolling, retrieving these models should be done before rendering the list. More specifically, we want to make sure that we have all of the Friend objects and the corresponding latest Message in memory before setting the list of friends to the Adapter of the RecyclerView. 
+Both the _Friend_ and _Message_ models are persisted in a local SQLite database. To prevent jankiness while scrolling, retrieving these models should be done before rendering the list. More specifically, we want to make sure that we have all of the Friend objects and the corresponding latest Message in memory before setting the list of friends to the Adapter of the RecyclerView. 
  
 Before we dive into Observables and how RxJava fits into the picture, let’s look at a few classes that compose the dashboard view. Note that even though some of the classes here have been shortened for brevity, the underlying concepts should be the same.
 
 ## Non-Reactive Parts
 ### DashboardFriendViewModel
  
-On the dashboard, the `DashboardFriendViewModel` class is in charge of binding the `Friend` and `Message` models to a single friend view. True to the `ViewModel` design pattern, this class provides us with the benefit of abstracting away model details from the view layer. So if our model changes, we would only need to update the `ViewModel`’s code (i.e. `DashboardFriendViewModel`), and not the view’s code.
+On the dashboard, the _DashboardFriendViewModel_ class is in charge of binding the _Friend_ and _Message_ models to a single friend view. True to the _ViewModel_ design pattern, this class provides us with the benefit of abstracting away model details from the view layer. So if our model changes, we would only need to update the _ViewModel_’s code (i.e. _DashboardFriendViewModel_), and not the view’s code.
 
 ```
 data class DashboardFriendViewModel(
@@ -52,7 +52,7 @@ data class DashboardFriendViewModel(
 ```
 
 ### DashboardFriendViewHolder
-Using a `DashboardFriendViewModel`, a `DashboardFriendViewHolder` (a subclass of `RecyclerView.ViewHolder`), can simply update the views it holds by getting the fields on the `DashboardFriendViewModel`.
+Using a _DashboardFriendViewModel_, a _DashboardFriendViewHolder_ (a subclass of _RecyclerView.ViewHolder_), can simply update the views it holds by getting the fields on the _DashboardFriendViewModel_.
  
 ```
 class DashboardFriendViewHolder(
@@ -77,7 +77,7 @@ class DashboardFriendViewHolder(
 ```
 
 ### DashboardAdapter
-The backing adapter for the dashboard RecyclerView, `DashboardAdapter`, holds a list of `DashboardFriendViewModel` objects and binds each object to a `DashboardFriendViewHolder` (note that check-ins are excluded in the code sample below).
+The backing adapter for the dashboard RecyclerView, _DashboardAdapter_, holds a list of _DashboardFriendViewModel_ objects and binds each object to a _DashboardFriendViewHolder_ (note that check-ins are excluded in the code sample below).
 
 ```
 class DashboardAdapter : 
@@ -103,7 +103,7 @@ class DashboardAdapter :
 }
 ```
 
-With these classes in mind, it should be clear that the role of the Activity is to provide the `DashboardAdapter` a list of `DashboardFriendViewModel` objects to construct the list of friends in the dashboard view. In the next section, we will look at the reactive elements that come into play to accomplish this.
+With these classes in mind, it should be clear that the role of the Activity is to provide the _DashboardAdapter_ a list of _DashboardFriendViewModel_ objects to construct the list of friends in the dashboard view. In the next section, we will look at the reactive elements that come into play to accomplish this.
 
 ## Reactive Parts
 
@@ -111,7 +111,7 @@ Each model that is backed by a SQLite table has a corresponding data access obje
 
 ### DAO
 
-DAOs in Pre are also designed to be reactive; that is, DAOs can provide data packaged as an Observable so that the requestor can continue to receive updates as the underlying model changes. The details of how these Observables are constructed will be covered in the 2nd part of this series. For now, assume that we have the following methods provided by `FriendDao` and `MessageDao`.
+DAOs in Pre are also designed to be reactive; that is, DAOs can provide data packaged as an Observable so that the requestor can continue to receive updates as the underlying model changes. The details of how these Observables are constructed will be covered in the 2nd part of this series. For now, assume that we have the following methods provided by _FriendDao_ and _MessageDao_.
 
 ```
 class FriendDao {
@@ -137,13 +137,13 @@ class MessageDao {
 }
 ```
 
-It is important to keep in mind that these methods return Observables that report changes to subscribers as the underlying data also changes. For example, if we subscribe to `FriendDao#getAllFriends()` and, at a later point, a new `Friend` is added, the observer would receive an updated list of friends via `.onNext()` once the new friend is persisted in the database. This is really powerful as the mechanism for requesting initial data and for receiving updates will all be in the same place — the observer.
+It is important to keep in mind that these methods return Observables that report changes to subscribers as the underlying data also changes. For example, if we subscribe to _FriendDao#getAllFriends()_ and, at a later point, a new _Friend_ is added, the observer would receive an updated list of friends via _.onNext()_ once the new friend is persisted in the database. This is really powerful as the mechanism for requesting initial data and for receiving updates will all be in the same place — the observer.
 
-In addition, all methods that return Observables in Pre’s DAOs run off the main thread. It is up to the subscriber to ultimately hop back to the main thread, via `.observeOn()`, when necessary (e.g. when interacting with the view layer).
+In addition, all methods that return Observables in Pre’s DAOs run off the main thread. It is up to the subscriber to ultimately hop back to the main thread, via _.observeOn()_, when necessary (e.g. when interacting with the view layer).
 
 ## Putting It All Together 🏗
 
-Using `FriendDao` and `MessageDao` that supply us with Observables of `Friend` and `Message` objects, respectively, we can now construct the list of DashboardFriendViewModel objects and display our list of friends on the dashboard.
+Using _FriendDao_ and _MessageDao_ that supply us with Observables of _Friend_ and _Message_ objects, respectively, we can now construct the list of DashboardFriendViewModel objects and display our list of friends on the dashboard.
 
 The lines of code that accomplish this are:
 
