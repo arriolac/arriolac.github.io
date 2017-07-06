@@ -16,7 +16,7 @@ Note that all of the code samples in this series are written in Kotlin. In addit
 
 ## Dashboard View
 
-{% img center http://chrisarriola.me/images/pre_dashboard_view.png %}
+{% img center http://chrisarriola.me/images/pre_dashboard_view.jpg %}
 
 The dashboard view is the first view presented to the user upon logging in. It contains 2 sections: (1) a section displaying a list of recent check-ins from your friends, and (2) a section displaying a list of all your friends. The latter is displayed by querying the data layer for all of your friends, followed by querying the most recent message in the conversation thread for each of your friends. The state of the message will then determine if an unread indicator, or if a relative timestamp of when that message was sent, should be displayed.
 
