@@ -20,11 +20,9 @@ Note that all of the code samples in this series are written in Kotlin. In addit
 
 The dashboard view is the first view presented to the user upon logging in. It contains 2 sections: (1) a section displaying a list of recent check-ins from your friends, and (2) a section displaying a list of all your friends. The latter is displayed by querying the data layer for all of your friends, followed by querying the most recent message in the conversation thread for each of your friends. The state of the message will then determine if an unread indicator, or if a relative timestamp of when that message was sent, should be displayed.
 
-Friend with unread message:
-{% img center http://chrisarriola.me/images/pre_dashboard_unread.png %}
+{% img center http://chrisarriola.me/images/pre_dashboard_unread.png 'Friend with unread message' %}
 
-Friend with no unread message:
-{% img center http://chrisarriola.me/images/pre_dashboard_read.png %}
+{% img center http://chrisarriola.me/images/pre_dashboard_read.png 'Friend with no unread message' %}
 
 Both the _Friend_ and _Message_ models are persisted in a local SQLite database. To prevent jankiness while scrolling, retrieving these models should be done before rendering the list. More specifically, we want to make sure that we have all of the Friend objects and the corresponding latest Message in memory before setting the list of friends to the Adapter of the RecyclerView. 
  
