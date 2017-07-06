@@ -1,12 +1,14 @@
 ---
 layout: post
 title: "Using Observables to Render Responsive Lists: An RxJava Case Study - Part 1 of 3"
-date: 2017-07-05 21:40:26 -0500
+date: 2017-07-06 9:40:26 -0500
 comments: true
 categories: Android, RxJava, Freelancing, Pre
 ---
 
-This is the 1st part of a 3 part series about how RxJava are used in [Pre](https://pre.co/), a location-based app for checking in and chatting with your best friends. In this first post, I will go over how we used Observables to compose a complex view that displays a list of items, specifically, the _dashboard_ view.
+_This post was originally posted on [Medium](https://medium.com/joinpre/using-observables-to-render-responsive-lists-an-rxjava-case-study-part-1-of-3-53dd83af2c08)._
+
+This is the 1st part of a 3 part series about how RxJava is used in [Pre](https://pre.co/), a location-based app for checking in and chatting with your best friends. In this first post, I will go over how we used Observables to compose a complex view that displays a list of items, specifically, the _dashboard_ view.
 
 If you are new to RxJava, I recommend [starting here](http://chrisarriola.me/blog/2016/09/04/introduction-to-rxjava-for-android/). You can also check out a [book](https://leanpub.com/reactiveandroid) Angus Huang and I wrote if you would like a more comprehensive learning resource on RxJava.
 
@@ -183,7 +185,6 @@ There’s quite a lot going on here so let’s look at it step-by-step:
 The solution above is brief and accomplishes our goal of displaying the dashboard view as well as keeping it up-to-date whenever there is new data. Having a reactive data layer at Pre enables this. By no means is this the only way to compose complex UI. However, I hope this post convinced you that working with Observables makes dealing with data that can come from different sources as well as coordinating concurrency an easier task.
 
 ---
-
-Any questions? Feel free to leave a comment below 😎
+Pre is now available in the Google Play Store 🎉 Get it [here](https://play.google.com/store/apps/details?id=io.tsukemen.zarusoba).
 
 Subscribe at the bottom of this site if you want to be notified when the next post in the series goes out.
