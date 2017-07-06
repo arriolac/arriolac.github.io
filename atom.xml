@@ -4,7 +4,7 @@
   <title><![CDATA[Chris Arriola]]></title>
   <link href="http://chrisarriola.me/atom.xml" rel="self"/>
   <link href="http://chrisarriola.me/"/>
-  <updated>2017-06-30T14:20:48-05:00</updated>
+  <updated>2017-07-06T12:02:02-05:00</updated>
   <id>http://chrisarriola.me/</id>
   <author>
     <name><![CDATA[Chris Arriola]]></name>
@@ -12,6 +12,285 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Using Observables to Render Responsive Lists: An RxJava Case Study - Part 1 of 3]]></title>
+    <link href="http://chrisarriola.me/blog/2017/07/06/using-observables-to-render-responsive-lists-an-rxjava-case-study-part-1-of-3/"/>
+    <updated>2017-07-06T09:40:26-05:00</updated>
+    <id>http://chrisarriola.me/blog/2017/07/06/using-observables-to-render-responsive-lists-an-rxjava-case-study-part-1-of-3</id>
+    <content type="html"><![CDATA[<p><em>This post was originally posted on <a href="https://medium.com/joinpre/using-observables-to-render-responsive-lists-an-rxjava-case-study-part-1-of-3-53dd83af2c08">Medium</a>.</em></p>
+
+<p>This is the 1st part of a 3 part series about how RxJava is used in <a href="https://pre.co/">Pre</a>, a location-based app for checking in and chatting with your best friends. In this first post, I will go over how we used Observables to compose a complex view that displays a list of items, specifically, the <em>dashboard</em> view.</p>
+
+<p>If you are new to RxJava, I recommend <a href="http://chrisarriola.me/blog/2016/09/04/introduction-to-rxjava-for-android/">starting here</a>. You can also check out a <a href="https://leanpub.com/reactiveandroid">book</a> Angus Huang and I wrote if you would like a more comprehensive learning resource on RxJava.</p>
+
+<p>Note that all of the code samples in this series are written in Kotlin. In addition to RxJava, we use RxKotlin which is a lightweight library that provides convenient extension functions to RxJava.</p>
+
+<h2>Dashboard View</h2>
+
+<p><img class="center" src="http://chrisarriola.me/images/pre_dashboard_view.png"></p>
+
+<p>The dashboard view is the first view presented to the user upon logging in. It contains 2 sections: (1) a section displaying a list of recent check-ins from your friends, and (2) a section displaying a list of all your friends. The latter is displayed by querying the data layer for all of your friends, followed by querying the most recent message in the conversation thread for each of your friends. The state of the message will then determine if an unread indicator, or if a relative timestamp of when that message was sent, should be displayed.</p>
+
+<p>Friend with unread message:
+<img class="center" src="http://chrisarriola.me/images/pre_dashboard_unread.png"></p>
+
+<p>Friend with no unread message:
+<img class="center" src="http://chrisarriola.me/images/pre_dashboard_read.png"></p>
+
+<p>Both the <em>Friend</em> and <em>Message</em> models are persisted in a local SQLite database. To prevent jankiness while scrolling, retrieving these models should be done before rendering the list. More specifically, we want to make sure that we have all of the Friend objects and the corresponding latest Message in memory before setting the list of friends to the Adapter of the RecyclerView.</p>
+
+<p>Before we dive into Observables and how RxJava fits into the picture, let’s look at a few classes that compose the dashboard view. Note that even though some of the classes here have been shortened for brevity, the underlying concepts should be the same.</p>
+
+<h2>Non-Reactive Parts</h2>
+
+<h3>DashboardFriendViewModel</h3>
+
+<p>On the dashboard, the <em>DashboardFriendViewModel</em> class is in charge of binding the <em>Friend</em> and <em>Message</em> models to a single friend view. True to the <em>ViewModel</em> design pattern, this class provides us with the benefit of abstracting away model details from the view layer. So if our model changes, we would only need to update the <em>ViewModel</em>’s code (i.e. <em>DashboardFriendViewModel</em>), and not the view’s code.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>data class DashboardFriendViewModel(
+</span><span class='line'>   val emoji: String,
+</span><span class='line'>   val title: String,
+</span><span class='line'>   val subtitle: String,
+</span><span class='line'>   val hasUnread: Boolean
+</span><span class='line'>) {
+</span><span class='line'>   companion object Factory {
+</span><span class='line'>       @JvmStatic fun create(
+</span><span class='line'>           friend: Friend,
+</span><span class='line'>           message: Message
+</span><span class='line'>       ) : DashboardFriendViewModel {
+</span><span class='line'>           // Factory logic goes here...
+</span><span class='line'>       }
+</span><span class='line'>   }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>DashboardFriendViewHolder</h3>
+
+<p>Using a <em>DashboardFriendViewModel</em>, a <em>DashboardFriendViewHolder</em> (a subclass of <em>RecyclerView.ViewHolder</em>), can simply update the views it holds by getting the fields on the <em>DashboardFriendViewModel</em>.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class DashboardFriendViewHolder(
+</span><span class='line'>   parent: ViewGroup
+</span><span class='line'>) : RecyclerView.ViewHolder(
+</span><span class='line'>    LayoutInflater.from(parent.context).inflate(
+</span><span class='line'>        R.layout.item_dashboard_friend, parent, false
+</span><span class='line'>    )
+</span><span class='line'>) {
+</span><span class='line'> 
+</span><span class='line'>   var viewModel: DashboardFriendViewModel? = null
+</span><span class='line'>       set(value) {
+</span><span class='line'>           field = value
+</span><span class='line'>           value?.let {
+</span><span class='line'>               textViewEmoji.text = it.emoji
+</span><span class='line'>               textViewTitle.text = it.title
+</span><span class='line'>               textViewSubtitle.text = it.subtitle
+</span><span class='line'>               imageViewUnread.visibility = if (hasUnread) View.VISIBLE else View.GONE
+</span><span class='line'>           }
+</span><span class='line'>       }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>DashboardAdapter</h3>
+
+<p>The backing adapter for the dashboard RecyclerView, <em>DashboardAdapter</em>, holds a list of <em>DashboardFriendViewModel</em> objects and binds each object to a <em>DashboardFriendViewHolder</em> (note that check-ins are excluded in the code sample below).</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class DashboardAdapter : 
+</span><span class='line'>    RecyclerView.Adapter&lt;DashboardFriendViewHolder&gt;() {
+</span><span class='line'>    var friendViewModels: List&lt;DashboardFriendViewModel&gt; = listOf()
+</span><span class='line'>        set(value) {
+</span><span class='line'>            field = value
+</span><span class='line'>            notifyDataSetChanged()
+</span><span class='line'>        }
+</span><span class='line'>    override fun onBindViewHolder(
+</span><span class='line'>        holder: DashboardFriendViewHolder, 
+</span><span class='line'>        position: Int
+</span><span class='line'>    ) {
+</span><span class='line'>        holder.viewModel = friendViewModels[position]
+</span><span class='line'>    }
+</span><span class='line'>    override fun getItemCount(): Int = friendViewModels.size
+</span><span class='line'>    override fun onCreateViewHolder(
+</span><span class='line'>        parent: ViewGroup, 
+</span><span class='line'>        viewType: Int
+</span><span class='line'>    ): DashboardFriendViewHolder {
+</span><span class='line'>        return DashboardFriendViewHolder(parent)
+</span><span class='line'>    }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>With these classes in mind, it should be clear that the role of the Activity is to provide the <em>DashboardAdapter</em> a list of <em>DashboardFriendViewModel</em> objects to construct the list of friends in the dashboard view. In the next section, we will look at the reactive elements that come into play to accomplish this.</p>
+
+<h2>Reactive Parts</h2>
+
+<p>Each model that is backed by a SQLite table has a corresponding data access object, or DAO for short, that is in charge of performing CRUD (create, read, update, and delete) operations. The DAO provides the application layer with a higher level abstraction when it needs to access models so that it doesn’t need to know how to perform complex SQLite queries.</p>
+
+<h3>DAO</h3>
+
+<p>DAOs in Pre are also designed to be reactive; that is, DAOs can provide data packaged as an Observable so that the requestor can continue to receive updates as the underlying model changes. The details of how these Observables are constructed will be covered in the 2nd part of this series. For now, assume that we have the following methods provided by <em>FriendDao</em> and <em>MessageDao</em>.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class FriendDao {
+</span><span class='line'>    fun getAllFriends(): Observable&lt;List&lt;Friend&gt;&gt; {
+</span><span class='line'>        // ...
+</span><span class='line'>    }
+</span><span class='line'>    fun getFriend(userId: String): Observable&lt;Friend&gt; {
+</span><span class='line'>        // ...
+</span><span class='line'>    }
+</span><span class='line'>    
+</span><span class='line'>    // more methods here...
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>class MessageDao {
+</span><span class='line'> 
+</span><span class='line'>    fun getAllMessagesFrom(userId: String): Observable&lt;List&lt;Message&gt;&gt; {
+</span><span class='line'>        // ...
+</span><span class='line'>    }
+</span><span class='line'>    fun getRecentMessageWith(userId: String): Observable&lt;Message&gt; {   
+</span><span class='line'>        // ...
+</span><span class='line'>    }
+</span><span class='line'>    // more methods here...
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It is important to keep in mind that these methods return Observables that report changes to subscribers as the underlying data also changes. For example, if we subscribe to <em>FriendDao#getAllFriends()</em> and, at a later point, a new <em>Friend</em> is added, the observer would receive an updated list of friends via <em>.onNext()</em> once the new friend is persisted in the database. This is really powerful as the mechanism for requesting initial data and for receiving updates will all be in the same place — the observer.</p>
+
+<p>In addition, all methods that return Observables in Pre’s DAOs run off the main thread. It is up to the subscriber to ultimately hop back to the main thread, via <em>.observeOn()</em>, when necessary (e.g. when interacting with the view layer).</p>
+
+<h2>Putting It All Together 🏗</h2>
+
+<p>Using <em>FriendDao</em> and <em>MessageDao</em> that supply us with Observables of <em>Friend</em> and <em>Message</em> objects, respectively, we can now construct the list of DashboardFriendViewModel objects and display our list of friends on the dashboard.</p>
+
+<p>The lines of code that accomplish this are:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>friendDao.getAllFriends()
+</span><span class='line'>    .switchMap { friends -&gt;
+</span><span class='line'>        val observables = friends.map { friend -&gt;
+</span><span class='line'>            messageDao.getRecentMessageWith(friend.userId)
+</span><span class='line'>                .map { DashboardFriendViewModel.create(friend, it) }
+</span><span class='line'>        }
+</span><span class='line'>        Observable.combineLatest(observables) {
+</span><span class='line'>            Arrays.copyOf(
+</span><span class='line'>                it, 
+</span><span class='line'>                it.size,
+</span><span class='line'>                Array&lt;DashboardFriendViewModel&gt;::class.java
+</span><span class='line'>            ).toList()
+</span><span class='line'>        }
+</span><span class='line'>    }.observeOn(AndroidSchedulers.mainThread())
+</span><span class='line'>     .subscribe { adapter.friendViewModels = it }</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There’s quite a lot going on here so let’s look at it step-by-step:</p>
+
+<ul>
+<li><p>First, we retrieve all friends by calling the .getAllFriends() method on a FriendDao object. As mentioned earlier, this Observable will first emit the list of friends as well as any changes to the user’s friends (i.e. a list of friends will be emitted as new friends are added, or as existing friends are removed/updated)</p></li>
+<li><p>Next, we apply a .switchMap() operator which maps the stream from a list of Friend objects to a list of DashboardFriendViewModel objects, the type we are ultimately interested in. We are using .switchMap() here, instead of .flatMap() or .concatMap(), so that only the most recent Observable emission from .switchMap() is observed and all other previous emissions will be considered stale. You can read about the difference between the operators on the ReactiveX wiki.</p></li>
+<li><p>Within the .switchMap() operator, we then convert friends into a list of Observable<DashboardFriendViewModel> by iterating through each friend and getting the most recent message with them followed by mapping that to a DashboardFriendViewModel.</p></li>
+<li><p>We then combine the emissions of the list of Observable<DashboardFriendViewModel> using the .combineLatest() operator, the result of which is then combined into a list of DashboardFriendViewModel objects which is propagated down to the observer. This operator allows downstream operators and observers to receive updates whenever there is a new message from a friend.</p></li>
+<li><p>After the .switchMap() operator, we then chain an .observeOn() operator and make sure that the observer receives events on Android’s main thread.</p></li>
+<li><p>Finally, we subscribe to the Observable after applying .switchMap() and set the DashboardAdapter’s friendViewModels to the received emissions. Here, we are replacing the backing data set for the DashboardAdapter, which in turn invokes notifyDataSetChanged(). This can also be optimized by finding the items with changes and selectively applying notifiyItemChanged() or notifyItemRangeChanged().</p></li>
+</ul>
+
+
+<h2>Summary</h2>
+
+<p>The solution above is brief and accomplishes our goal of displaying the dashboard view as well as keeping it up-to-date whenever there is new data. Having a reactive data layer at Pre enables this. By no means is this the only way to compose complex UI. However, I hope this post convinced you that working with Observables makes dealing with data that can come from different sources as well as coordinating concurrency an easier task.</p>
+
+<hr />
+
+<p>Pre is now available in the Google Play Store 🎉 Get it <a href="https://play.google.com/store/apps/details?id=io.tsukemen.zarusoba">here</a>.</p>
+
+<p>Subscribe at the bottom of this site if you want to be notified when the next post in the series goes out.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Announcing New Book: Reactive Programming on Android with RxJava]]></title>
@@ -2251,44 +2530,6 @@ Below are some resources I&#8217;ve used in the past for taking free online clas
 <strong></strong>&#8230;and of course it goes without saying that another great resource for self-learning is&#8230; a book! I&#8217;m currently using <a href="www.goodreads.com">www.goodreads.com</a> to find good recommendations based on books I&#8217;ve read on the past, and it&#8217;s also a good social website to view what your friends are currently reading and what they&#8217;ve read in the past.
 
 I hope you find these priceless &#8220;jewels&#8221; as invaluable as I found them. Enjoy!
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Countdown Timer on Android]]></title>
-    <link href="http://chrisarriola.me/blog/2012/05/01/countdown-timer-on-android/"/>
-    <updated>2012-05-01T00:00:00-05:00</updated>
-    <id>http://chrisarriola.me/blog/2012/05/01/countdown-timer-on-android</id>
-    <content type="html"><![CDATA[An <a href="http://chrisarriola.wordpress.com/2012/03/12/first-android-application-napp/">exercise</a> I did to practice threading on Android is to implement a simple countdown timer. To do this, I used a <em>Handler</em> and added a <em>Runnable</em> Object—which performs the countdown—to it&#8217;s message queue.
-
-Here&#8217;s a snippet of the Runnable Object:
-<pre>Runnable mTimerTask = new Runnable() {
-@Override
-public void run() {
-  long currTime = System.currentTimeMillis();
-  long currTimeSysClock = SystemClock.uptimeMillis();
-  long timeLeftMillis = mWakeUpTime - currTime;
-  int seconds = (int) timeLeftMillis / 1000;
-  int minutes = seconds / 60;
-  int hours = minutes / 60;
-  seconds %= 60;
-  minutes %= 60;
-  updateTime(mSecondView, seconds);
-  updateTime(mMinuteView, minutes);
-  updateTime(mHourView, hours);
-
-  if (hours == 0 &amp;&amp; minutes == 0 &amp;&amp; seconds == 0) {
-    mTimerHandler.removeCallbacks(this);
-  } else {
-    mTimerHandler.postAtTime(this, currTimeSysClock + 1000);
-  }
-  }
-};</pre>
-Finally, passing the Runnable object to the Handler&#8217;s <em>post()</em> method will initiate the countdown sequence.
-
-Essentially, the run method gets called every 1 second following the first call to run ( <em>postAtTime()</em> ). The process is then repeated until the countdown reaches 0. To prevent reseting the wake up time, the wake up time (<em>mWakeUpTime</em>) is saved in the app&#8217;s shared preferences.
-
-Another approach that could&#8217;ve also been used is through the use of an <em>AsyncTask</em>. However, for a simple task such as a countdown timer and since we want to control the specific time a thread runs, a Handler would be the best way to go.
 ]]></content>
   </entry>
   

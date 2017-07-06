@@ -185,20 +185,26 @@
         <lastmod>2017-06-13T07:55:08-05:00</lastmod>
     </url>
     <url>
+        <loc>
+            http://chrisarriola.me/blog/2017/07/06/using-observables-to-render-responsive-lists-an-rxjava-case-study-part-1-of-3/
+        </loc>
+        <lastmod>2017-07-06T12:01:22-05:00</lastmod>
+    </url>
+    <url>
         <loc>http://chrisarriola.me/about-me/</loc>
         <lastmod>2017-06-30T14:20:32-05:00</lastmod>
     </url>
     <url>
         <loc>http://chrisarriola.me/archives/</loc>
-        <lastmod>2017-06-13T07:55:08-05:00</lastmod>
+        <lastmod>2017-07-06T12:01:22-05:00</lastmod>
     </url>
     <url>
         <loc>http://chrisarriola.me/blog/archives/</loc>
-        <lastmod>2017-06-13T07:55:08-05:00</lastmod>
+        <lastmod>2017-07-06T12:01:22-05:00</lastmod>
     </url>
     <url>
         <loc>http://chrisarriola.me/blog/</loc>
-        <lastmod>2017-06-13T07:55:08-05:00</lastmod>
+        <lastmod>2017-07-06T12:01:22-05:00</lastmod>
     </url>
     <url>
         <loc>http://chrisarriola.me/book/</loc>
@@ -210,7 +216,7 @@
     </url>
     <url>
         <loc>http://chrisarriola.me/</loc>
-        <lastmod>2017-06-13T07:55:08-05:00</lastmod>
+        <lastmod>2017-07-06T12:01:22-05:00</lastmod>
     </url>
     <url>
         <loc>http://chrisarriola.me/robots.txt</loc>
