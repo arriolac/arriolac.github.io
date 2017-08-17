@@ -4,7 +4,7 @@
   <title><![CDATA[Chris Arriola]]></title>
   <link href="http://chrisarriola.me/atom.xml" rel="self"/>
   <link href="http://chrisarriola.me/"/>
-  <updated>2017-07-23T21:48:40-05:00</updated>
+  <updated>2017-08-17T11:36:37-05:00</updated>
   <id>http://chrisarriola.me/</id>
   <author>
     <name><![CDATA[Chris Arriola]]></name>
@@ -332,7 +332,7 @@
   <entry>
     <title type="html"><![CDATA[Reactive Modelling on Android]]></title>
     <link href="http://chrisarriola.me/blog/2017/03/06/reactive-modelling-on-android/"/>
-    <updated>2017-03-06T06:14:25-06:00</updated>
+    <updated>2017-03-06T07:14:25-05:00</updated>
     <id>http://chrisarriola.me/blog/2017/03/06/reactive-modelling-on-android</id>
     <content type="html"><![CDATA[<p><em>This post was originally published on <a href="https://www.toptal.com/android/simplify-concurrency-reactive-modelling-android?utm_source=Android+Weekly&amp;utm_campaign=258130a563-android-weekly-247&amp;utm_medium=email&amp;utm_term=0_4eb677ad19-258130a563-337833853">Toptal</a>.</em></p>
 
@@ -1813,7 +1813,7 @@
   <entry>
     <title type="html"><![CDATA[Getting Attached To Your State]]></title>
     <link href="http://chrisarriola.me/blog/2015/12/29/getting-attached-to-your-state/"/>
-    <updated>2015-12-29T17:38:18-06:00</updated>
+    <updated>2015-12-29T18:38:18-05:00</updated>
     <id>http://chrisarriola.me/blog/2015/12/29/getting-attached-to-your-state</id>
     <content type="html"><![CDATA[<p><a href="http://developer.android.com/guide/topics/resources/runtime-changes.html#HandlingTheChange">Configuration changes</a> occur in runtime and are caused by various events such as: when keyboard visibility changes, when language changes, or when orientation changes. This in turn causes any <em>visible Activity</em> to be reconstructed once the change finishes. For state to be recovered, it needs to be explicitly tied to Android’s parcelling mechanism via Bundle.</p>
 

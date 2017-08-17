@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Android, | Chris Arriola]]></title>
   <link href="http://chrisarriola.me/blog/categories/android/atom.xml" rel="self"/>
   <link href="http://chrisarriola.me/"/>
-  <updated>2017-07-23T21:48:40-05:00</updated>
+  <updated>2017-08-17T11:36:37-05:00</updated>
   <id>http://chrisarriola.me/</id>
   <author>
     <name><![CDATA[Chris Arriola]]></name>
@@ -266,7 +266,7 @@ friendDao.getAllFriends()</p>
   <entry>
     <title type="html"><![CDATA[Reactive Modelling on Android]]></title>
     <link href="http://chrisarriola.me/blog/2017/03/06/reactive-modelling-on-android/"/>
-    <updated>2017-03-06T06:14:25-06:00</updated>
+    <updated>2017-03-06T07:14:25-05:00</updated>
     <id>http://chrisarriola.me/blog/2017/03/06/reactive-modelling-on-android</id>
     <content type="html"><![CDATA[<p><em>This post was originally published on <a href="https://www.toptal.com/android/simplify-concurrency-reactive-modelling-android?utm_source=Android+Weekly&amp;utm_campaign=258130a563-android-weekly-247&amp;utm_medium=email&amp;utm_term=0_4eb677ad19-258130a563-337833853">Toptal</a>.</em></p>
 
