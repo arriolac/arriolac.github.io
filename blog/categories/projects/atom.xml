@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: projects | Chris Arriola]]></title>
+  <link href="http://chrisarriola.me/blog/categories/projects/atom.xml" rel="self"/>
+  <link href="http://chrisarriola.me/"/>
+  <updated>2017-10-04T21:16:11-07:00</updated>
+  <id>http://chrisarriola.me/</id>
+  <author>
+    <name><![CDATA[Chris Arriola]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Learn ARKit Using Swift]]></title>
+    <link href="http://chrisarriola.me/blog/2017/10/04/learn-arkit-using-swift/"/>
+    <updated>2017-10-04T21:01:18-07:00</updated>
+    <id>http://chrisarriola.me/blog/2017/10/04/learn-arkit-using-swift</id>
+    <content type="html"><![CDATA[<p>Check out a course I developed at Udacity on <a href="https://www.udacity.com/course/learn-arkit--nd114">ARKit using Swift</a> (SceneKit)!</p>
+
+<p><img class="center <a" src="href="http://chrisarriola.me/images/udacity_profile.png">http://chrisarriola.me/images/udacity_profile.png</a>"></p>
+
+<p>Putting together course material and teaching has really pushed me to grow and I&rsquo;m excited to share it with the world.</p>
+
+<p>Let&rsquo;s make some AWESOME AR apps! :D</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: SoftwareDesign, | Chris Arriola]]></title>
   <link href="http://chrisarriola.me/blog/categories/softwaredesign/atom.xml" rel="self"/>
   <link href="http://chrisarriola.me/"/>
-  <updated>2017-08-17T11:36:37-05:00</updated>
+  <updated>2017-10-04T21:16:11-07:00</updated>
   <id>http://chrisarriola.me/</id>
   <author>
     <name><![CDATA[Chris Arriola]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Code Like a Goldfish]]></title>
     <link href="http://chrisarriola.me/blog/2015/10/18/code-like-a-goldfish/"/>
-    <updated>2015-10-18T18:46:47-05:00</updated>
+    <updated>2015-10-18T16:46:47-07:00</updated>
     <id>http://chrisarriola.me/blog/2015/10/18/code-like-a-goldfish</id>
     <content type="html"><![CDATA[<p>There is an underlying hidden requirement in creating software products. It doesn&rsquo;t just have to &ldquo;work&rdquo;; it needs to be molded in such a way that it can be changed, maintained, and scaled easily.</p>
 

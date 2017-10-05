@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Pre | Chris Arriola]]></title>
   <link href="http://chrisarriola.me/blog/categories/pre/atom.xml" rel="self"/>
   <link href="http://chrisarriola.me/"/>
-  <updated>2017-08-17T11:36:37-05:00</updated>
+  <updated>2017-10-04T21:16:11-07:00</updated>
   <id>http://chrisarriola.me/</id>
   <author>
     <name><![CDATA[Chris Arriola]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Using Observables to Render Responsive Lists: An RxJava Case Study - Part 1 of 3]]></title>
     <link href="http://chrisarriola.me/blog/2017/07/06/using-observables-to-render-responsive-lists-an-rxjava-case-study-part-1-of-3/"/>
-    <updated>2017-07-06T09:40:26-05:00</updated>
+    <updated>2017-07-06T07:40:26-07:00</updated>
     <id>http://chrisarriola.me/blog/2017/07/06/using-observables-to-render-responsive-lists-an-rxjava-case-study-part-1-of-3</id>
     <content type="html"><![CDATA[<p><em>This post was originally posted on <a href="https://medium.com/joinpre/using-observables-to-render-responsive-lists-an-rxjava-case-study-part-1-of-3-53dd83af2c08">Medium</a>.</em></p>
 
