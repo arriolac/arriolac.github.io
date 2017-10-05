@@ -10,8 +10,6 @@ Check out a course I developed at Udacity on [ARKit using Swift](https://www.uda
 
 {% img center http://chrisarriola.me/images/udacity_profile.png %}
 
-Putting together course material and teaching has really pushed me to grow and I'm excited to share it with the world.
+Developing course material, and teaching it, has really pushed me to grow (both technical and non-technical) and I'm excited to share it with the world.
 
-Let's make some AWESOME AR apps! :D
-
-
+Let's make some _AWESOME_ AR apps 😀
