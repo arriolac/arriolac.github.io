@@ -7,6 +7,10 @@ footer: true
 ---
 
 ##Work Experience
+__Course Developer__, *[Udacity](https://udacity.com) (June 2017 - Present)*
+
+Developing Udacity's [ARKit Swift](https://www.udacity.com/course/learn-arkit--nd114) course. The course teaches students how to build immersive augmented reality apps on iOS using Apple's AR SDK, ARKit.
+
 __Founder and Software Engineer__, *[Mynah Software](https://mynahsoftware.com) (Nov. 2016 - Present)*
 
 Developing Android and iOS applications.
