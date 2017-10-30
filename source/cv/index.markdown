@@ -9,7 +9,7 @@ footer: true
 ##Work Experience
 __Course Developer__, *[Udacity](https://udacity.com) (June 2017 - Present)*
 
-Developing Udacity's [ARKit Swift](https://www.udacity.com/course/learn-arkit--nd114) course. The course teaches students how to build immersive augmented reality apps on iOS using Apple's AR SDK, ARKit.
+Developed Udacity's [Learn ARKit - Swift](https://www.udacity.com/course/learn-arkit--nd114) course. The course teaches students how to build immersive augmented reality apps on iOS using Apple's AR SDK, ARKit.
 
 __Founder and Software Engineer__, *[Mynah Software](https://mynahsoftware.com) (Nov. 2016 - Present)*
 
@@ -75,6 +75,8 @@ __Open Source Contributor__, *Sana Mobile (Nov. 2010 - 2013)*
 Pushing code to develop the Sana Mobile Android client.
 <br />
 ##Speaking/Teaching Events
+__[Learn ARKit - Swift](https://www.udacity.com/course/learn-arkit--nd114)__, *Udacity, Mountain View (Sept. 2017)*
+
 __[Introduction to RxJava on Android](https://speakerdeck.com/arriolac/introduction-to-rxjava-on-android)__, *CodePath, San Francisco (June 2016)*
 
 __[Code Like A Goldfish](http://chrisarriola.me/blog/2015/10/18/code-like-a-goldfish/)__, *Telegraph Academy, Berkeley (Oct. 2015)*
