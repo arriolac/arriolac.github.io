@@ -4,7 +4,7 @@
   <title><![CDATA[Category: teaching | Chris Arriola]]></title>
   <link href="http://chrisarriola.me/blog/categories/teaching/atom.xml" rel="self"/>
   <link href="http://chrisarriola.me/"/>
-  <updated>2017-10-30T14:07:12-04:00</updated>
+  <updated>2017-12-28T16:52:58-08:00</updated>
   <id>http://chrisarriola.me/</id>
   <author>
     <name><![CDATA[Chris Arriola]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Learn ARKit Using Swift]]></title>
-    <link href="http://chrisarriola.me/blog/2017/10/05/learn-arkit-using-swift/"/>
-    <updated>2017-10-05T00:01:18-04:00</updated>
-    <id>http://chrisarriola.me/blog/2017/10/05/learn-arkit-using-swift</id>
+    <link href="http://chrisarriola.me/blog/2017/10/04/learn-arkit-using-swift/"/>
+    <updated>2017-10-04T21:01:18-07:00</updated>
+    <id>http://chrisarriola.me/blog/2017/10/04/learn-arkit-using-swift</id>
     <content type="html"><![CDATA[<p>Check out a course I developed at Udacity on <a href="https://www.udacity.com/course/learn-arkit--nd114">ARKit using Swift</a> (SceneKit)!</p>
 
 <p><img class="center <a" src="href="http://chrisarriola.me/images/udacity_profile.png">http://chrisarriola.me/images/udacity_profile.png</a>"></p>

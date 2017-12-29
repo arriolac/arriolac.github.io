@@ -4,7 +4,7 @@
   <title><![CDATA[Category: RxJava | Chris Arriola]]></title>
   <link href="http://chrisarriola.me/blog/categories/rxjava/atom.xml" rel="self"/>
   <link href="http://chrisarriola.me/"/>
-  <updated>2017-10-30T14:07:12-04:00</updated>
+  <updated>2017-12-28T16:52:58-08:00</updated>
   <id>http://chrisarriola.me/</id>
   <author>
     <name><![CDATA[Chris Arriola]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Using Observables to Render Responsive Lists: An RxJava Case Study - Part 1 of 3]]></title>
     <link href="http://chrisarriola.me/blog/2017/07/06/using-observables-to-render-responsive-lists-an-rxjava-case-study-part-1-of-3/"/>
-    <updated>2017-07-06T10:40:26-04:00</updated>
+    <updated>2017-07-06T07:40:26-07:00</updated>
     <id>http://chrisarriola.me/blog/2017/07/06/using-observables-to-render-responsive-lists-an-rxjava-case-study-part-1-of-3</id>
     <content type="html"><![CDATA[<p><em>This post was originally posted on <a href="https://medium.com/joinpre/using-observables-to-render-responsive-lists-an-rxjava-case-study-part-1-of-3-53dd83af2c08">Medium</a>.</em></p>
 
@@ -227,7 +227,7 @@ friendDao.getAllFriends()</p>
   <entry>
     <title type="html"><![CDATA[Announcing New Book: Reactive Programming on Android with RxJava]]></title>
     <link href="http://chrisarriola.me/blog/2017/06/12/announcing-new-book-reactive-programming-on-android-with-rxjava/"/>
-    <updated>2017-06-12T15:44:00-04:00</updated>
+    <updated>2017-06-12T12:44:00-07:00</updated>
     <id>http://chrisarriola.me/blog/2017/06/12/announcing-new-book-reactive-programming-on-android-with-rxjava</id>
     <content type="html"><![CDATA[<p>I&rsquo;m very pleased to announce that a book that <a href="https://www.linkedin.com/in/ahuang13/">Angus Huang</a> and I started writing a few months back, <a href="https://leanpub.com/reactiveandroid">&ldquo;Reactive Programming on Android with RxJava&rdquo;</a>, is now published and available on LeanPub! 🎉</p>
 
@@ -266,7 +266,7 @@ friendDao.getAllFriends()</p>
   <entry>
     <title type="html"><![CDATA[Reactive Modelling on Android]]></title>
     <link href="http://chrisarriola.me/blog/2017/03/06/reactive-modelling-on-android/"/>
-    <updated>2017-03-06T07:14:25-05:00</updated>
+    <updated>2017-03-06T04:14:25-08:00</updated>
     <id>http://chrisarriola.me/blog/2017/03/06/reactive-modelling-on-android</id>
     <content type="html"><![CDATA[<p><em>This post was originally published on <a href="https://www.toptal.com/android/simplify-concurrency-reactive-modelling-android?utm_source=Android+Weekly&amp;utm_campaign=258130a563-android-weekly-247&amp;utm_medium=email&amp;utm_term=0_4eb677ad19-258130a563-337833853">Toptal</a>.</em></p>
 
@@ -646,7 +646,7 @@ public class LocationManager {</p>
   <entry>
     <title type="html"><![CDATA[Introduction to RxJava for Android]]></title>
     <link href="http://chrisarriola.me/blog/2016/09/04/introduction-to-rxjava-for-android/"/>
-    <updated>2016-09-04T03:52:08-04:00</updated>
+    <updated>2016-09-04T00:52:08-07:00</updated>
     <id>http://chrisarriola.me/blog/2016/09/04/introduction-to-rxjava-for-android</id>
     <content type="html"><![CDATA[<p><em>This post was originally published on <a href="https://www.toptal.com/android/functional-reactive-android-rxjava">Toptal</a> under my Toptal <a href="https://www.toptal.com/resume/christopher-arriola">account</a>.</em></p>
 

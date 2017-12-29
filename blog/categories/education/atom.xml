@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: education | Chris Arriola]]></title>
+  <title><![CDATA[Category: Education | Chris Arriola]]></title>
   <link href="http://chrisarriola.me/blog/categories/education/atom.xml" rel="self"/>
   <link href="http://chrisarriola.me/"/>
-  <updated>2017-10-30T14:07:12-04:00</updated>
+  <updated>2017-12-28T16:52:58-08:00</updated>
   <id>http://chrisarriola.me/</id>
   <author>
     <name><![CDATA[Chris Arriola]]></name>
@@ -14,17 +14,71 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Learn ARKit Using Swift]]></title>
-    <link href="http://chrisarriola.me/blog/2017/10/05/learn-arkit-using-swift/"/>
-    <updated>2017-10-05T00:01:18-04:00</updated>
-    <id>http://chrisarriola.me/blog/2017/10/05/learn-arkit-using-swift</id>
-    <content type="html"><![CDATA[<p>Check out a course I developed at Udacity on <a href="https://www.udacity.com/course/learn-arkit--nd114">ARKit using Swift</a> (SceneKit)!</p>
+    <title type="html"><![CDATA[Preparing for a Hackathon (A Mobile Perspective)]]></title>
+    <link href="http://chrisarriola.me/blog/2013/07/23/preparing-for-a-hackathon-a-mobile-perspective/"/>
+    <updated>2013-07-23T00:00:00-07:00</updated>
+    <id>http://chrisarriola.me/blog/2013/07/23/preparing-for-a-hackathon-a-mobile-perspective</id>
+    <content type="html"><![CDATA[<p><a href="http://chrisarriola.files.wordpress.com/2013/07/536444_10150917662022200_1083819652_a.jpg"><img class="size-full wp-image  " id="i-461" alt="Image" align="middle" src="http://chrisarriola.files.wordpress.com/2013/07/536444_10150917662022200_1083819652_a.jpg?w=170" width="170" height="261" /></a></p>
 
-<p><img class="center <a" src="href="http://chrisarriola.me/images/udacity_profile.png">http://chrisarriola.me/images/udacity_profile.png</a>"></p>
+<p dir="ltr">The time-pressure imposed at hackathons make it essential for teams to prepare ahead of time so that they can focus on the most critical tasks (building the actual product) the day of the event. Typically though, hackers come in without a team or idea. Whether you fall under this category or not, <em>preparation is still important</em>. Given that a full-blown business and a polished working product is unlikely to be built overnight, the point of a hackathon should be to learn as much as you can as well as form long-lasting relationships with people in your team—<strong>the burning desire for building and creating new things does not stop after a weekend</strong>!</p>
 
-<p>Developing course material, and teaching it, has really pushed me to grow (both technical and non-technical) and I&rsquo;m excited to share it with the world.</p>
 
-<p>Let&rsquo;s make some <em>AWESOME</em> AR apps 😀</p>
+<p dir="ltr">Let’s say you do have a team and an idea to work on over the course of a sleep-deprived weekend. So where should you start? I thought I’d share some mobile-specific (Android and iOS) tools and projects you can leverage to bootstrap the development process.</p>
+
+
+
+
+<h3>Back-end</h3>
+
+
+<p dir="ltr">If you want to do data-persistence you can always build your own server logic, create RESTful APIs and create database schemas, but if you want a simple back-end service solution, the best option right now is to use <a title="Parse" href="www.parse.com" target="_blank">Parse</a>. <em>Parse</em> allows you to create models in a nice visual dashboard and then automatically creates a RESTful API for you to do CRUD operations on that model. Best of all, <em>Parse</em> is free until you hit a million requests on the API which is something you don’t have to worry about in a hackathon setting. In short, if you’re building a mobile app and you don’t have a dedicated server guy, go with <em>Parse</em>.</p>
+
+
+
+
+<h3>Networking</h3>
+
+
+<p dir="ltr">If you’re going to be integrating with some sort of web service (Facebook, Twitter, etc.), chances are, you’ll be using their APIs. Perhaps you might build your own API. Regardless, client-side you’ll need a pretty solid networking library to use. iOS and Android have their native implementations but you’ll be better of using a 3rd party library with a much simpler API that abstracts all the nitty-gritty details of HTTP. For iOS, <a title="AFNetworking" href="https://github.com/AFNetworking/AFNetworking" target="_blank">AFNetworking</a> and <a title="RestKit" href="https://github.com/RestKit/RestKit" target="_blank">RestKit</a> (uses <em>AFNetworking</em>) are the common solutions, whereas for Android, you have a couple of options but to name a few <a title="OkHTTP" href="https://github.com/square/okhttp" target="_blank">OkHTTP</a>, <a title="Retrofit" href="http://square.github.io/retrofit/" target="_blank">Retrofit</a> and <a title="android-async-http" href="https://github.com/loopj/android-async-http" target="_blank">android-async-http</a> are pretty solid.</p>
+
+
+
+
+<h3>Convenience Libraries</h3>
+
+
+<p dir="ltr">Do you make common mistakes on Android such as forgetting to check for <em>null</em>? Do you have the issue of stale objects such as Fragments and/or Activities when doing callbacks? A couple of ways to get around that is to use <a title="Guava" href="https://code.google.com/p/guava-libraries/" target="_blank">Guava</a> which has a lot of convenience classes that for Java, and to use some sort of event bus such as Square’s <a title="Otto" href="https://github.com/square/otto" target="_blank">Otto</a> to avoid callback nightmare.</p>
+
+
+<p dir="ltr">Hopefully these tools help you with your next Hackathon. If you have any suggestions/tips please feel free to leave a comment. Keep hacking!</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Self-Learning Resources]]></title>
+    <link href="http://chrisarriola.me/blog/2012/05/01/self-learning-resources/"/>
+    <updated>2012-05-01T00:00:00-07:00</updated>
+    <id>http://chrisarriola.me/blog/2012/05/01/self-learning-resources</id>
+    <content type="html"><![CDATA[<p>One of the many pleasures in life involves learning something new. Whether it be learning a new culture, learning how to paint, learning how to write creatively, or learning how to fly a kite; the act of &ldquo;knowing&rdquo; something is nothing less than exciting. With that said, I&rsquo;m a firm believer in the active pursuit of self-learning and self-education—who said learning should stop in school? Perhaps graduating school is the end of formal learning, but if it were the end of learning in itself, life would be very, very, boring.</p>
+
+<p>Below are some resources I&rsquo;ve used in the past for taking free online classes. As my Calc 2 professor would say, these resources are &ldquo;jewels in a priceless treasure chest&rdquo;.</p>
+
+<p><strong>Coursera: </strong><a href="https://www.coursera.org/"><a href="https://www.coursera.org/">https://www.coursera.org/</a></a></p>
+
+<p><strong>Academic Earth: </strong><a href="http://www.academicearth.org/"><a href="http://www.academicearth.org/">http://www.academicearth.org/</a></a></p>
+
+<p><strong>Khan Academy: </strong><a href="http://www.khanacademy.org/"><a href="http://www.khanacademy.org/">http://www.khanacademy.org/</a></a></p>
+
+<p><strong></strong><strong>MIT Open Courseware: </strong><a href="http://ocw.mit.edu/"><a href="http://ocw.mit.edu/">http://ocw.mit.edu/</a></a></p>
+
+<p><strong></strong><strong>Engineer Guy: </strong><a href="http://www.engineerguy.com/"><a href="http://www.engineerguy.com/">http://www.engineerguy.com/</a></a></p>
+
+<p><strong>Google Code University: </strong><a href="http://code.google.com/edu/"><a href="http://code.google.com/edu/">http://code.google.com/edu/</a></a></p>
+
+<p><strong></strong>&hellip;and of course it goes without saying that another great resource for self-learning is&hellip; a book! I&rsquo;m currently using <a href="www.goodreads.com">www.goodreads.com</a> to find good recommendations based on books I&rsquo;ve read on the past, and it&rsquo;s also a good social website to view what your friends are currently reading and what they&rsquo;ve read in the past.</p>
+
+<p>I hope you find these priceless &ldquo;jewels&rdquo; as invaluable as I found them. Enjoy!</p>
 ]]></content>
   </entry>
   
