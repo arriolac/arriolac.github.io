@@ -3,7 +3,7 @@ layout: post
 title: "Reactive Modelling on Android"
 date: 2017-03-06 13:14:25 +0100
 comments: true
-categories: Android, RxJava
+categories: Android RxJava
 ---
 
 _This post was originally published on [Toptal](https://www.toptal.com/android/simplify-concurrency-reactive-modelling-android?utm_source=Android+Weekly&utm_campaign=258130a563-android-weekly-247&utm_medium=email&utm_term=0_4eb677ad19-258130a563-337833853)._

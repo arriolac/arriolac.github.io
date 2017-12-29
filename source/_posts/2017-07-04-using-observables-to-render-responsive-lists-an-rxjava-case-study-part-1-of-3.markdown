@@ -3,7 +3,7 @@ layout: post
 title: "Using Observables to Render Responsive Lists: An RxJava Case Study - Part 1 of 3"
 date: 2017-07-06 9:40:26 -0500
 comments: true
-categories: Android, RxJava, Freelancing, Pre
+categories: Android RxJava Freelancing Pre
 ---
 
 _This post was originally posted on [Medium](https://medium.com/joinpre/using-observables-to-render-responsive-lists-an-rxjava-case-study-part-1-of-3-53dd83af2c08)._

@@ -3,7 +3,7 @@ layout: post
 title: "Announcing New Book: Reactive Programming on Android with RxJava"
 date: 2017-06-12 14:44:00 -0500
 comments: true
-categories: Android, RxJava
+categories: Android RxJava
 ---
 
 I'm very pleased to announce that a book that [Angus Huang](https://www.linkedin.com/in/ahuang13/) and I started writing a few months back, ["Reactive Programming on Android with RxJava"](https://leanpub.com/reactiveandroid), is now published and available on LeanPub! 🎉
