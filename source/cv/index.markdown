@@ -7,15 +7,19 @@ footer: true
 ---
 
 ##Work Experience
+__Software Engineer__, *[Blockchain](https://blockchain.com) (April 2018 - Present)*
+
+Building something new at Blockchain.
+
 __Founder and Software Engineer__, *[Mynah Software](https://mynahsoftware.com) (Nov. 2016 - Present)*
 
 Developing Android and iOS applications.
 
-__Course Developer__, *[Udacity](https://udacity.com) (June 2017 - Present)*
+__Course Developer__, *[Udacity](https://udacity.com) (June 2017 - March 2018)*
 
 Developed Udacity's [Learn ARKit - Swift](https://www.udacity.com/course/learn-arkit--nd114) course. The course teaches students how to build immersive augmented reality apps on iOS using Apple's AR SDK, ARKit.
 
-__Writer and Freelance Software Engineer__, *[Toptal](https://www.toptal.com/resume/christopher-arriola) (May 2016 - Present)*
+__Writer and Freelance Software Engineer__, *[Toptal](https://www.toptal.com/resume/christopher-arriola) (May 2016 - Oct. 2016)*
 
 Building mobile apps for Toptal clients & writing engineering-related educational content on Toptal's blog.
 
