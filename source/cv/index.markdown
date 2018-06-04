@@ -7,9 +7,9 @@ footer: true
 ---
 
 ##Work Experience
-__Software Engineer__, *Blockchain.com (April 2018 - Present)*
+__Software Engineer__, *[Blockchain](https://blockchain.com) (April 2018 - Present)*
 
-Building software @Blockchain
+Building software [@Blockchain](https://twitter.com/blockchain).
 
 __Software Engineer__, *Tsukemen Inc. (acquired by Blockchain.com) (Nov. 2016 - April 2018)*
 
@@ -19,7 +19,7 @@ __Course Developer__, *[Udacity](https://udacity.com) (June 2017 - March 2018)*
 
 Developed Udacity's [Learn ARKit - Swift](https://www.udacity.com/course/learn-arkit--nd114) and [Mobile Design Patterns for iOS](https://www.udacity.com/course/ios-design-patterns--ud1029) courses.
 
-__Writer and Freelance Software Engineer__, *[Toptal](https://www.toptal.com/resume/christopher-arriola) (May 2016 - Present)*
+__Writer and Freelance Software Engineer__, *[Toptal](https://www.toptal.com/resume/christopher-arriola) (May 2016 - Oct. 2016)*
 
 Building mobile apps for Toptal clients & writing engineering-related educational content on Toptal's blog.
 
