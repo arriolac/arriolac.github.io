@@ -11,9 +11,9 @@ __Software Engineer__, *[Blockchain](https://blockchain.com) (April 2018 - Prese
 
 Building software [@Blockchain](https://twitter.com/blockchain).
 
-__Software Engineer__, *Tsukemen Inc. (acquired by Blockchain.com) (Nov. 2016 - April 2018)*
+__Co-Founder and Technical Architect__, *Tsukemen Inc. (acquired by Blockchain.com) (Nov. 2016 - April 2018)*
 
-Developed consumer-facing Android and iOS applications ([Acquired by Blockchain.com](https://blog.blockchain.com/2018/05/02/blockchain-continues-its-rapid-growth-with-a-new-san-francisco-office/)).
+Tsukemen is a product studio. We are a group of diverse, talented individuals who are obsessed with creating beautifully crafted products that users love. We created the popular daily sports mobile app called G.O.A.T. that was featured on Product Hunt and Sports Illustrated. Backed by top-tier investors, we raised over $1.5M in seed funding from VCs and angel investors. [Tsukemen was acquired by Blockchain in 2018](https://blog.blockchain.com/2018/05/02/blockchain-continues-its-rapid-growth-with-a-new-san-francisco-office/).
 
 __Course Developer__, *[Udacity](https://udacity.com) (June 2017 - March 2018)*
 
