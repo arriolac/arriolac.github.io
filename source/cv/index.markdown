@@ -7,9 +7,11 @@ footer: true
 ---
 
 ##Work Experience
-__Software Engineer__, *[Blockchain](https://blockchain.com) (April 2018 - Present)*
+__Head of Mobile__, *[Blockchain](https://blockchain.com) (April 2018 - Oct 2019)*
 
-Building software [@Blockchain](https://twitter.com/blockchain).
+Lead and managed a mobile team of 3 iOS and 2 Android engineers. 
+
+I was responsible for mentoring directs as well as driving technical initiatives (e.g. adding new currencies, improving the stability/quality of the apps, etc.) to meet company goals.
 
 __Co-Founder and Technical Architect__, *Tsukemen Inc. (acquired by Blockchain.com) (Nov. 2016 - April 2018)*
 
