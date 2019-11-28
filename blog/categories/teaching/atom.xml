@@ -4,7 +4,7 @@
   <title><![CDATA[Category: teaching | Chris Arriola]]></title>
   <link href="http://chrisarriola.me/blog/categories/teaching/atom.xml" rel="self"/>
   <link href="http://chrisarriola.me/"/>
-  <updated>2018-08-05T20:27:02-07:00</updated>
+  <updated>2019-11-27T19:08:53-08:00</updated>
   <id>http://chrisarriola.me/</id>
   <author>
     <name><![CDATA[Chris Arriola]]></name>
@@ -20,9 +20,7 @@
     <id>http://chrisarriola.me/blog/2017/10/04/learn-arkit-using-swift</id>
     <content type="html"><![CDATA[<p>Check out a course I developed at Udacity on <a href="https://www.udacity.com/course/learn-arkit--nd114">ARKit using Swift</a> (SceneKit)!</p>
 
-<p><img class="center <a" src="href="http://chrisarriola.me/images/udacity_profile.png">http://chrisarriola.me/images/udacity_profile.png</a>"></p>
-
-<p>Developing course material, and teaching it, has really pushed me to grow (both technical and non-technical) and I&rsquo;m excited to share it with the world.</p>
+<p>Developing course material, and teaching it, has really pushed me to grow and I&rsquo;m excited to finally be able to share it.</p>
 
 <p>Let&rsquo;s make some <em>AWESOME</em> AR apps 😀</p>
 ]]></content>
