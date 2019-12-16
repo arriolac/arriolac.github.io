@@ -7,6 +7,10 @@ footer: true
 ---
 
 ##Work Experience
+__Developer Programs Engineer__, *[Google](https://cloud.google.com/maps-platform/) (Dec 2019 - Present)*
+
+Working as a Developer 🥑 for Google Maps Platform.
+
 __Head of Mobile__, *[Blockchain](https://blockchain.com) (April 2018 - Oct 2019)*
 
 Lead and managed a mobile team of 3 iOS and 2 Android engineers. 
