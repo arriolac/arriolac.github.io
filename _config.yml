@@ -4,7 +4,7 @@
 
 url: http://chrisarriola.me
 title: Chris Arriola
-subtitle: Developer Relations Engineer
+subtitle: 🌵
 author: Chris Arriola
 simple_search: http://google.com/search
 description: Ramblings
@@ -110,6 +110,8 @@ navigation:
   url: /book
 - text: CV
   url: /cv
+- text: About Me
+  url: /about-me
 
 
 mailchimp : true
