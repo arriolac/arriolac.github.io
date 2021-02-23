@@ -1,0 +1,11 @@
+#blob-top-right {
+    position:absolute;
+    top:0px;
+    right:0px;
+}
+
+#blob-bottom-left {
+    position:absolute;
+    bottom:0;
+    left:0;
+}
