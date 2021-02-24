@@ -1,12 +1,33 @@
-/* Animations */
+:root {
+    --primary: #F2E39B;
+    --primary2: #FFFFCC;
+    --text: #4b4b4b;
+}
+
 @keyframes blob-animate-down {
     from { top:-50px }
     to { top:0px }
 }
 
-@keyframes blob-animate-up {
-    from { bottom:-50px }
-    to { bottom:0px }
+@keyframes blob-animate-right {
+    from { left:-50px }
+    to { left:0px }
+}
+
+#hero {
+    display: flex;
+    padding: 16px;
+    margin-top: 211px;
+    justify-content: center;
+}
+
+#headline {
+    display: flex;
+    align-items: center;
+}
+
+#profile-pic-container {
+    margin-left: 199px;
 }
 
 #blob-top-right {
@@ -22,6 +43,32 @@
     position:absolute;
     bottom:0;
     left:0;
-    animation-name: blob-animate-up;
+    animation-name: blob-animate-right;
     animation-duration: .5s;
+}
+
+.emphasis {
+    background-color: var(--primary);
+    padding: 4px 10px;
+    border-radius: 10px;
+}
+
+.background-image {
+    z-index: -1;
+}
+
+body {
+    color: var(--text);
+}
+
+h1 {
+    font-size: 90px;
+    font-weight: 300;
+    font-family: 'Roboto', sans-serif;
+}
+
+h2 {
+    font-size: 60px;
+    font-weight: 300;
+    font-family: 'Roboto', sans-serif;
 }
