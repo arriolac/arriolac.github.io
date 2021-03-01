@@ -2,6 +2,7 @@
     --primary: #F2E39B;
     --primary2: #FFFFCC;
     --text: #4b4b4b;
+    font-size: 20px;
 }
 
 @keyframes blob-animate-down {
@@ -34,7 +35,11 @@
     display: flex;
     padding: 16px;
     margin-top: 80px;
-    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    max-width: 80%;
 }
 
 #headline {
@@ -43,26 +48,26 @@
 }
 
 #profile-pic-container {
-    margin-left: 199px;
+    /*margin-left: 199px;*/
 }
 
 #content-description {
     line-height: 30px;
     margin: 64 auto;
-    max-width: 935px;
+    max-width: 55%;
 }
 
 #blob-top-right {
-    position:absolute;
-    top:0px;
-    right:0px;
+    position:fixed;
+    top:0;
+    right:0;
     animation-name: blob-animate-down;
     animation-duration: .5s;
     animation-timing-function: cubic-bezier(.17,.67,.85,1.34);
 }
 
 #blob-bottom-left {
-    position:absolute;
+    position:fixed;
     bottom:0;
     left:0;
     animation-name: blob-animate-right;
@@ -73,9 +78,12 @@
     align-items: center;
     display: flex;
     height: 44px;
-    justify-content:center;
+    justify-content: flex-end;
     margin-top: 60px;
     margin-left: 724px;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .navigation-item {
@@ -93,10 +101,24 @@
     margin: 0px 30px;
 }
 
+/*
 .emphasis {
     background-color: var(--primary);
     padding: 4px 10px;
     border-radius: 10px;
+}
+*/
+
+.emphasis {
+    border-radius: 10px;
+    background-image: linear-gradient(transparent 0%, transparent 50%, #F2E39B88 50%, #F2E39B88 90%, transparent 90%, transparent);
+    display: inline;
+    border-radius: 10px;
+}
+
+.emphasis:after {
+  content: '';
+  display: block;
 }
 
 .background-image {
@@ -112,17 +134,17 @@
 body {
     color: var(--text);
     font-family: 'Roboto', sans-serif;
-    font-size: 20px;
+    font-size: 1em;
     font-weight: 400;
 }
 
 h1 {
-    font-size: 90px;
+    font-size: 4.5em;
     font-weight: 300;
 }
 
 h2 {
-    font-size: 60px;
+    font-size: 3em;
     font-weight: 300;
 }
 
@@ -137,4 +159,3 @@ a {
 a:hover {
     opacity: 1.0;
     text-shadow: 0px 2px 5px #0005;
-}
