@@ -2,7 +2,14 @@
     --primary: #F2E39B;
     --primary2: #FFFFCC;
     --text: #4b4b4b;
+    --text2: #ffffff;
+    --background: #FDFDFD;
+    --neutral-dark: #353535;
+}
+
+html {
     font-size: 20px;
+    background-color: var(--background);
 }
 
 @keyframes blob-animate-down {
@@ -101,14 +108,6 @@
     margin: 0px 30px;
 }
 
-/*
-.emphasis {
-    background-color: var(--primary);
-    padding: 4px 10px;
-    border-radius: 10px;
-}
-*/
-
 .emphasis {
     border-radius: 10px;
     background-image: linear-gradient(transparent 0%, transparent 50%, #F2E39B88 50%, #F2E39B88 90%, transparent 90%, transparent);
@@ -159,3 +158,19 @@ a {
 a:hover {
     opacity: 1.0;
     text-shadow: 0px 2px 5px #0005;
+}
+
+@media (prefers-color-scheme: dark) {
+    html {
+        background-color: var(--neutral-dark);
+    }
+    body {
+        color: var(--text2);
+    }
+    a {
+        color: var(--text2);
+    }
+    .emphasis {
+        background-image: linear-gradient(transparent 0%, transparent 50%, #BEB16C88 50%, #BEB16C88 90%, transparent 90%, transparent);
+    }
+}
