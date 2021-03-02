@@ -5,10 +5,10 @@
     --text2: #ffffff;
     --background: #FDFDFD;
     --neutral-dark: #353535;
+    font-size: 20px;
 }
 
 html {
-    font-size: 20px;
     background-color: var(--background);
 }
 
@@ -52,6 +52,7 @@ html {
 #headline {
     display: flex;
     align-items: center;
+    margin: 0px 60px;
 }
 
 #profile-pic-container {
@@ -125,7 +126,7 @@ html {
 }
 
 .button {
-    font-size: 14px;
+    font-size: .75em;
     letter-spacing: 2px;
     font-weight: 500;
 }
