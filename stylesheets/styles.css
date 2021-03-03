@@ -148,6 +148,15 @@ h2 {
     font-weight: 300;
 }
 
+@media only screen
+  and (min-device-width: 300px)
+  and (max-device-width: 600px)
+  and (orientation: portrait) {
+      h2 {
+          font-size: 2rem;
+      }
+}
+
 a {
     color: var(--text);
     opacity: .75;
