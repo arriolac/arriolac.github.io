@@ -12,14 +12,15 @@ html {
     background-color: var(--background);
 }
 
-@keyframes blob-animate-down {
-    from { top:-50px }
-    to { top:0px }
-}
-
-@keyframes blob-animate-right {
-    from { left:-50px }
-    to { left:0px }
+@keyframes blob-scale {
+    from {
+        transform: scale(0.0);
+        -webkit-transform: scale(0.0);
+    }
+    to {
+        transform: scale(1.0);
+        -webkit-transform: scale(1.0);
+    }
 }
 
 @keyframes wave-animation {
@@ -46,6 +47,7 @@ html {
     justify-content: space-evenly;
     flex-wrap: wrap;
     max-width: 80%;
+    min-width: 360px;
 }
 
 #headline {
@@ -73,23 +75,26 @@ html {
     line-height: 30px;
     margin: 64 auto;
     max-width: 55%;
+    min-width: 300px;
 }
 
 #blob-top-right {
     position:fixed;
     top:0;
     right:0;
-    animation-name: blob-animate-down;
+    animation-name: blob-scale;
     animation-duration: .5s;
     animation-timing-function: cubic-bezier(.17,.67,.85,1.34);
+    transform-origin: right top;
 }
 
 #blob-bottom-left {
     position:fixed;
     bottom:0;
     left:0;
-    animation-name: blob-animate-right;
+    animation-name: blob-scale;
     animation-duration: .5s;
+    transform-origin: 50% bottom;
 }
 
 #navigation {
