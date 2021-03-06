@@ -84,7 +84,7 @@ html {
     right:0;
     animation-name: blob-scale;
     animation-duration: .5s;
-    animation-timing-function: cubic-bezier(.17,.67,.85,1.34);
+    animation-timing-function: cubic-bezier(.34,1.56,.64,1);
     transform-origin: right top;
 }
 
@@ -94,6 +94,7 @@ html {
     left:0;
     animation-name: blob-scale;
     animation-duration: .5s;
+    animation-timing-function: cubic-bezier(.34,1.56,.64,1);
     transform-origin: 50% bottom;
 }
 
